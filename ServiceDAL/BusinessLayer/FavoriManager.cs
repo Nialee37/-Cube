@@ -43,10 +43,12 @@ namespace ServiceDAL.BusinessLayer
 
         public void Update(Favori obj)
         {
-            Favori Old = Service.DbContext.Favori.Find(obj.IdPersonne);
-            if (Old != null)
+            Favori Old = Service.DbContext.Favori.Find(obj.IdRessource);
+            Favori Old2 = Service.DbContext.Favori.Find(obj.IdPersonne);
+            if (Old != null && Old2 != null)
             {
                 Service.DbContext.Entry(Old).CurrentValues.SetValues(obj);
+                Service.DbContext.Entry(Old2).CurrentValues.SetValues(obj);
                 Service.DbContext.SaveChanges();
             }
         }

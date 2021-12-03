@@ -43,9 +43,11 @@ namespace ServiceDAL.BusinessLayer
         public void Update(Historique obj)
         {
             Historique Old = Service.DbContext.Historique.Find(obj.IdPersonne);
-            if (Old != null)
+            Historique Old2 = Service.DbContext.Historique.Find(obj.IdRessource);
+            if (Old != null && Old2 != null)
             {
                 Service.DbContext.Entry(Old).CurrentValues.SetValues(obj);
+                Service.DbContext.Entry(Old2).CurrentValues.SetValues(obj);
                 Service.DbContext.SaveChanges();
             }
         }

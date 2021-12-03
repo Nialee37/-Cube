@@ -43,9 +43,11 @@ namespace ServiceDAL.BusinessLayer
         public void Update(Archive obj)
         {
             Archive Old = Service.DbContext.Archive.Find(obj.IdPersonne);
-            if (Old != null)
+            Archive Old2 = Service.DbContext.Archive.Find(obj.IdRessource);
+            if (Old != null && Old2 != null)
             {
                 Service.DbContext.Entry(Old).CurrentValues.SetValues(obj);
+                Service.DbContext.Entry(Old2).CurrentValues.SetValues(obj);
                 Service.DbContext.SaveChanges();
             }
         }
