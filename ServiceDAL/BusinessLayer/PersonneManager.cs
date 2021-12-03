@@ -29,6 +29,21 @@ namespace ServiceDAL.BusinessLayer
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
+        public Personne GetByName(string name)
+        {
+            return Service.DbContext.Personnes
+                .Include("Adresse")
+                .Where(p => p.Nom == name)
+                .FirstOrDefault();
+        }
+
+        public Personne GetByMail(string mail)
+        {
+            return Service.DbContext.Personnes
+                .Include("Adresse")
+                .Where(p => p.Mail == mail)
+                .FirstOrDefault();
+        }
 
         public IList<Personne> GetAll()
         {

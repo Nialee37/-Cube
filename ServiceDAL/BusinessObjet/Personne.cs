@@ -14,7 +14,7 @@ namespace ServiceDAL.BusinessObjet
         public DateTime DateNaissance { get; set; }        
         public int Genre { get; set; }
         public string PasswordHash { get; set; }
-
+        public string Mail { get; set; }
         public int IdAdresse { get; set; }
         public int IdRoles { get; set; }
         public virtual Adresse Adresse { get; set; }
