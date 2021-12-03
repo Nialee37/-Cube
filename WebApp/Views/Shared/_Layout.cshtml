@@ -6,10 +6,12 @@
     <title>@ViewData["Title"] - WebApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/navBar.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @* <nav class="navbar navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -33,9 +35,49 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> *@
+        <div id="menu">
+            <div class="navigation responsive">
+                <div class="titleNav">
+                    <img src="~/img/logoV1.png" alt="logo" class="logo">
+                    <span style="overflow: hidden;">Source Relationnelles</span>
+                </div>
+                <ul>
+                    <li class="list active">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-home iconNav"></i>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a asp-area="" asp-controller="Villes" asp-action="Index">
+                                <i class="fas fa-building iconNav"></i>
+                            <span class="title">Liste des villes</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-user-secret iconNav"></i>
+                            <span class="title">Privacy</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a asp-area="" asp-controller="Connection" asp-action="Index">
+                                <i class="fas fa-user-cog iconNav"></i>
+                            <span class="title">Setting</span>
+                        </a>
+                    </li>
+                    <li class="list logOut">
+                        <a href="javascript:void(0)">
+                            <i class="fas fa-sign-out-alt iconNav"></i>
+                            <span class="title">Déconnexion</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </header>
-    <div class="container">
+    <div id="main" class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -49,6 +91,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/navBar.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
