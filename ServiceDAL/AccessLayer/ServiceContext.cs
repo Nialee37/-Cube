@@ -1,0 +1,51 @@
+﻿using ServiceDAL.BusinessObjet;
+using ServiceDAL.Migrations;
+using System.Data.Entity;
+
+namespace ServiceDAL.AccessLayer
+{
+    class ServiceContext: DbContext
+    {
+        private static ServiceContext instance;
+
+        public static ServiceContext Instance()
+        {
+            if (instance == null)
+            {
+                instance = new ServiceContext();
+                instance.Database.Initialize(true);
+            }
+            return instance;
+        }
+
+        public ServiceContext()
+             : base("server=(localdb)\\mssqllocaldb;database=ServiceDal_Local;Trusted_Connection=True;")
+        {
+            SetConfiguration();
+        }
+
+        public ServiceContext(string connectionString)
+             : base(connectionString)
+        {
+            SetConfiguration();
+        }
+
+        private void SetConfiguration()
+        {
+            //Création de la bdd si non existante
+            Database.SetInitializer<ServiceContext>(new CreateDatabaseIfNotExists<ServiceContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ServiceContext, Configuration>());
+            Configuration.LazyLoadingEnabled = true;
+        }
+
+
+        // Ajoutez un DbSet pour chaque type d'entité à inclure dans votre modèle. Pour plus d'informations 
+        // sur la configuration et l'utilisation du modèle Code First, consultez http://go.microsoft.com/fwlink/?LinkId=390109.
+
+        public virtual DbSet<Personne> Personnes { get; set; }
+        public virtual DbSet<Adresse> Adresses { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Ville> Villes { get; set; }
+
+    }
+}
