@@ -11,5 +11,7 @@ namespace ServiceDAL.BusinessObjet
         public DateTime Date { get; set; }
         public string CheminAcces { get; set; }
         public string Source { get; set; }
+        public int IdType { get; set; }
+        public virtual Type Type { get; set; }
     }
 }

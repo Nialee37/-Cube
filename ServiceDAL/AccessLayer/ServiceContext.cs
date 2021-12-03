@@ -43,7 +43,10 @@ namespace ServiceDAL.AccessLayer
         // sur la configuration et l'utilisation du modèle Code First, consultez http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<Personne> Personnes { get; set; }
+        public virtual DbSet<Commentaire> Commentaire { get; set; }
         public virtual DbSet<Ressources> Ressources { get; set; }
+        public virtual DbSet<Categorie> Categorie { get; set; }
+        public virtual DbSet<Type> Type { get; set; }
         public virtual DbSet<Historique> Historique { get; set; }
         public virtual DbSet<Favori> Favori { get; set; }
         public virtual DbSet<Archive> Archive { get; set; }
