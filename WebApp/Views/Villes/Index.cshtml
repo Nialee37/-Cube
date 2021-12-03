@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ServiceDAL.BusinessObjet.Ville>
+@{
+    ViewData["Title"] = "Liste des villes";
+}
+
+<h2>Liste des villes</h2>
+
+<p>
+    <a asp-action="Create">Ajouter une ville</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVille)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPostal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdVille)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPostal)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdVille">Modifier</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdVille">Détails</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdVille">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
