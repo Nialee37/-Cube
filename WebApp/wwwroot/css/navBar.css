@@ -23,13 +23,6 @@
     background: transparent;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 body {
     min-height: 100vh;
     background-color: #fff;
@@ -124,21 +117,6 @@ body {
     transition: 0.2s;
 }
 
-.toogle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    height: 60px;
-    width: 60px;
-    background-color: var(--main-bg-color);
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 0px 50px #d8d8d8;
-}
-
 .navigation.responsive {
     width: 70px;
 }
@@ -166,9 +144,14 @@ body {
 .titleNav{
     overflow-x: hidden !important;
     color: white;
-    width: 250px;
+    width: 350px;
 }
 
+.titleNav > span {
+    overflow: hidden;
+    font-weight: 800;
+    font-size: 19px;
+}
 
 .iconNav {
     line-height: 60px !important;
