@@ -126,14 +126,25 @@ body {
     color: transparent;
 }
 
-#main {
-    margin-left: 5em !important;
-    transition: margin-left 0.6s;
+@media only screen and (min-width: 601px) {
+    #main {
+        transition: margin-left 0.6s;
+    }
+
+    #main.active {
+        margin-left: 10em !important;
+        transition: margin-left 0.3s;
+    }
 }
 
-#main.active {
-    margin-left: 20em !important;
-    transition: margin-left 0.3s;
+@media only screen and (max-width: 601px) {
+    #main {
+        margin-left: 4.5em !important;
+    }
+}
+
+#menu {
+    z-index: 1000 !important;
 }
 
 .logo {
