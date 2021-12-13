@@ -16,8 +16,9 @@ for (let i = 0; i < list.length; i++) {
  */
 //let menuToggle = document.querySelector('.toogle');
 let navigation = document.querySelector('.navigation');
+let btn = document.querySelector('#btnNav');
 let main = document.querySelector('#main');
-navigation.onclick = function () {
+btn.onclick = function () {
     main.classList.toggle('active');
     //menuToggle.classList.toggle('active');
     navigation.classList.toggle('responsive');
