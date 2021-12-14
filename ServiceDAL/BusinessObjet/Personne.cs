@@ -17,6 +17,7 @@ namespace ServiceDAL.BusinessObjet
         public string Mail { get; set; }
         public int IdAdresse { get; set; }
         public int IdRoles { get; set; }
+        public bool IsConnected { get; set; }
         public virtual Adresse Adresse { get; set; }
         public virtual Roles Roles { get; set; }
     }
