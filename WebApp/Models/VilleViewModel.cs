@@ -2,7 +2,7 @@
 
 namespace WebApp.Models
 {
-    public class Ville
+    public class VilleViewModel
     {
         [Key]
         public int IdVille { get; set; }
