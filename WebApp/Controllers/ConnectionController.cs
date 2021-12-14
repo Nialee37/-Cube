@@ -55,9 +55,7 @@ namespace WebApp.Controllers
             {
                 ViewBag.message = "Aucun compte n'existe avec ce mail ou ce nom d'utilisateur";
                 return View("Index");
-            }
-
-          
+            }          
         }
 
         public IActionResult RegisterCreate(string username, string password)
