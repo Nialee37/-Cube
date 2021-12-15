@@ -24,3 +24,13 @@ ServiceDAL/obj/
 ServiceDALTests/obj/
 
 ServiceDALTests/bin/
+
+AndroidApp/AndroidApp.Android/obj/
+
+AndroidApp/AndroidApp.Android/bin/
+
+*.user
+
+AndroidApp/AndroidApp/obj/
+
+AndroidApp/AndroidApp/bin/

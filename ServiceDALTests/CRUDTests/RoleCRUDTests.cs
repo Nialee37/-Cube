@@ -66,7 +66,7 @@ namespace ServiceDALTests.CRUDTests
         {
             // Arrange
             const int ID = 1;
-            const string EXCEPTED = "Roles1";
+            const string EXCEPTED = "Role1";
 
             // Act
             Roles unRoles = Manager.Get(ID);
