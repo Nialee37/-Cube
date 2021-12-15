@@ -40,12 +40,9 @@ namespace ServiceDAL.BusinessLayer
         public Personne GetByMail(string mail)
         {
             return Service.DbContext.Personnes
+                .Include("Adresse")
                 .Where(p => p.Mail == mail)
                 .FirstOrDefault();
-            //return Service.DbContext.Personnes
-            //    .Include("Adresse")
-            //    .Where(p => p.Mail == mail)
-            //    .FirstOrDefault();
         }
 
         public IList<Personne> GetAll()
