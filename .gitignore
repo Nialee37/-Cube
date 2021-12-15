@@ -20,3 +20,11 @@ ServiceDAL/obj/
 .vs/
 
 .zip
+
+AndroidApp/AndroidApp.Android/obj/
+
+AndroidApp/AndroidApp.Android/bin/
+
+AndroidApp/AndroidApp/bin/
+
+AndroidApp/AndroidApp/obj/
