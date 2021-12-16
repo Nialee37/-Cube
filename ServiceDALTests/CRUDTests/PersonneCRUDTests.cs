@@ -6,7 +6,7 @@ using Xunit.Extensions.Ordering;
 
 namespace ServiceDALTests.CRUDTests
 {
-    [Order(3)]
+    [Order(4)]
     public class PersonneCRUDTests
     {
         private static ServiceDAL.BusinessLayer.PersonneManager Manager { get; set; }
@@ -47,6 +47,7 @@ namespace ServiceDALTests.CRUDTests
             // Act
 
             Adresse UneAdresse = ServiceStructuralTests.ServiceDAL.AdresseManager.Get(2);
+            Roles UnRoles = ServiceStructuralTests.ServiceDAL.RolesManager.Get(2);
             Manager.Add(new Personne()
             {
                 Nom = "leNom",
@@ -54,43 +55,15 @@ namespace ServiceDALTests.CRUDTests
                 DateNaissance = new DateTime(2010, 8, 18),
                 Genre = 1,
                 IdAdresse = 1,
-                Adresse = UneAdresse
+                IdRoles = 1,
+                Adresse = UneAdresse,
+                Roles = UnRoles
             });
             long actual = Manager.GetAll().Count;
 
             // Assert
             Assert.Equal(EXCEPTED, actual);
         }
-        //[Fact]
-        //[Order(3)]
-        //public void Personne_CreateOnePersonnewithAdresse_Find2()
-        //{
-        //    // Arrange
-        //    const long EXCEPTED = 2;
-
-        //    // Act
-        //    Ville laVille = ServiceStructuralTests.ServiceDAL.VilleManager.Get(2);
-        //    Manager.AddWithAdresse(new Personne()
-        //    {
-        //        Nom = "leNom",
-        //        Prenom = "lePrenom",
-        //        DateNaissance = new DateTime(2010, 8, 18),
-        //        Genre = 1,
-        //        IdAdresse = 1,
-        //        Adresse = new Adresse
-        //        {
-        //            Numero = "2Ter",
-        //            Nom = "NomAdresse2",
-        //            Type = 2,
-        //            IdVille = 1,
-        //            Ville = laVille
-        //        }
-        //    });
-        //    long actual = Manager.GetAll().Count;
-
-        //    // Assert
-        //    Assert.Equal(EXCEPTED, actual);
-        //}
 
         [Fact]
         [Order(4)]

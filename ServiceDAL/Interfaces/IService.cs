@@ -7,8 +7,11 @@ namespace ServiceDAL.Interfaces
     {
         RolesManager RolesManager { get; }
         VilleManager VilleManager { get; }
+        TypeManager TypeManager { get; }
+        CategorieManager CategorieManager { get; }
         AdresseManager AdresseManager { get; }
         PersonneManager PersonneManager { get; }
+        RessourcesManager RessourcesManager { get; }
         new void Dispose();
     }
 }

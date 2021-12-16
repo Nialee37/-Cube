@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServiceDAL.BusinessObjet
 {
@@ -15,9 +16,12 @@ namespace ServiceDAL.BusinessObjet
         public int Genre { get; set; }
         public string PasswordHash { get; set; }
         public string Mail { get; set; }
+
+        [ForeignKey("Adresse")]
         public int IdAdresse { get; set; }
+
+        [ForeignKey("Roles")]
         public int IdRoles { get; set; }
-        public bool IsConnected { get; set; }
         public virtual Adresse Adresse { get; set; }
         public virtual Roles Roles { get; set; }
     }
