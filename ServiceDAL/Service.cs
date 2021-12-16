@@ -15,21 +15,36 @@ namespace ServiceDAL
             else
                 DbContext = new ServiceContext(connectionString);
 
+            RolesManager = new RolesManager();
+            RessourcesManager = new RessourcesManager();
             VilleManager = new VilleManager();
+            CategorieManager = new CategorieManager();
+            TypeManager = new TypeManager();
             AdresseManager = new AdresseManager();
             PersonneManager = new PersonneManager();
             RessourcesManager = new RessourcesManager();
         }
 
+        public RolesManager RolesManager { get; private set; }
+        public RessourcesManager RessourcesManager { get; private set; }
         public VilleManager VilleManager { get; private set; }
+<<<<<<< HEAD
 
         public RessourcesManager RessourcesManager { get; private set; }
+=======
+        public CategorieManager CategorieManager { get; private set; }
+        public TypeManager TypeManager { get; private set; }
+>>>>>>> Feature_UnitTest
         public AdresseManager AdresseManager { get; private set; }
         public PersonneManager PersonneManager { get; private set; }
 
         public void Dispose()
         {
+            RolesManager.Dispose();
+            RessourcesManager.Dispose();
             VilleManager.Dispose();
+            CategorieManager.Dispose();
+            TypeManager.Dispose();
             AdresseManager.Dispose();
             PersonneManager.Dispose();
             RessourcesManager.Dispose();

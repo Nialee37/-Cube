@@ -21,10 +21,16 @@ ServiceDAL/obj/
 
 .zip
 
+ServiceDALTests/obj/
+
+ServiceDALTests/bin/
+
 AndroidApp/AndroidApp.Android/obj/
 
 AndroidApp/AndroidApp.Android/bin/
 
-AndroidApp/AndroidApp/bin/
+*.user
 
 AndroidApp/AndroidApp/obj/
+
+AndroidApp/AndroidApp/bin/

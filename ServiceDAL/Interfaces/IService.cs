@@ -5,11 +5,19 @@ namespace ServiceDAL.Interfaces
 {
     public interface IService: IDisposable
     {
+        RolesManager RolesManager { get; }
         VilleManager VilleManager { get; }
+        TypeManager TypeManager { get; }
+        CategorieManager CategorieManager { get; }
         AdresseManager AdresseManager { get; }
         PersonneManager PersonneManager { get; }
+<<<<<<< HEAD
 
         RessourcesManager  RessourcesManager { get; }
         void Dispose();
+=======
+        RessourcesManager RessourcesManager { get; }
+        new void Dispose();
+>>>>>>> Feature_UnitTest
     }
 }

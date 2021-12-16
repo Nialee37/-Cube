@@ -9,7 +9,6 @@ namespace ServiceDAL.BusinessObjet
         public string Numero { get; set; }
         public string Nom { get; set; }
         public int Type { get; set; }
-        public int IdVille { get; set; }
         public virtual Ville Ville { get; set; }
     }
 }
