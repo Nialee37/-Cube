@@ -1,0 +1,61 @@
+﻿@model ServiceDAL.BusinessObjet.Personne
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="POST">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+                <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+             
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class="form-control" value="@Model.Nom" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prenom" class="control-label"></label>
+                <input asp-for="Prenom" class="form-control" value="@Model.Prenom" />
+                <span asp-validation-for="Prenom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateNaissance" class="control-label"></label>
+                <input asp-for="DateNaissance" class="form-control" value="@Model.DateNaissance" />
+                <span asp-validation-for="DateNaissance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genre" class="control-label"></label>
+                <input asp-for="Genre" class="form-control" value="@Model.Genre"/>
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+            @*MDP A VOIR APRES*@
+            <div class="form-group">
+                <label asp-for="PasswordHash" class="control-label"></label>
+                <input asp-for="PasswordHash" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mail" class="control-label"></label>
+                <input asp-for="Mail" class="form-control" value="@Model.Mail" />
+                <span asp-validation-for="Mail" class="text-danger"></span>
+            </div>
+          
+                <input asp-for="IdAdresse" class="form-control" value="@Model.IdAdresse" type="hidden" />
+                <input asp-for="IdRoles" class="form-control" value="@Model.IdRoles" />
+               
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsConnected" type="hidden" value="@Model.IsConnected" /> @Html.DisplayNameFor(model => model.IsConnected)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

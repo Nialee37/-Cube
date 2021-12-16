@@ -23,7 +23,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            //var test = Service.AdresseManager.Get(1);
+            ViewBag.ListRessources = Service.RessourcesManager.Get10last(); //récupération des 10 derniere.
             return View();
         }
 

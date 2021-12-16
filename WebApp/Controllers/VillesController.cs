@@ -22,6 +22,12 @@ namespace WebApp.Controllers
             return View(villes);
         }
 
+        public JsonResult JsonVille()
+        {
+            var villes = Service.VilleManager.GetAll();
+            return Json(villes);
+        }
+
         // GET: VillesController/Details/5
         public ActionResult Details(int? id)
         {

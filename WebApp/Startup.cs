@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServiceDAL;
 using ServiceDAL.Interfaces;
+using System;
 
 namespace WebApp
 {
@@ -23,6 +24,16 @@ namespace WebApp
             services.AddControllersWithViews();
 
             services.AddSingleton<IService, Service>();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,12 +53,18 @@ namespace WebApp
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseCors(builder => builder.WithOrigins("https://localhost:44306")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
         }
     }
 }

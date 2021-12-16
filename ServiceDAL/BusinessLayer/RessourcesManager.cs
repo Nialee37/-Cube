@@ -29,9 +29,16 @@ namespace ServiceDAL.BusinessLayer
                 .FirstOrDefault();
         }
 
+
+
         public IList<Ressources> GetAll()
         {
             return Service.DbContext.Ressources.ToList();
+        }
+
+        public IList<Ressources> Get10last()
+        {
+            return Service.DbContext.Ressources.OrderByDescending(x => x.Date).Take(10).ToList();
         }
 
         public void Update(Ressources obj)

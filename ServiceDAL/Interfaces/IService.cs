@@ -8,6 +8,8 @@ namespace ServiceDAL.Interfaces
         VilleManager VilleManager { get; }
         AdresseManager AdresseManager { get; }
         PersonneManager PersonneManager { get; }
+
+        RessourcesManager  RessourcesManager { get; }
         void Dispose();
     }
 }

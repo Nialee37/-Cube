@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,6 +10,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/all.min.css" />
     <link rel="stylesheet" href="~/css/navBar.css" />
+
+
 </head>
 <body>
     <header>
@@ -67,12 +71,19 @@
                             <span class="title">Connexion</span>
                         </a>
                     </li>
-                    @* <li class="list logOut">
-                        <a href="javascript:void(0)">
-                            <i class="fas fa-sign-out-alt iconNav"></i>
-                            <span class="title">Déconnexion</span>
+                    @{
+                        if (Context.Session.GetString("user") != null)
+                        {
+                            Personne user = JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user"));
+                            string url = "/Personne/Edit?id=" + user.Id;
+                            <li class="list">
+                        <a href="@url">
+                                <i class="fas fa-sign-in-alt iconNav"></i>
+                            <span class="title">Edition du profil</span>
                         </a>
-                    </li> *@
+                    </li>
+                    }}
+                  
                 </ul>
             </div>
         </div>
