@@ -66,7 +66,8 @@ namespace WebApp.Controllers
         public ActionResult Edit(Personne user)
         {
             Service.PersonneManager.Update(user);
-            return View();
+            user = Service.PersonneManager.Get(user.Id);
+            return View(user);
         }
 
         // GET: PersonneController/Delete/5

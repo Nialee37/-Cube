@@ -87,7 +87,7 @@ namespace WebApp.Controllers
 
                         //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
                         ViewBag.message = "Bonjour " + user.Prenom.ToString();
-                        user.IsConnected = true;
+                     
                         Service.PersonneManager.Update(user);
                         string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                         HttpContext.Session.SetString("user", jsonUser);
@@ -120,7 +120,7 @@ namespace WebApp.Controllers
                 //enregitrement de l'adresse au préalable afin d'avoir l'id
 
                 user.PasswordHash = BCryptNet.HashPassword(user.PasswordHash); //hashage du password pour save en base de donnée
-                user.IdRoles = 0; //role normal citoyen connecté
+                user.IdRoles = 2; //role normal citoyen connecté
 
                 Service.PersonneManager.Add(user);
                 // code a recuperer pour la création du compte

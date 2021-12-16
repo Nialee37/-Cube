@@ -10,7 +10,7 @@ namespace ServiceDAL.BusinessLayer
         public Personne Add(Personne obj)
         {
             var personne = Service.DbContext.Personnes.Add(obj);
-            Service.DbContext.SaveChanges();
+                Service.DbContext.SaveChanges();
             return personne;
         }
 

@@ -48,11 +48,6 @@
                 <input asp-for="IdAdresse" class="form-control" value="@Model.IdAdresse" type="hidden" />
                 <input asp-for="IdRoles" class="form-control" value="@Model.IdRoles" />
                
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsConnected" type="hidden" value="@Model.IsConnected" /> @Html.DisplayNameFor(model => model.IsConnected)
-                </label>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
