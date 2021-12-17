@@ -17,6 +17,7 @@ namespace ServiceDAL
 
             RolesManager = new RolesManager();
             RessourcesManager = new RessourcesManager();
+            CommentaireManager = new CommentaireManager();
             VilleManager = new VilleManager();
             CategorieManager = new CategorieManager();
             TypeManager = new TypeManager();
@@ -26,6 +27,7 @@ namespace ServiceDAL
 
         public RolesManager RolesManager { get; private set; }
         public RessourcesManager RessourcesManager { get; private set; }
+        public CommentaireManager CommentaireManager { get; private set; }
         public VilleManager VilleManager { get; private set; }
         public CategorieManager CategorieManager { get; private set; }
         public TypeManager TypeManager { get; private set; }
@@ -36,6 +38,7 @@ namespace ServiceDAL
         {
             RolesManager.Dispose();
             RessourcesManager.Dispose();
+            CommentaireManager.Dispose();
             VilleManager.Dispose();
             CategorieManager.Dispose();
             TypeManager.Dispose();

@@ -54,8 +54,23 @@ namespace ServiceDALTests.CRUDTests
                 Prenom = "lePrenom",
                 DateNaissance = new DateTime(2010, 8, 18),
                 Genre = 1,
+                PasswordHash = "root1",
+                Mail = "email1@test.fr",
                 IdAdresse = 1,
                 IdRoles = 1,
+                Adresse = UneAdresse,
+                Roles = UnRoles
+            });
+            Manager.Add(new Personne()
+            {
+                Nom = "leNom2",
+                Prenom = "lePrenom2",
+                DateNaissance = new DateTime(2020, 10, 20),
+                Genre = 0,
+                PasswordHash = "root2",
+                Mail = "email2@test.fr",
+                IdAdresse = 2,
+                IdRoles = 2,
                 Adresse = UneAdresse,
                 Roles = UnRoles
             });

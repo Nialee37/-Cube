@@ -15,11 +15,11 @@
                         Numero = c.String(),
                         Nom = c.String(),
                         Type = c.Int(nullable: false),
-                        IdVille = c.Int(nullable: false),
+                        Ville_IdVille = c.Int(),
                     })
                 .PrimaryKey(t => t.IdAdresse)
-                .ForeignKey("dbo.Villes", t => t.IdVille, cascadeDelete: true)
-                .Index(t => t.IdVille);
+                .ForeignKey("dbo.Villes", t => t.Ville_IdVille)
+                .Index(t => t.Ville_IdVille);
             
             CreateTable(
                 "dbo.Villes",
@@ -59,14 +59,12 @@
                         Mail = c.String(),
                         IdAdresse = c.Int(nullable: false),
                         IdRoles = c.Int(nullable: false),
-                        IsConnected = c.Boolean(nullable: false),
-                        Roles_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Adresses", t => t.IdAdresse, cascadeDelete: true)
-                .ForeignKey("dbo.Roles", t => t.Roles_Id)
+                .ForeignKey("dbo.Roles", t => t.IdRoles, cascadeDelete: true)
                 .Index(t => t.IdAdresse)
-                .Index(t => t.Roles_Id);
+                .Index(t => t.IdRoles);
             
             CreateTable(
                 "dbo.Roles",
@@ -87,14 +85,16 @@
                         CheminAcces = c.String(),
                         Source = c.String(),
                         IdType = c.Int(nullable: false),
-                        Type_Id = c.Int(),
+                        IdCategorie = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Types", t => t.Type_Id)
-                .Index(t => t.Type_Id);
+                .ForeignKey("dbo.Categories", t => t.IdCategorie, cascadeDelete: true)
+                .ForeignKey("dbo.Types", t => t.IdType, cascadeDelete: true)
+                .Index(t => t.IdType)
+                .Index(t => t.IdCategorie);
             
             CreateTable(
-                "dbo.Types",
+                "dbo.Categories",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -103,7 +103,7 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Categories",
+                "dbo.Types",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -116,17 +116,15 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        commentaire = c.Long(nullable: false),
+                        commentaire = c.String(),
                         IdPersonne = c.Int(nullable: false),
                         IdRessource = c.Int(nullable: false),
-                        Personne_Id = c.Int(),
-                        Ressources_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Personnes", t => t.Personne_Id)
-                .ForeignKey("dbo.Ressources", t => t.Ressources_Id)
-                .Index(t => t.Personne_Id)
-                .Index(t => t.Ressources_Id);
+                .ForeignKey("dbo.Personnes", t => t.IdPersonne, cascadeDelete: true)
+                .ForeignKey("dbo.Ressources", t => t.IdRessource, cascadeDelete: true)
+                .Index(t => t.IdPersonne)
+                .Index(t => t.IdRessource);
             
             CreateTable(
                 "dbo.Favoris",
@@ -184,34 +182,36 @@
             DropForeignKey("dbo.Historiques", "Personne_Id", "dbo.Personnes");
             DropForeignKey("dbo.Favoris", "Ressources_Id", "dbo.Ressources");
             DropForeignKey("dbo.Favoris", "Personne_Id", "dbo.Personnes");
-            DropForeignKey("dbo.Commentaires", "Ressources_Id", "dbo.Ressources");
-            DropForeignKey("dbo.Commentaires", "Personne_Id", "dbo.Personnes");
+            DropForeignKey("dbo.Commentaires", "IdRessource", "dbo.Ressources");
+            DropForeignKey("dbo.Commentaires", "IdPersonne", "dbo.Personnes");
             DropForeignKey("dbo.Archives", "Ressources_Id", "dbo.Ressources");
-            DropForeignKey("dbo.Ressources", "Type_Id", "dbo.Types");
+            DropForeignKey("dbo.Ressources", "IdType", "dbo.Types");
+            DropForeignKey("dbo.Ressources", "IdCategorie", "dbo.Categories");
             DropForeignKey("dbo.Archives", "Personne_Id", "dbo.Personnes");
-            DropForeignKey("dbo.Personnes", "Roles_Id", "dbo.Roles");
+            DropForeignKey("dbo.Personnes", "IdRoles", "dbo.Roles");
             DropForeignKey("dbo.Personnes", "IdAdresse", "dbo.Adresses");
-            DropForeignKey("dbo.Adresses", "IdVille", "dbo.Villes");
+            DropForeignKey("dbo.Adresses", "Ville_IdVille", "dbo.Villes");
             DropIndex("dbo.LinkRessCats", new[] { "Ressources_Id" });
             DropIndex("dbo.LinkRessCats", new[] { "Categorie_Id" });
             DropIndex("dbo.Historiques", new[] { "Ressources_Id" });
             DropIndex("dbo.Historiques", new[] { "Personne_Id" });
             DropIndex("dbo.Favoris", new[] { "Ressources_Id" });
             DropIndex("dbo.Favoris", new[] { "Personne_Id" });
-            DropIndex("dbo.Commentaires", new[] { "Ressources_Id" });
-            DropIndex("dbo.Commentaires", new[] { "Personne_Id" });
-            DropIndex("dbo.Ressources", new[] { "Type_Id" });
-            DropIndex("dbo.Personnes", new[] { "Roles_Id" });
+            DropIndex("dbo.Commentaires", new[] { "IdRessource" });
+            DropIndex("dbo.Commentaires", new[] { "IdPersonne" });
+            DropIndex("dbo.Ressources", new[] { "IdCategorie" });
+            DropIndex("dbo.Ressources", new[] { "IdType" });
+            DropIndex("dbo.Personnes", new[] { "IdRoles" });
             DropIndex("dbo.Personnes", new[] { "IdAdresse" });
             DropIndex("dbo.Archives", new[] { "Ressources_Id" });
             DropIndex("dbo.Archives", new[] { "Personne_Id" });
-            DropIndex("dbo.Adresses", new[] { "IdVille" });
+            DropIndex("dbo.Adresses", new[] { "Ville_IdVille" });
             DropTable("dbo.LinkRessCats");
             DropTable("dbo.Historiques");
             DropTable("dbo.Favoris");
             DropTable("dbo.Commentaires");
-            DropTable("dbo.Categories");
             DropTable("dbo.Types");
+            DropTable("dbo.Categories");
             DropTable("dbo.Ressources");
             DropTable("dbo.Roles");
             DropTable("dbo.Personnes");
