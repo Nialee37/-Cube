@@ -56,7 +56,7 @@ namespace WebApp.Controllers
         {
 
             Personne user = Service.PersonneManager.Get(id);
-            
+
             return View(user);
         }
 
