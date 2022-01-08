@@ -66,7 +66,10 @@ namespace WebApp.Controllers
         public ActionResult Edit(Personne user)
         {
             Service.PersonneManager.Update(user);
+
             user = Service.PersonneManager.Get(user.Id);
+            string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+            HttpContext.Session.SetString("user", jsonUser);
             return View(user);
         }
 

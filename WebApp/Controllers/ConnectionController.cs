@@ -126,5 +126,13 @@ namespace WebApp.Controllers
                 // code a recuperer pour la création du compte
                 return IndexLogin(user.Mail, temppsd);
             }
+
+        public IActionResult Logout()
+        {
+
+            HttpContext.Session.Clear();
+            return View("~/Views/Home/index.cshtml");
         }
+
     }
+}
