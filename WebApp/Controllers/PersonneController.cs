@@ -57,7 +57,8 @@ namespace WebApp.Controllers
         {
 
             Personne user = Service.PersonneManager.Get(id);
-
+            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;
             return View(user);
         }
 
@@ -69,8 +70,10 @@ namespace WebApp.Controllers
             Service.PersonneManager.Update(user);
 
             user = Service.PersonneManager.Get(user.Id);
-            string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
-            HttpContext.Session.SetString("user", jsonUser);
+            /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+            HttpContext.Session.SetString("user", jsonUser);*/
+            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;
             return View(user);
         }
 
