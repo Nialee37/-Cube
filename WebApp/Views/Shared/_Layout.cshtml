@@ -14,6 +14,9 @@
 
 </head>
 <body>
+    @{
+         Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+    }
     <header>
         @* <nav class="navbar navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -47,34 +50,42 @@
                     <span>Source Relationnelles</span>
                 </div>
                 <ul>
-                    <li class="list active">
+                    <li class='list @(ViewData["Page"] == "Home" ? "active" : "" )'>
                         <a asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="fas fa-home iconNav"></i>
                             <span class="title">Home</span>
                         </a>
                     </li>
-                    <li class="list">
+                    <li class='list @(ViewData["Page"] == "Ville" ? "active" : "" )'>
                         <a asp-area="" asp-controller="Villes" asp-action="Index">
                                 <i class="fas fa-building iconNav"></i>
                             <span class="title">Liste des villes</span>
                         </a>
                     </li>
-                    <li class="list">
+                    <li class='list @(ViewData["Page"] == "Privacy" ? "active" : "" )'>
                         <a asp-area="" asp-controller="Home" asp-action="Privacy">
                                 <i class="fas fa-user-secret iconNav"></i>
                             <span class="title">Privacy</span>
                         </a>
                     </li>
-                    <li class="list">
-                        <a asp-area="" asp-controller="Connection" asp-action="Index">
-                                <i class="fas fa-sign-in-alt iconNav"></i>
-                            <span class="title">Connexion</span>
-                        </a>
-                    </li>
-                    @{
-                        if (Context.Session.GetString("user") != null)
+                    @{if(user != null)
+                       {
+                            <li class='list'>
+                                <a asp-area="" asp-controller="Connection" asp-action="Index">
+                                        <i class="fas fa-sign-out-alt iconNav"></i>
+                                    <span class="title">Déconnexion</span>
+                                </a>
+                            </li>
+                      }else{
+                            <li class='list @(ViewData["Page"] == "Connection" ? "active" : "")'>
+                                <a asp-area="" asp-controller="Connection" asp-action="Index">
+                                        <i class="fas fa-sign-in-alt iconNav"></i>
+                                    <span class="title">Connexion</span>
+                                </a>
+                            </li>
+                       }
+                        if (user != null)
                         {
-                            Personne user = JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user"));
                             string url = "/Personne/Edit?id=" + user.Id;
                             <li class="list">
                         <a href="@url">
