@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
+using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
@@ -92,6 +93,17 @@ namespace WebApp.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult AdminPersonne()
+        {
+            return View();
+        }
+        [HttpGet]
+        public JsonResult GetAllPersonne()
+        {
+            List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
+            return Json(personnes);
         }
     }
 }
