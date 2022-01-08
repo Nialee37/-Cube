@@ -1,9 +1,10 @@
 ﻿<table class="display" width="100%" id="example">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Mail</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -20,8 +21,19 @@ $(document).ready(function() {
         "columns": [
             { "data": "id" },
             { "data": "nom" },
-            { "data": "prenom" }
+            { "data": "prenom" },
+            { "data": "mail" }
+        ],
+        "columnDefs":[
+            {visible: false, targets: [0]},
+            {
+                targets: 1,
+                render: function(data,type,row,meta){
+                    return '<a target="_blank" href="/Personne/Edit/' + row.id + '">' + row.nom + '</a>'
+                }
+            }
         ]
+
     } );
 } );
 </script>

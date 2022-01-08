@@ -109,11 +109,13 @@ namespace WebApp.Controllers
 
             public IActionResult RegisterCreate(Personne user)
             {
-                if (user == Service.PersonneManager.GetByMail(user.Mail))
+            Personne userbdd = Service.PersonneManager.GetByMail(user.Mail);
+
+                if (user.Mail == userbdd.Mail)
                 {
                     ViewBag.message = "Bonjour un compte existe deja avec cet identifiant.";
-                    return View("~/Views/Home/index.cshtml");
-                }
+                return View("~/Views/Home/Index.cshtml");
+            }
 
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
 

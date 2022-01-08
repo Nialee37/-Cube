@@ -3,8 +3,16 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["Page"] = "Home";
+
     Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
 }
+@if(ViewBag.message != null){
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>@ViewBag.message</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
+
 <div class="text-center">
    <h1 class="display-4">Welcome @(user != null ? user.Prenom+" "+user.Nom : "")</h1>
    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

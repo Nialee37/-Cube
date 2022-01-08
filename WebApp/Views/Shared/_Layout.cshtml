@@ -98,6 +98,14 @@
                         </a>
                     </li>
                     }}
+                     @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ))
+                       {
+                            <li class='list'>
+                                <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne">
+                                        <i class="fas fa-sign-out-alt iconNav"></i>
+                                    <span class="title">Gestion des utilisateurs</span>
+                                </a>
+                            </li> }}
                   
                 </ul>
             </div>
