@@ -29,7 +29,7 @@ namespace WebApp.Controllers
             List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
             return Json(mesressources);
         }
-        public JsonResult RessourceAcceuil() //fonction qui va retourner les ressources sur la page d'acceuil
+        public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
         {
             List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().OrderBy(x => x.Date).Take(50);
             return Json(mesressources);
