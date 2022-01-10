@@ -26,7 +26,6 @@ namespace WebApp.Controllers
         // GET: PersonneController/Details/5
         public ActionResult Details(int id)
         {
-            
 
             return View();
         }

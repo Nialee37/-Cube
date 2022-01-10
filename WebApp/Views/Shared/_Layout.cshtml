@@ -95,6 +95,17 @@
                         </a>
                     </li>
                     }}
+
+                     @{if(user != null )
+                       {
+                            <li class='list'>
+                                <a asp-area="" asp-controller="Ressource" asp-action="Index">
+                                        <i class="fas fa-sign-out-alt iconNav"></i>
+                                    <span class="title">Mes ressources</span>
+                                </a>
+                            </li> }}
+
+
                      @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ))
                        {
                             <li class='list'>
