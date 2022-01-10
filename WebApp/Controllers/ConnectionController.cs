@@ -91,6 +91,7 @@ namespace WebApp.Controllers
                         Service.PersonneManager.Update(user);
                         string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                         HttpContext.Session.SetString("user", jsonUser);
+                        Response.Redirect("/");
                         return View("~/Views/Home/Index.cshtml");
                     }
                     else
@@ -131,7 +132,7 @@ namespace WebApp.Controllers
 
         public IActionResult Logout()
         {
-
+            Response.Redirect("/");
             HttpContext.Session.Clear();
             return View("~/Views/Home/index.cshtml");
         }
