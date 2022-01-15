@@ -34,7 +34,11 @@
             </div>
                      
         }else{
-            <a asp-area="" asp-controller="Connection" asp-action="Index" class='btn btn-success @(ViewData["Page"] == "Connection" ? "active" : "" )'> <i class="fas fa-sign-in-alt"></i> Connexion</a> 
+            <div>
+                <a asp-area="" asp-controller="Connection" asp-action="Register" class='btn btn-danger'> <i class="fas fa-pen"></i> S'inscrire</a> 
+
+                <a asp-area="" asp-controller="Connection" asp-action="Index" class='btn btn-success'> <i class="fas fa-sign-in-alt"></i> Connexion</a> 
+            </div>
         }}
         
     </header>
