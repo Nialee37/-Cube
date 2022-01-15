@@ -1,25 +1,25 @@
-/**
- * Add active class in selected list item
- */
-let list = document.querySelectorAll('.list');
-for (let i = 0; i < list.length; i++) {
-    list[i].onclick = function () {
-        let j = 0;
-        while (j < list.length) {
-            list[j++].className = 'list';
-        }
-        list[i].className = 'list active';
+$(document).ready(function () {
+    /*===== LINK ACTIVE =====*/
+    $(".nav_link").click(function(){
+        colorLink();
+    })
+
+    $("#header-toggle").click(function(){
+        // show navbar
+        $("#nav-bar").toggleClass('show-nav');
+        // change icon
+        $("#header-toggle").toggleClass('fa-times');
+        // add padding to body
+        $("#body-pd").toggleClass('body-pd');
+        // add padding to header
+        $("#header").toggleClass('body-pd');
+    });
+});
+
+
+function colorLink() {
+    if (linkColor) {
+        linkColor.removeClass("active");
+        this.addClass('active');
     }
-}
-/**
- *   Toggle menu
- */
-//let menuToggle = document.querySelector('.toogle');
-let navigation = document.querySelector('.navigation');
-let btn = document.querySelector('#btnNav');
-let main = document.querySelector('#main');
-btn.onclick = function () {
-    main.classList.toggle('active');
-    //menuToggle.classList.toggle('active');
-    navigation.classList.toggle('responsive');
 }
