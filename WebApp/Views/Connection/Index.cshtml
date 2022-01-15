@@ -1,59 +1,49 @@
 ﻿@{
-    ViewData["Title"] = "Page de connexion";
-    ViewData["Page"] = "Connection";
+  ViewData["Title"] = "Page de connexion";
+  ViewData["Page"] = "Connection";
+}
+@section Styles {
+<link rel='stylesheet' href='~/css/login.css'>
 }
 <section class="py-4">
   <div class="container ">
     <div class="row justify-content-center align-items-center">
       <div class="col-xl-10">
-        <div class="card cardLogin text-black">
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="card-body p-md-4 mx-md-5">
-                <div class="text-center">
-                  <img src="~/img/logoV2.png"  style="width:100%;" alt="logo">
+        <div class="form-bg">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-offset-3 col-lg-11 col-md-offset-2 col-md-8">
+                    <div class="form-container">
+                      <div class="form-icon">
+                        <img src="~/img/logoV2.png" class="logo-login" alt="logo">
+                        <span class="signup">Vous n'avez pas de compte ? <a href="/Connection/Register" class="btn btn-outline-light btn-signup">Créé en un !</a> </span>
+                      </div>
+                      <form class="form-horizontal" asp-action="IndexLogin">
+                        @{
+                          if(ViewBag.message != null){
+                            <div class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
+                              <i class="fas fa-exclamation-circle"></i>
+                                @ViewBag.message
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                          }
+                        }
+                        <h3 class="title">Connecter vous !</h3>
+                        <div class="form-group">
+                          <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                          <input name="username" type="email" id="form2Example11" class="form-control" placeholder="Adresse mail ou nom d'utilisateur"/>
+                        </div>
+                        <div class="form-group">
+                          <span class="input-icon"><i class="fa fa-lock"></i></span>
+                          <input name="password" type="password" id="form2Example22" class="form-control" placeholder="Votre mot de passe" />
+                        </div>
+                        <button class="btn signin">Connexion</button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <p>@ViewBag.message</p>
-                <form asp-action="IndexLogin">
-                  <h2 class="text-center mb-3">Veuillez vous connecter</h2>
-
-                  <div class="form-outline mb-3">
-                    <label class="form-label" for="form2Example11">Nom d'utilisateur</label>
-                    <input name="username" type="email" id="form2Example11" class="form-control" placeholder="Adresse mail ou nom d'utilisateur"/>
-                  </div>
-
-                  <div class="form-outline mb-3">
-                    <label class="form-label" for="form2Example22">Mot de passe</label>
-                    <input name="password" type="password" id="form2Example22" class="form-control" />
-                  </div>
-
-                  <div class="text-center">
-                    <input class="btn btn-dark btn-block fa-lg gradient-custom-2 mb-3" type="submit">
-                  </div>
-                    
-                  <div class="text-center">
-                    <button class="btn btn-dark btn-block fa-lg gradient-custom-2 mb-3" type="button">Mot de passe oublier</button>
-                  </div>
-
-                  <div class="col-xl-12">
-                    <div class="col-xl-6">
-                      <span class="mb-0 me-2 px-2">Vous n'avez pas de compte?</span>
-                    </div>
-                    <div class="col-xl-6">
-                      <a href="/Connection/Register" class="btn btn-outline-danger">Créé en un !</a>
-                    </div>
-                  </div>
-                </form>
               </div>
             </div>
-            <div class="col-lg-5 d-flex align-items-center">
-              <div class="px-3 py-4">
-                <h4 class="mb-4">We are more than just a company</h4>
-                <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
