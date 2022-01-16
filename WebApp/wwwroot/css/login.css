@@ -96,7 +96,6 @@
 .form-horizontal .form-control::placeholder {
     color: #b5b5b5;
     font-size: 13px;
-    text-transform: capitalize;
 }
 
 .form-horizontal .btn {

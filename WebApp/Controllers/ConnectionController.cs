@@ -36,10 +36,9 @@ namespace WebApp.Controllers
 
                 IDictionary<int, string> ListVilles = new Dictionary<int, string>();
                 IEnumerable<Ville> villes = Service.VilleManager.GetAll().OrderBy(v => v.CPostal);
-                ListVilles.Add(-1, "Veuillez sélectionner une ville");
+                //ListVilles.Add(-1, "Veuillez sélectionner une ville");
                 foreach (var item in villes)
                 {
-
                     ListVilles.Add(item.IdVille, $"{item.CPostal} - {item.Nom}");
                 }
                 ViewBag.ListVilles = new SelectList(ListVilles, "Key", "Value");
@@ -50,7 +49,7 @@ namespace WebApp.Controllers
 
                 string genre = "Homme,Femme,Autre";
                 var temp = genre.Split(",");
-                ListGenres.Add(-1, "Veuillez sélectionner une genre");
+                //ListGenres.Add(-1, "Veuillez sélectionner une genre");
 
                 for (int i = 0; i < temp.Count(); i++)
                 {
@@ -63,7 +62,7 @@ namespace WebApp.Controllers
 
                 string type = "Boulevard,Rue,Impace,Avenue,Ruelle,Chemin,Place";
                 var temp12 = type.Split(",");
-                ListTypeAdresse.Add(-1, "Veuillez sélectionner un type d'adresse");
+                //ListTypeAdresse.Add(-1, "Veuillez sélectionner un type d'adresse");
 
                 for (int i = 0; i < temp12.Count(); i++)
                 {
