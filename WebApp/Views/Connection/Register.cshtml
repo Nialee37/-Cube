@@ -14,7 +14,7 @@
 
         <!-- Registeration Form -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" action="#">
+            <form class="form-horizontal" asp-action="RegisterCreate">
                  <h1>Création de mon compte</h1>
                  <div class="div-general">
                      <h2>Générale</h2>
@@ -24,7 +24,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-address-card"></i></span>
-                                <input asp-for="Nom" class="form-control" placeholder="Prénom" />
+                                <input asp-for="Prenom" class="form-control" placeholder="Prénom" required/>
                                 <span asp-validation-for="Prenom" class="text-danger"></span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-address-card"></i></span>
-                                <input asp-for="Nom" class="form-control" placeholder="Nom "/>
+                                <input asp-for="Nom" class="form-control" placeholder="Nom " required/>
                                 <span asp-validation-for="Nom" class="text-danger"></span>
                             </div>
                         </div>
@@ -41,14 +41,14 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-calendar-week"></i></span>
-                                <input asp-for="DateNaissance" class="form-control" />
+                                <input asp-for="DateNaissance" class="form-control" required/>
                                 <span asp-validation-for="DateNaissance" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-genderless"></i></span>
-                                <select class="form-control" id="Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Veuillez sélectionner un genre</option></select>
+                                <select required class="form-control" id="Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Veuillez sélectionner un genre</option></select>
                                 <span asp-validation-for="Genre" class="text-danger"></span>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fa fa-envelope"></i></span>
-                                <input asp-for="Mail" class="form-control" placeholder="Adresse mail"/>
+                                <input required asp-for="Mail" class="form-control" placeholder="Adresse mail"/>
                                 <span asp-validation-for="Mail" class="text-danger"></span>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fa fa-lock"></i></span>
-                                <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Mot de passe" />
+                                <input required asp-for="PasswordHash" type="password" class="form-control" placeholder="Mot de passe" />
                                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
                             </div>
                         </div>
@@ -79,14 +79,14 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-map-pin"></i></span>
-                                <input asp-for="Adresse.Numero" class="form-control" placeholder="Numéro" />
+                                <input required asp-for="Adresse.Numero" class="form-control" placeholder="Numéro" />
                                 <span asp-validation-for="Adresse.Numero" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-location-arrow"></i></span>
-                                <select class="form-control" id="Genre" asp-for="Adresse.Type" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <select required class="form-control" id="Genre" asp-for="Adresse.Type" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
                                 <span asp-validation-for="Adresse.Type" class="text-danger"></span>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-road"></i></span>
-                                <input asp-for="Adresse.Nom" class="form-control" placeholder="Nom de la rue"/>
+                                <input required asp-for="Adresse.Nom" class="form-control" placeholder="Nom de la rue"/>
                                 <span asp-validation-for="Adresse.Nom" class="text-danger"></span>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-city"></i></span>
-                                <select asp-for="Adresse.Ville.IdVille" onchange="RecupIdVille(this.value)" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
+                                <select required asp-for="Adresse.Ville.IdVille" onchange="RecupIdVille(this.value)" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
                                 <span asp-validation-for="Adresse.Ville.IdVille" class="text-danger"></span>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                         </div>
                         <!-- Already Registered -->
                         <div class="text-center w-100">
-                            <p class="text-muted font-weight-bold">Déja inscrit ? <a asp-area="" asp-controller="Connection" asp-action="Index" class="text-primary ml-2">Connecter vous !</a></p>
+                            <p class="text-muted font-weight-bold">Déjà inscrit ? <a asp-area="" asp-controller="Connection" asp-action="Index" class="text-primary ml-2">Connectez vous !</a></p>
                         </div>
 
                     </div>

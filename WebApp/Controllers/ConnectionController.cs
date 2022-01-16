@@ -76,47 +76,52 @@ namespace WebApp.Controllers
             [ValidateAntiForgeryToken]
             public IActionResult IndexLogin(string username, string password)
             {
+                if(username != null && password != null) {
+                    Personne user = Service.PersonneManager.GetByMail(username);
 
-                Personne user = Service.PersonneManager.GetByMail(username);
-
-                if (user != null)
-                {
-                    if (BCryptNet.Verify(password, user.PasswordHash) && password != "")
+                    if (user != null)
                     {
+                        if (BCryptNet.Verify(password, user.PasswordHash) && password != "")
+                        {
 
-                        //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
-                        ViewBag.message = "Bonjour " + user.Prenom.ToString();
+                            //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
+                            ViewBag.message = "Bonjour " + user.Prenom.ToString();
                      
-                        Service.PersonneManager.Update(user);
-                        string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
-                        HttpContext.Session.SetString("user", jsonUser);
-                        Response.Redirect("/");
-                        return View("~/Views/Home/Index.cshtml");
+                            Service.PersonneManager.Update(user);
+                            string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                            HttpContext.Session.SetString("user", jsonUser);
+                            Response.Redirect("/");
+                            return View("~/Views/Home/Index.cshtml");
+                        }
+                        else
+                        {
+                            ViewBag.message = "Votre mot de passe est incorrect";
+                            return View("Index");
+                        }
+
                     }
                     else
                     {
-                        ViewBag.message = "Votre mot de passe est incorrect";
+                        ViewBag.message = "Aucun compte n'existe avec ce mail ou ce nom d'utilisateur";
                         return View("Index");
                     }
-
-                }
-                else
-                {
-                    ViewBag.message = "Aucun compte n'existe avec ce mail ou ce nom d'utilisateur";
+                }else {
+                    ViewBag.message = "Veuillez saisir un mail et un mot de passe !";
                     return View("Index");
-                }
+            }
             }
 
             public IActionResult RegisterCreate(Personne user)
             {
             Personne userbdd = Service.PersonneManager.GetByMail(user.Mail);
-
+                
+            if (userbdd != null) { 
                 if (user.Mail == userbdd.Mail)
                 {
                     ViewBag.message = "Bonjour un compte existe deja avec cet identifiant.";
-                return View("~/Views/Home/Index.cshtml");
+                    return View("~/Views/Home/Index.cshtml");
+                }
             }
-
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
 
                 //enregitrement de l'adresse au préalable afin d'avoir l'id
