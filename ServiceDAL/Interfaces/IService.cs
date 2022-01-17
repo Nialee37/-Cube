@@ -7,6 +7,7 @@ namespace ServiceDAL.Interfaces
     {
         RolesManager RolesManager { get; }
         VilleManager VilleManager { get; }
+        CommentaireManager CommentaireManager { get; }
         TypeManager TypeManager { get; }
         CategorieManager CategorieManager { get; }
         AdresseManager AdresseManager { get; }

@@ -8,7 +8,7 @@ namespace ServiceDAL.BusinessObjet
     {
         [Key]
         public int Id { get; set; }
-        public long commentaire { get; set; }
+        public string commentaire { get; set; }
         [ForeignKey("Personne")]
         public int IdPersonne { get; set; }
         [ForeignKey("Ressources")]
