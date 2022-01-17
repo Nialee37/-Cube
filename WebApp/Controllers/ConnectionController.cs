@@ -128,6 +128,7 @@ namespace WebApp.Controllers
 
                 user.PasswordHash = BCryptNet.HashPassword(user.PasswordHash); //hashage du password pour save en base de donnée
                 user.IdRoles = 2; //role normal citoyen connecté
+                user.Roles = Service.RolesManager.Get(user.IdRoles);
 
                 Service.PersonneManager.Add(user);
                 // code a recuperer pour la création du compte
