@@ -5,6 +5,7 @@
 @section Styles {
     <link rel='stylesheet' href='~/css/register.css'>
 }
+
 <div class="container">
     <div class="row py-5 mt-4 align-items-center">
         <!-- For Demo Purpose -->
@@ -52,7 +53,7 @@
                                 <span asp-validation-for="Genre" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fa fa-envelope"></i></span>
@@ -69,6 +70,14 @@
                                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
                             </div>
                         </div>
+                       @* <div class="col-md-6">
+                            <!-- First Name -->
+                            <div class="form-group">
+                                <span class="input-icon"><i class="fa fa-lock"></i></span>
+                                <input required  type="password" class="form-control" placeholder="Confirmation le mot de passe" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>*@
                    </div>
                </div>
                <div class="div-adresse">
@@ -103,8 +112,8 @@
                             <!-- First Name -->
                             <div class="form-group">
                                 <span class="input-icon"><i class="fas fa-city"></i></span>
-                                <select required asp-for="Adresse.Ville.IdVille" onchange="RecupIdVille(this.value)" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
-                                <span asp-validation-for="Adresse.Ville.IdVille" class="text-danger"></span>
+                                <select required asp-for="Adresse.IdVille" onchange="RecupIdVille(this.value)" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
+                                <span asp-validation-for="Adresse.IdVille" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12 submit-btn">

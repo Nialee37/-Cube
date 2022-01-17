@@ -124,11 +124,12 @@ namespace WebApp.Controllers
             }
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
 
-                //enregitrement de l'adresse au préalable afin d'avoir l'id
-
+            //enregitrement de l'adresse au préalable afin d'avoir l'id
+                //user.Adresse.IdVille = user.Adresse.Ville.IdVille;
                 user.PasswordHash = BCryptNet.HashPassword(user.PasswordHash); //hashage du password pour save en base de donnée
                 user.IdRoles = 2; //role normal citoyen connecté
-                user.Roles = Service.RolesManager.Get(user.IdRoles);
+                //user.Roles = Service.RolesManager.Get(user.IdRoles);
+                //user.Adresse.Ville = null;
 
                 Service.PersonneManager.Add(user);
                 // code a recuperer pour la création du compte
