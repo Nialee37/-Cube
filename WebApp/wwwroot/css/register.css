@@ -95,6 +95,23 @@
     transition: all 0.3s ease;
 }
 
+.form-group.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    margin-left: 15px;
+    display: block;
+}
+
+.invalid-feedback > ul {
+    padding-left: 0.1rem !important;
+}
+
+.invalid-feedback > ul > li {
+    margin-right: 10px !important;
+}
+
 @media only screen and (max-width:568px) {
     .card-register {
         margin-left: 10vw !important;
@@ -122,3 +139,4 @@
         margin-top: -6.3vh !important;
     }
 }
+

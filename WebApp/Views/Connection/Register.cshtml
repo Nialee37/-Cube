@@ -8,12 +8,12 @@
 
 <div class="container">
     <div class="row py-5 mt-4 align-items-center">
-        <!-- For Demo Purpose -->
+        <!-- Logo -->
         <div class="col-md-12 col-lg-3 pr-lg-5 mb-5 mb-md-0 card-photo">
             <img src="~/img/logoV2.png" class="logo-submit img-logo" alt="logo">
         </div>
 
-        <!-- Registeration Form -->
+        <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
             <form class="form-horizontal" asp-action="RegisterCreate">
                  <h1>Création de mon compte</h1>
@@ -21,105 +21,105 @@
                      <h2>Générale</h2>
                      <hr />
                      <div class="row">
-                        <div class="col-md-6">
-                            <!-- First Name -->
+                        <!-- Prénom -->
+                        <div class="col-md-6">                   
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-address-card"></i></span>
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
                                 <input asp-for="Prenom" class="form-control" placeholder="Prénom" required/>
-                                <span asp-validation-for="Prenom" class="text-danger"></span>
+                                <div asp-validation-for="Prenom" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
-                    
-                        <div class="col-md-6">
-                            <!-- First Name -->
+                        <!-- Nom -->
+                        <div class="col-md-6">                        
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-address-card"></i></span>
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
                                 <input asp-for="Nom" class="form-control" placeholder="Nom " required/>
-                                <span asp-validation-for="Nom" class="text-danger"></span>
+                                <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Date de naissance -->
                         <div class="col-md-6">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-calendar-week"></i></span>
+                                <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
                                 <input asp-for="DateNaissance" class="form-control" required/>
-                                <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                                <div asp-validation-for="DateNaissance" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Genre -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-genderless"></i></span>
+                                <div class="input-icon"><i class="fas fa-genderless"></i></div>
                                 <select required class="form-control" id="Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Veuillez sélectionner un genre</option></select>
-                                <span asp-validation-for="Genre" class="text-danger"></span>
+                                <div asp-validation-for="Genre" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Adresse mail -->
                         <div class="col-md-12">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                                <div class="input-icon"><i class="fa fa-envelope"></i></div>
                                 <input required asp-for="Mail" class="form-control" placeholder="Adresse mail"/>
-                                <span asp-validation-for="Mail" class="text-danger"></span>
+                                <div asp-validation-for="Mail" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
-
+                        <!-- Mot de passe -->
                         <div class="col-md-6">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fa fa-lock"></i></span>
-                                <input required asp-for="PasswordHash" type="password" class="form-control" placeholder="Mot de passe" />
-                                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                                <div class="input-icon"><i class="fa fa-lock"></i></div>
+                                <input required asp-for="PasswordHash" type="password" id="password" minlength="8" class="form-control" placeholder="Mot de passe" />
+                                <div asp-validation-for="PasswordHash" class="invalid-feedback fw-bold" id="passwordAlert"></div>
                             </div>
                         </div>
-                       @* <div class="col-md-6">
-                            <!-- First Name -->
+                        <!-- Confirmation mot de passe -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <span class="input-icon"><i class="fa fa-lock"></i></span>
-                                <input required  type="password" class="form-control" placeholder="Confirmation le mot de passe" />
-                                <span class="text-danger"></span>
+                                <div class="input-icon"><i class="fa fa-lock"></i></div>
+                                <input required id="confirmPassword" type="password" class="form-control" placeholder="Confirmation du mot de passe" />
+                                <div class="invalid-feedback fw-bold" id="confirmPasswordAlert"></div>
                             </div>
-                        </div>*@
+                        </div>
                    </div>
                </div>
                <div class="div-adresse">
                    <h2>Adresse </h2>
                    <hr />
                    <div class="row">
+                       <!-- Numéro adresse -->
                         <div class="col-md-4">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-map-pin"></i></span>
+                                <div class="input-icon"><i class="fas fa-map-pin"></i></div>
                                 <input required asp-for="Adresse.Numero" class="form-control" placeholder="Numéro" />
-                                <span asp-validation-for="Adresse.Numero" class="text-danger"></span>
+                                <div asp-validation-for="Adresse.Numero" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Type d'adresse' -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-location-arrow"></i></span>
-                                <select required class="form-control" id="Genre" asp-for="Adresse.Type" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
-                                <span asp-validation-for="Adresse.Type" class="text-danger"></span>
+                                <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
+                                <select required class="form-control" asp-for="Adresse.Type" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
-
+                        <!-- Nom de la rue -->
                         <div class="col-md-4">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-road"></i></span>
+                                <div class="input-icon"><i class="fas fa-road"></i></div>
                                 <input required asp-for="Adresse.Nom" class="form-control" placeholder="Nom de la rue"/>
-                                <span asp-validation-for="Adresse.Nom" class="text-danger"></span>
+                                <div asp-validation-for="Adresse.Nom" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Choix ville -->
                         <div class="col-md-12">
-                            <!-- First Name -->
                             <div class="form-group">
-                                <span class="input-icon"><i class="fas fa-city"></i></span>
-                                <select required asp-for="Adresse.IdVille" onchange="RecupIdVille(this.value)" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
-                                <span asp-validation-for="Adresse.IdVille" class="text-danger"></span>
+                                <div class="input-icon"><i class="fas fa-city"></i></div>
+                                <select required asp-for="Adresse.IdVille" searching data-live-search="true" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
+                                <div asp-validation-for="Adresse.IdVille" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
+                        <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn">
-                            <button class="btn signin" type="submit">Finaliser l'inscription</button>
+                            <button class="btn signin" type="submit" id="login-btn" disabled>Finaliser l'inscription</button>
                         </div>
-                        <!-- Already Registered -->
+                        <!-- Si on est déja inscrit -->
                         <div class="text-center w-100">
                             <p class="text-muted font-weight-bold">Déjà inscrit ? <a asp-area="" asp-controller="Connection" asp-action="Index" class="text-primary ml-2">Connectez vous !</a></p>
                         </div>
@@ -131,8 +131,4 @@
     </div>
 </div>
 
-<script>
-    function RecupIdVille(value) {
-        document.getElementById("IdVille").value = value;
-    }
-</script>
+<script src="~/js/register.js"></script>

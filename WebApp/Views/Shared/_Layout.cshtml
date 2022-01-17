@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/all.min.css" />
     <link rel="stylesheet" href="~/css/navBar.css" />
+    <link rel="stylesheet" href="~/css/select.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" />
     <script src="~/lib/datatables/datatables.min.js"></script>
+    <script src="~/js/select.js"></script>
+    @RenderSection("JS", false)
 </head>
 <body>
     @{
@@ -51,7 +54,7 @@
                     <a asp-area="" asp-controller="Villes" asp-action="Index" class='nav_link @(ViewData["Page"] == "Ville" ? "active" : "" )'> <i class="fas fa-building nav_icon"></i> <span class="nav_name">Liste des villes</span> </a> 
                     <a asp-area="" asp-controller="Home" asp-action="Privacy" class='nav_link @(ViewData["Page"] == "Privacy" ? "active" : "" )'> <i class="fas fa-user-secret nav_icon"></i></i> <span class="nav_name">Privacy</span> </a> 
                 @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" )){
-                   <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "MesRessources" ? "active" : "" )'> <i class="fas fa-sign-out-alt nav_icon"></i> <span class="nav_name">Gestion des utilisateurss</span> </a> 
+                   <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a> 
                 }}
                 </div>
             </div> 
@@ -74,6 +77,5 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/navBar.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

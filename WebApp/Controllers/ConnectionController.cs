@@ -39,7 +39,7 @@ namespace WebApp.Controllers
                 //ListVilles.Add(-1, "Veuillez sélectionner une ville");
                 foreach (var item in villes)
                 {
-                    ListVilles.Add(item.IdVille, $"{item.CPostal} - {item.Nom}");
+                    ListVilles.Add(item.IdVille, $"<i class='fas fa-building'></i> - {item.CPostal} - {item.Nom}");
                 }
                 ViewBag.ListVilles = new SelectList(ListVilles, "Key", "Value");
 
@@ -47,7 +47,7 @@ namespace WebApp.Controllers
 
                 IDictionary<int, string> ListGenres = new Dictionary<int, string>();
 
-                string genre = "Homme,Femme,Autre";
+                string genre = "<i class='fas fa-mars'></i> - Homme,<i class='fas fa-venus'></i> - Femme,<i class='fas fa-genderless'></i> - Autre";
                 var temp = genre.Split(",");
                 //ListGenres.Add(-1, "Veuillez sélectionner une genre");
 
