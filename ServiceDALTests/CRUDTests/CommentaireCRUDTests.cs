@@ -46,16 +46,31 @@ namespace ServiceDALTests.CRUDTests
             const long EXCEPTED = 2;
 
             // Act
-            Manager.Add(new Commentaire() {
+            Personne UnePersonne = ServiceStructuralTests.ServiceDAL.PersonneManager.Get(2);
+            Ressources UneRessources = ServiceStructuralTests.ServiceDAL.RessourcesManager.Get(2);
+            Manager.Add(new Commentaire()
+            {
                 commentaire = "Commentaire1",
+                IdPersonne = 1,
+                IdRessource = 1,
+                Personne = UnePersonne,
+                Ressources = UneRessources
             });
-            Manager.Add(new Commentaire() {
+            Manager.Add(new Commentaire()
+            {
                 commentaire = "Commentaire2",
+                IdPersonne = 2,
+                IdRessource = 2,
+                Personne = UnePersonne,
+                Ressources = UneRessources
             });
+
             long actual = Manager.GetAll().Count;
 
             // Assert
             Assert.Equal(EXCEPTED, actual);
+
+
         }
 
         [Fact]

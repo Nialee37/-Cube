@@ -49,6 +49,7 @@ namespace ServiceDALTests.CRUDTests
                 Numero = "2",
                 Nom = "NomAdresse",
                 Type = 1,
+                IdVille = 1,
                 Ville = laVille
             }) ;
             Manager.Add(new Adresse()
@@ -56,6 +57,7 @@ namespace ServiceDALTests.CRUDTests
                 Numero = "2Bis",
                 Nom = "NomAdresse2",
                 Type = 2,
+                IdVille = 2,
                 Ville = laVille
             }) ;
             long actual = Manager.GetAll().Count;
