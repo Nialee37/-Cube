@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ServiceDAL\ServiceDAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StructuralTests\" />
+  </ItemGroup>
+
 </Project>

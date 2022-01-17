@@ -42,7 +42,7 @@ namespace ServiceDALTests.CRUDTests
         public void Ressources_CreateOneRessources_Find1()
         {
             // Arrange
-            const long EXCEPTED = 1;
+            const long EXCEPTED = 2;
 
             // Act
 
@@ -50,10 +50,22 @@ namespace ServiceDALTests.CRUDTests
             Categorie UneCategorie = ServiceStructuralTests.ServiceDAL.CategorieManager.Get(2);
             Manager.Add(new Ressources()
             {
-                Nom = "leNom",
+                Nom = "UneRessource1",
                 Date = new DateTime(2010, 8, 18),
-                CheminAcces = "unCheminDacces",
-                Source = "uneSource",
+                CheminAcces = "unCheminDacces1",
+                Source = "uneSource1",
+                IdType = 2,
+                Type = UnType,
+                IdCategorie = 2,
+                Categorie = UneCategorie
+
+            }); 
+            Manager.Add(new Ressources()
+            {
+                Nom = "UneRessource2",
+                Date = new DateTime(2010, 8, 18),
+                CheminAcces = "unCheminDacces2",
+                Source = "uneSource2",
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
@@ -72,7 +84,7 @@ namespace ServiceDALTests.CRUDTests
         {
             // Arrange
             const int ID = 1;
-            const string EXCEPTED = "leNom";
+            const string EXCEPTED = "UneRessource1";
 
             // Act
             Ressources laRessource = Manager.Get(ID);
