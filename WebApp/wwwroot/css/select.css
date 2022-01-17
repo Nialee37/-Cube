@@ -15,6 +15,7 @@ select {
 .current {
     margin-top: -5px;
     display: block;
+    overflow: hidden;
 }
 
 .dropdown-select {
@@ -95,6 +96,7 @@ select {
         transform: scale(1);
         opacity: 1;
         pointer-events: auto;
+        z-index: 100;
     }
 
     .dropdown-select.open .option {

@@ -49,7 +49,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-icon"><i class="fas fa-genderless"></i></div>
-                                <select required class="form-control" id="Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Veuillez sélectionner un genre</option></select>
+                                <select required class="form-control" id="Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un genre</option></select>
                                 <div asp-validation-for="Genre" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="input-icon"><i class="fas fa-city"></i></div>
-                                <select required asp-for="Adresse.IdVille" searching data-live-search="true" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Veuillez sélectionner une ville</option></select>
+                                <select required asp-for="Adresse.IdVille" searching data-live-search="true" class="form-control" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner une ville</option></select>
                                 <div asp-validation-for="Adresse.IdVille" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
