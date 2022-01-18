@@ -3,7 +3,7 @@
         if (!$(this).next().hasClass('dropdown-select')) {
             var icon = "";
             if ($(this).parent().hasClass("form-group") && $(this).parent().find(".input-icon").children().hasClass("fas")){
-                icon = '<div class="input-icon">' + $(this).parent().find(".input-icon").html() + '</div>' ;
+                icon = '<div class="input-icon baseIcon">' + $(this).parent().find(".input-icon").html() + '</div>' ;
                 $(this).parent().attr("style", "border: 0 !important;");
                 $(this).parent().find(".input-icon").attr("style", "display: none !important;");
             }
@@ -71,14 +71,24 @@ function filter(text_filter, i) {
 // Option click
 $(document).on('click', '.dropdown-select .option', function (event) {
     $(this).closest('.list').find('.selected').removeClass('selected');
-    $(this).closest('.list').find('i').remove();
+    $(this).closest('.list').find('.prefix').remove();
     $(this).addClass('selected');
     var text = $(this).data('display-text') || $(this).text();
     $(this).append("<i class=\"fas fa-check prefix\"></i>");
+    var icon = "";
+    if (typeof $(this).find("i").attr("class") !== 'undefined') {
+        icon = '<i class=\"' + $(this).find("i").attr("class") + '\"></i>';
+    }
 
     //Affiche in top
     if ($(this).closest('.dropdown-select').parent().hasClass("form-group") && $(this).closest('.dropdown-select').parent().find(".input-icon").children().hasClass("fas")) {
-        $(this).closest('.dropdown-select').find('.current').html('<div class="input-icon">' + $(this).closest('.dropdown-select').parent().find(".input-icon").html() + '</div> ' + text)
+        if (icon == "") {
+            icon = $(this).closest('.dropdown-select').parent().find(".input-icon").html();
+            $(this).closest('.dropdown-select').find('.current').html('<div class="input-icon baseIcon">' + icon + '</div> ' + text)
+        } else {
+            $(this).closest('.dropdown-select').find('.current').html('<div class="input-icon baseIcon" style="display:none" >' + $(this).closest('.dropdown-select').parent().find(".input-icon").html() + '</div> <div class="input-icon iconPerso">' + icon + "</div>" + text);
+        }
+        
     } else {
         $(this).closest('.dropdown-select').find('.current').text(text);
     }

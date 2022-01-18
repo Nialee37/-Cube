@@ -240,3 +240,7 @@ select {
     border-radius: 20px !important;
     width: 100% !important;
 }
+
+.list > ul {
+    margin-bottom: 0;
+}
