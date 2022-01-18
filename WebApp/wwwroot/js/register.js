@@ -1,4 +1,6 @@
-﻿/**
+﻿var checkFinalPassword = false;
+
+/**
  * Fonction qui permet de vérifier si le mot de passe est valide ou non.
  * @param {*} password le mot de passe a vérifié.
  * @returns une valeur boolean qui dit si le mot de passe est valide ou non.
@@ -77,7 +79,119 @@ function checkPassword(password) {
     return passwordCheck;
 }
 
+/**
+ * Fonction qui permet de vérifier si un input est valide ou non.
+ * @param {*} input l'input a vérifié.
+ * @param {*} messageErreur le message d'erreur a affiché si l'input est invalid.
+ * @param {*} pattern le pattern que l'ont check s'il y a un pattern à ajouter sinon laisser la valeur à null.
+ * @param {*} messageFalsePattern si l'input a besoin d'un pattern, affiche un message d'erreur est invalide.
+ * @returns une valeur boolean qui dit si l'input est valide ou non.
+ */
+function checkInput(input, messageErreur, pattern = null, messageFalsePattern = null) {
+    var check = false;
+    input.parent().find(".invalid-feedback").empty();
+    
+    if (pattern != null) {
+        if (input.val() == "" || input.val() == null ) {
+            input.addClass("is-invalid");
+            input.parent().find(".invalid-feedback").html(messageErreur);
+        } else if (!pattern.test(input.val())) {
+            input.addClass("is-invalid");
+            input.parent().find(".invalid-feedback").html(messageFalsePattern);
+        } else {
+            input.removeClass("is-invalid");
+            input.parent().find(".invalid-feedback").empty();
+            check = true;
+        }
+    } else {
+        if (input.val() == "" || input.val() == null) {
+            input.addClass("is-invalid");
+            input.parent().find(".invalid-feedback").html(messageErreur);
+        } else {
+            input.removeClass("is-invalid");
+            input.parent().find(".invalid-feedback").empty();
+            check = true;
+        }
+    }
+    return check;
+}
+
+/**
+ * Fonction qui permet de vérifier si un input est valide ou non sans afficher de message.
+ * @param {*} input l'input a vérifié.
+ * @param {*} pattern le pattern que l'ont check s'il y a un pattern à ajouter sinon laisser la valeur à null.
+ * @returns une valeur boolean qui dit si l'input est valide ou non.
+ */
+function validInput(input, pattern = null) {
+    var check = false;
+    if (pattern != null) {
+        if (input.val() != "" && input.val() != null) {
+            if (pattern.test(input.val()))
+                check = true;
+        }
+    } else {
+        if (input.val() != "" && input.val() != null) {
+            check = true;
+        } 
+    }
+    return check;
+}
+
+
+/**
+ * Fonction événementielle qui permet de vérifier l'input a chaque fois que l'on écrit dans un input.
+ */
+function checkOnInput() {
+    $('select, input:not(#search-custom-2, [name=__RequestVerificationToken])').each(function (i) {
+        $(this).on("keyup change", function () {
+            if ($(this).attr("type") == "email") {
+                    var pathMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    checkInput($(this), "Veuillez saisir un courriel !", pathMail, "Veuillez saisir un courriel avec le format exemple@mail.com");
+            } else if ($(this).attr("type") != "password") {
+                    if (this.tagName == "INPUT") {
+                        checkInput($(this), "Veuillez saisir votre " + $(this).data("nom") + ".");
+                    } else if (this.tagName == "SELECT") {
+                        checkInput($(this), "Veuillez sélectionner votre " + $(this).data("nom") + ".");
+                    } 
+            }
+            validForm();
+        });
+    });
+}
+
+function validForm() {
+    if (checkFinalPassword && checkAllInput())
+        $("#login-btn").removeAttr("disabled");
+    else
+        $("#login-btn").attr("disabled", "disabled");
+}
+
+function checkAllInput() {
+    var numberValid = 0;
+    $('select, input:not(#search-custom-2, [name=__RequestVerificationToken])').each(function (i) {
+        if ($(this).attr("type") == "email") {
+            var pathMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (validInput($(this), pathMail)) {
+                numberValid++;
+            }
+        } else {
+            if (validInput($(this))) {
+                numberValid++;
+            }
+        }
+    });
+    if ($('select, input:not(#search-custom-2, [name=__RequestVerificationToken])').length == numberValid) {
+        console.log($('select, input:not(#search-custom-2, [name=__RequestVerificationToken])').length);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
 $(document).ready(function () {
+    
     var checkPass = false;
     $("#confirmPassword").keyup(function () {
         if (checkPass) {
@@ -86,11 +200,13 @@ $(document).ready(function () {
                 $("#passwordAlert").text("");
                 $("#password").addClass("is-invalid");
                 $("#confirmPassword").addClass("is-invalid");
-                $("#login-btn").attr("disabled", "disabled");
+                checkFinalPassword = false;
+              //$("#login-btn").attr("disabled", "disabled");
             } else {
+                checkFinalPassword = true;
                 $("#passwordAlert").text("");
                 $("#confirmPasswordAlert").text("");
-                $("#login-btn").removeAttr("disabled");
+                //$("#login-btn").removeAttr("disabled");
                 $("#password").removeClass("is-invalid");
                 $("#confirmPassword").removeClass("is-invalid");
             }
@@ -104,11 +220,13 @@ $(document).ready(function () {
                 $("#confirmPasswordAlert").text("");
                 $("#password").addClass("is-invalid");
                 $("#confirmPassword").addClass("is-invalid");
-                $("#login-btn").attr("disabled","disabled");
+                checkFinalPassword = false;
+                //$("#login-btn").attr("disabled","disabled");
             } else {
+                checkFinalPassword = true;
                 $("#passwordAlert").text("");
                 $("#confirmPasswordAlert").text("");
-                $("#login-btn").removeAttr("disabled");
+               // $("#login-btn").removeAttr("disabled");
                 $("#password").removeClass("is-invalid");
                 $("#confirmPassword").removeClass("is-invalid");
             }
@@ -116,4 +234,6 @@ $(document).ready(function () {
             checkPass = false;
         }
     });
+
+    checkOnInput();
 });
