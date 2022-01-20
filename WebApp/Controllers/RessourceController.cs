@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace WebApp.Controllers
 {
@@ -45,28 +47,57 @@ namespace WebApp.Controllers
         // GET: RessourceController/Create
         public ActionResult Create()
         {
+            IDictionary<int, string> ListCategories = new Dictionary<int, string>();
+            IEnumerable<Categorie> categorie = Service.CategorieManager.GetAll();
+            foreach (var item in categorie)
+            {
+                ListCategories.Add(item.Id, $"{item.Libelle}");
+            }
+            var selectListcat = new SelectList(ListCategories, "Key", "Value");
+            
+            ViewBag.ListCategories = selectListcat;
+
+            IDictionary<int, string> ListType = new Dictionary<int, string>();
+            IEnumerable<Type> types = Service.TypeManager.GetAll();
+            foreach (var item in types)
+            {
+                ListType.Add(item.Id, $"{item.Libelle}");
+            }
+            var selectListType = new SelectList(ListType, "Key", "Value");
+            ViewBag.ListType = selectListType;
+
             return View();
         }
 
         // POST: RessourceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Ressources ressource)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            ressource.Date = System.DateTime.Today;
+            //ressource.idCreator = userConnected.Id;
+            //ressource.validate = false;
+            Service.RessourcesManager.Add(ressource);
+
+            Ressources ressourcetemp = (Ressources)Service.RessourcesManager.GetAll().OrderByDescending(x => x.Date).FirstOrDefault();
+            return Edit(ressourcetemp.Id);
         }
 
         // GET: RessourceController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            
+            Ressources ressource = Service.RessourcesManager.Get(id);
+
+            //if((ressource.idCreator == userConnected.id && ressource.validate == false) || (userConnected.Roles.Libelle =="SuperAdministrateur" || userConnected.Roles.Libelle == "Administrateur"))
+            //{
+            //    return View("Edit", ressource);
+            //}
+            //return View("index");
+
+            return View("Edit", ressource);
         }
 
         // POST: RessourceController/Edit/5
