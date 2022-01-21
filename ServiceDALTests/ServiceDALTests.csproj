@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="StructuralTests\**" />
+    <EmbeddedResource Remove="StructuralTests\**" />
+    <None Remove="StructuralTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="Xunit.Extensions.Ordering" Version="1.4.5" />
@@ -22,10 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceDAL\ServiceDAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="StructuralTests\" />
   </ItemGroup>
 
 </Project>

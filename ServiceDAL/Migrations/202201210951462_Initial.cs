@@ -15,11 +15,11 @@
                         Numero = c.String(),
                         Nom = c.String(),
                         Type = c.Int(nullable: false),
-                        Ville_IdVille = c.Int(),
+                        IdVille = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.IdAdresse)
-                .ForeignKey("dbo.Villes", t => t.Ville_IdVille)
-                .Index(t => t.Ville_IdVille);
+                .ForeignKey("dbo.Villes", t => t.IdVille, cascadeDelete: true)
+                .Index(t => t.IdVille);
             
             CreateTable(
                 "dbo.Villes",
@@ -86,6 +86,8 @@
                         Source = c.String(),
                         IdType = c.Int(nullable: false),
                         IdCategorie = c.Int(nullable: false),
+                        NomPersonne = c.String(),
+                        IsValidate = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.IdCategorie, cascadeDelete: true)
@@ -190,7 +192,7 @@
             DropForeignKey("dbo.Archives", "Personne_Id", "dbo.Personnes");
             DropForeignKey("dbo.Personnes", "IdRoles", "dbo.Roles");
             DropForeignKey("dbo.Personnes", "IdAdresse", "dbo.Adresses");
-            DropForeignKey("dbo.Adresses", "Ville_IdVille", "dbo.Villes");
+            DropForeignKey("dbo.Adresses", "IdVille", "dbo.Villes");
             DropIndex("dbo.LinkRessCats", new[] { "Ressources_Id" });
             DropIndex("dbo.LinkRessCats", new[] { "Categorie_Id" });
             DropIndex("dbo.Historiques", new[] { "Ressources_Id" });
@@ -205,7 +207,7 @@
             DropIndex("dbo.Personnes", new[] { "IdAdresse" });
             DropIndex("dbo.Archives", new[] { "Ressources_Id" });
             DropIndex("dbo.Archives", new[] { "Personne_Id" });
-            DropIndex("dbo.Adresses", new[] { "Ville_IdVille" });
+            DropIndex("dbo.Adresses", new[] { "IdVille" });
             DropTable("dbo.LinkRessCats");
             DropTable("dbo.Historiques");
             DropTable("dbo.Favoris");

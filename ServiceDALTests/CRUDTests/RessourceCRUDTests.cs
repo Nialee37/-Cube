@@ -48,16 +48,21 @@ namespace ServiceDALTests.CRUDTests
 
             ServiceDAL.BusinessObjet.Type UnType = ServiceStructuralTests.ServiceDAL.TypeManager.Get(2);
             Categorie UneCategorie = ServiceStructuralTests.ServiceDAL.CategorieManager.Get(2);
+            Personne UnePersonne = ServiceStructuralTests.ServiceDAL.PersonneManager.Get(2);
             Manager.Add(new Ressources()
             {
                 Nom = "UneRessource1",
                 Date = new DateTime(2010, 8, 18),
                 CheminAcces = "unCheminDacces1",
                 Source = "uneSource1",
+                IsValidate = true,
+                NomPersonne = "NomPersonne1",
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie
+                Categorie = UneCategorie,
+                //IdPersonne = 2,
+                //Personne = UnePersonne
 
             }); 
             Manager.Add(new Ressources()
@@ -66,10 +71,14 @@ namespace ServiceDALTests.CRUDTests
                 Date = new DateTime(2010, 8, 18),
                 CheminAcces = "unCheminDacces2",
                 Source = "uneSource2",
+                IsValidate = true,
+                NomPersonne = "NomPersonne2",
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie
+                Categorie = UneCategorie,
+                //IdPersonne = 2,
+                //Personne = UnePersonne
 
             });
             long actual = Manager.GetAll().Count;

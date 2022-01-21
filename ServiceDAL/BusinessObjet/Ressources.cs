@@ -18,6 +18,8 @@ namespace ServiceDAL.BusinessObjet
         public int IdType { get; set; }
         [ForeignKey("Categorie")]
         public int IdCategorie { get; set; }
+        public string NomPersonne { get; set; }
+        public bool IsValidate { get; set; }
         public virtual Type Type { get; set; }
         public virtual Categorie Categorie { get; set; }
     }

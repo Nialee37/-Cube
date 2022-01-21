@@ -13,7 +13,7 @@ namespace ServiceDAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202112170854096_Initial"; }
+            get { return "202201210951462_Initial"; }
         }
         
         string IMigrationMetadata.Source
