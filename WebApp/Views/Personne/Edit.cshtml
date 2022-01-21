@@ -18,7 +18,7 @@
         </div>
         <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="Edit" method="POST">
+            <form class="form-horizontal" asp-action="EditGeneral" asp-controller="Personne" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
@@ -30,7 +30,7 @@
                         <!-- Prénom -->
                         <div class="col-md-6">            
                             <div class="AfficheGeneral">
-                                <i class="fas fa-address-card"></i><span>Prénom : @Model.Prenom @Model.Nom</span>
+                                <i class="fas fa-address-card"></i><span>Identité : @Model.Prenom @Model.Nom</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-address-card"></i></div>
@@ -77,7 +77,7 @@
             </form>
         </div>
          <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="Edit" method="POST">
+            <form class="form-horizontal" asp-action="EditVilleUser" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                <div class="div-adresse">
                    <div class="cardTitle">
@@ -187,17 +187,18 @@
                     <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                      <div class="div-general">
                          <div class="cardTitle">
-                             <h2>Adresse mail et mot de passe</h2>
-                             <button class="editCard" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                             <h2><i class="fas fa-users"></i> Gestion du role</h2>
+                             <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                             <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                          </div>
                          <div class="row">
                             <!-- Adresse mail -->
                             <div class="AfficheGeneral">
-                                <span>@Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text)</span>
+                                <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
-                                <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
-                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <div class="input-icon"><i class="fas fa-users"></i></div>
+                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListRoles,"Value", "Text"))"><option value="-1" disabled selected hidden>Type de rôle</option></select>
                                 <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
                             </div>
                              <!-- Bouton submit -->
