@@ -4,72 +4,213 @@
 @{
     ViewData["Title"] = "View";
 }
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="POST">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        
-                <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
-             
-            <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" value="@Model.Nom" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prenom" class="control-label"></label>
-                <input asp-for="Prenom" class="form-control" value="@Model.Prenom" />
-                <span asp-validation-for="Prenom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateNaissance" class="control-label"></label>
-                <input asp-for="DateNaissance" class="form-control" value="@Model.DateNaissance.ToString("yyyy/MM-dd").Replace('/','-')" />
-                <span asp-validation-for="DateNaissance" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" value="@Model.Genre"/>
-                <span asp-validation-for="Genre" class="text-danger"></span>
-            </div>
-            @*MDP A VOIR APRES*@
-           
-                <input asp-for="PasswordHash" type="hidden" class="form-control" />
-          
-
-            <div class="form-group">
-                <label asp-for="Mail" class="control-label"></label>
-                <input asp-for="Mail" class="form-control" value="@Model.Mail" />
-                <span asp-validation-for="Mail" class="text-danger"></span>
-            </div>
-          
-                <input asp-for="IdAdresse" class="form-control" value="@Model.IdAdresse" type="hidden" />
-          
-               
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-               @{
+@section Styles {
+    <link rel='stylesheet' href='~/css/Edit.css'>
+}
+@{
          Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
-    }
-            @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ) && Model.Id != user.Id)
-            {
-               <div class="form-group">
-                <label asp-for="IdRoles" class="control-label"></label>
-                <select class="form-select" asp-for="IdRoles">
-                   @foreach(ServiceDAL.BusinessObjet.Roles role in ViewBag.Roles)
-                   {
-                      <option value="@role.Id">@role.Libelle</option>
-                   }
-                </select>
-                <span asp-validation-for="IdRoles" class="text-danger"></span>
+}
+<div class="container">
+    <div class="row row-card">
+        <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <div class="profilPicture"><i class="fas fa-user"></i></div>
+            <h1>Mon profil</h1>
+        </div>
+        <!-- Formulaire d'inscription -->
+        <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
+                <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+                 <div class="div-general">
+                     <div class="cardTitle">
+                         <h2><i class="fas fa-user-circle"></i> Général</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
+                     </div>
+                     <div class="row">
+                        <!-- Prénom -->
+                        <div class="col-md-6">            
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-address-card"></i><span>Prénom : @Model.Prenom @Model.Nom</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
+                                <input asp-for="Prenom" class="form-control verifForm" data-nom="prénom" placeholder="Prénom" required value="@Model.Prenom"/>
+                                <div asp-validation-for="Prenom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Nom -->
+                        <div class="col-md-6">    
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
+                                <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" required value="@Model.Nom"/>
+                                <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Date de naissance -->
+                        <div class="col-md-6">
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-calendar-week"></i><span>Date de naissance : @Model.DateNaissance.ToString("dd/MM/yyyy").Replace('-','/')</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
+                                <input asp-for="DateNaissance" class="form-control verifForm" data-nom="date de naissance" value="@Model.DateNaissance.ToString("yyyy/MM-dd").Replace('/','-')" required/>
+                                <div asp-validation-for="DateNaissance" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Genre -->
+                        <div class="col-md-6">
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-genderless"></i><span>Genre : @Html.Raw(new SelectList(ViewBag.ListGenres,"Value", "Text").Where(x => x.Value == Model.Genre.ToString()).First().Text)</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-genderless"></i></div>
+                                <select required class="form-control verifForm" id="Genre" data-nom="genre" value="@Model.Genre" asp-for="Genre" asp-items="@(new SelectList(ViewBag.ListGenres,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un genre</option></select>
+                                <div asp-validation-for="Genre" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                         <!-- Bouton submit -->
+                        <div class="col-md-12 submit-btn EditGeneral" hidden>
+                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
+                        </div>
+                   </div>
                </div>
-               
-               
+            </form>
+        </div>
+         <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
+                <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+               <div class="div-adresse">
+                   <div class="cardTitle">
+                         <h2><i class="fas fa-map-marked"></i> Adresse</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
+                     </div>
+                   <div class="row">
+                       <!-- Numéro adresse -->
+                        <div class="col-md-4">
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-map-pin"></i><span>Adresse : @Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-map-pin"></i></div>
+                                <input required asp-for="Adresse.Numero" value="@Model.Adresse.Numero" class="form-control verifForm" data-nom="numéro d'adresse" placeholder="Numéro" />
+                                <div asp-validation-for="Adresse.Numero" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Type d'adresse' -->
+                        <div class="col-md-4">
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
+                                <select required class="form-control verifForm" asp-for="Adresse.Type" value="@Model.Adresse.Type" data-nom="type d'adresse" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Nom de la rue -->
+                        <div class="col-md-4">
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-road"></i></div>
+                                <input required asp-for="Adresse.Nom" class="form-control verifForm" value="@Model.Adresse.Nom" data-nom="nom de rue" placeholder="Nom de la rue"/>
+                                <div asp-validation-for="Adresse.Nom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Choix ville -->
+                        <div class="col-md-12">
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-building"></i><span>Ville : @Html.Raw(new SelectList(ViewBag.ListVilles,"Value", "Text").Where(x => x.Value == Model.Adresse.IdVille.ToString()).First().Text)</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-city"></i></div>
+                                <select required asp-for="Adresse.IdVille" searching data-live-search="true" data-nom="ville" value="@Model.Adresse.IdVille" class="form-control verifForm" asp-items="@(new SelectList(ViewBag.ListVilles,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner une ville</option></select>
+                                <div asp-validation-for="Adresse.IdVille" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Bouton submit -->
+                        <div class="col-md-12 submit-btn EditGeneral" hidden>
+                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
+                <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+                 <div class="div-general">
+                     <div class="cardTitle">
+                         <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
+                     </div>
+                     <div class="row">
+                        <!-- Adresse mail -->
+                        <div class="col-md-12">
+                            <div class="AfficheGeneral">
+                               <i class="fas fa-envelope"></i><span>Adresse mail : @Model.Mail</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fa fa-envelope"></i></div>
+                                <input required asp-for="Mail" type="email" class="form-control verifForm" data-nom="adresse mail" placeholder="Adresse mail" value="@Model.Mail"/>
+                                <div asp-validation-for="Mail" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Mot de passe -->
+                        <div class="col-md-6">
+                            <div class="AfficheGeneral">
+                                <i class="fas fa-lock"></i><span>Mot de passe : ************</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fa fa-lock"></i></div>
+                                <input required asp-for="PasswordHash" type="password" id="password" data-nom="mot de passe" minlength="8" class="form-control verifForm" placeholder="Mot de passe" />
+                                <div asp-validation-for="PasswordHash" class="invalid-feedback fw-bold" id="passwordAlert"></div>
+                            </div>
+                        </div>
+                        <!-- Confirmation mot de passe -->
+                        <div class="col-md-6">
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fa fa-lock"></i></div>
+                                <input required id="confirmPassword" type="password" class="form-control verifForm" data-nom="confirmation de mot de passe" placeholder="Confirmation du mot de passe" />
+                                <div class="invalid-feedback fw-bold" id="confirmPasswordAlert"></div>
+                            </div>
+                        </div>
+                         <!-- Bouton submit -->
+                        <div class="col-md-12 submit-btn EditGeneral" hidden>
+                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                        </div>
+                   </div>
+               </div>
+            </form>
+        </div>
+        @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ) && Model.Id != user.Id)
+            {
+               <div class="col-md-12 col-lg-9 ml-auto card-register">
+                <form class="form-horizontal" asp-action="RegisterCreate">
+                    <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+                     <div class="div-general">
+                         <div class="cardTitle">
+                             <h2>Adresse mail et mot de passe</h2>
+                             <button class="editCard" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         </div>
+                         <div class="row">
+                            <!-- Adresse mail -->
+                            <div class="AfficheGeneral">
+                                <span>@Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text)</span>
+                            </div>
+                            <div class="form-group EditGeneral" hidden>
+                                <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
+                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
+                            </div>
+                             <!-- Bouton submit -->
+                            <div class="col-md-12 submit-btn EditGeneral" hidden>
+                                <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            </div>
+                       </div>
+                   </div>
+                </form>
+            </div>
              }   
-            }
-                  
-        </form>
+          }
     </div>
 </div>
+
+<script src="~/js/Edit.js"></script>
