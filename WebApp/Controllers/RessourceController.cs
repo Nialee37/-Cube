@@ -26,9 +26,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public JsonResult Mesressources(/*int id*/) //fonction qui va retourner les ressources de la personne where id personne 
+        public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
-            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+
+            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.NomPersonne == (userConnected.Nom + userConnected.Prenom)).ToList();
             return Json(mesressources);
         }
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
@@ -76,8 +78,8 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
-            //ressource.idCreator = userConnected.Id;
-            //ressource.validate = false;
+            ressource.NomPersonne = userConnected.Nom + userConnected.Prenom;
+            ressource.IsValidate = false;
             Service.RessourcesManager.Add(ressource);
 
             Ressources ressourcetemp = (Ressources)Service.RessourcesManager.GetAll().OrderByDescending(x => x.Date).FirstOrDefault();
@@ -134,6 +136,12 @@ namespace WebApp.Controllers
             {
                 return View();
             }
+
+        }
+        public ActionResult GetRessource(int id)
+        {
+            Ressources ressource = Service.RessourcesManager.Get(id);
+            return View(ressource);
         }
     }
 }
