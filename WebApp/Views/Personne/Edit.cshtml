@@ -18,18 +18,19 @@
         </div>
         <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
-                         <h2>Général</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-user-circle"></i> Général</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
                         <!-- Prénom -->
                         <div class="col-md-6">            
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-address-card"></i>Prénom : </span>
+                                <i class="fas fa-address-card"></i><span>Prénom : @Model.Prenom @Model.Nom</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-address-card"></i></div>
@@ -39,9 +40,6 @@
                         </div>
                         <!-- Nom -->
                         <div class="col-md-6">    
-                            <div class="AfficheGeneral">
-                                <span>@Model.Prenom @Model.Nom</span>
-                            </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-address-card"></i></div>
                                 <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" required value="@Model.Nom"/>
@@ -51,7 +49,7 @@
                         <!-- Date de naissance -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-calendar-week"></i>Date de naissance : @Model.DateNaissance.ToString("yyyy/MM-dd").Replace('/','-')</span>
+                                <i class="fas fa-calendar-week"></i><span>Date de naissance : @Model.DateNaissance.ToString("dd/MM/yyyy").Replace('-','/')</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
@@ -62,7 +60,7 @@
                         <!-- Genre -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-genderless"></i>Genre : @Html.Raw(new SelectList(ViewBag.ListGenres,"Value", "Text").Where(x => x.Value == Model.Genre.ToString()).First().Text)</span>
+                                <i class="fas fa-genderless"></i><span>Genre : @Html.Raw(new SelectList(ViewBag.ListGenres,"Value", "Text").Where(x => x.Value == Model.Genre.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-genderless"></i></div>
@@ -72,25 +70,26 @@
                         </div>
                          <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
                         </div>
                    </div>
                </div>
             </form>
         </div>
          <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                <div class="div-adresse">
                    <div class="cardTitle">
-                         <h2>Adresse</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-map-marked"></i> Adresse</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                    <div class="row">
                        <!-- Numéro adresse -->
                         <div class="col-md-4">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-map-pin"></i>Adresse : </span>
+                                <i class="fas fa-map-pin"></i><span>Adresse : @Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-map-pin"></i></div>
@@ -100,9 +99,6 @@
                         </div>
                         <!-- Type d'adresse' -->
                         <div class="col-md-4">
-                            <div class="AfficheGeneral">
-                                <span>@Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
-                            </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
                                 <select required class="form-control verifForm" asp-for="Adresse.Type" value="@Model.Adresse.Type" data-nom="type d'adresse" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
@@ -120,7 +116,7 @@
                         <!-- Choix ville -->
                         <div class="col-md-12">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-building"></i>Ville : @Html.Raw(new SelectList(ViewBag.ListVilles,"Value", "Text").Where(x => x.Value == Model.Adresse.IdVille.ToString()).First().Text)</span>
+                                <i class="fas fa-building"></i><span>Ville : @Html.Raw(new SelectList(ViewBag.ListVilles,"Value", "Text").Where(x => x.Value == Model.Adresse.IdVille.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-city"></i></div>
@@ -130,25 +126,26 @@
                         </div>
                         <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" asp-action="Edit" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
-                         <h2>Adresse mail et mot de passe</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
+                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
                         <!-- Adresse mail -->
                         <div class="col-md-12">
                             <div class="AfficheGeneral">
-                                <span><i class="fa fa-envelope"></i>Adresse mail : @Model.Mail</span>
+                               <i class="fas fa-envelope"></i><span>Adresse mail : @Model.Mail</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-envelope"></i></div>
@@ -159,7 +156,7 @@
                         <!-- Mot de passe -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fa fa-lock"></i>Mot de passe : ************</span>
+                                <i class="fas fa-lock"></i><span>Mot de passe : ************</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-lock"></i></div>
@@ -191,7 +188,7 @@
                      <div class="div-general">
                          <div class="cardTitle">
                              <h2>Adresse mail et mot de passe</h2>
-                             <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                             <button class="editCard" type="button"><i class="fas fa-pen"></i> Modifier</button>
                          </div>
                          <div class="row">
                             <!-- Adresse mail -->
@@ -215,3 +212,5 @@
           }
     </div>
 </div>
+
+<script src="~/js/Edit.js"></script>
