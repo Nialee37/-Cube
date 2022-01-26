@@ -78,7 +78,7 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
-            ressource.NomPersonne = userConnected.Nom + userConnected.Prenom;
+            ressource.NomPersonne = userConnected.Nom +" "+ userConnected.Prenom;
             ressource.IsValidate = false;
             Service.RessourcesManager.Add(ressource);
 

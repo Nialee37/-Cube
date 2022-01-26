@@ -1,0 +1,10 @@
+﻿.cardPage {
+    box-shadow: #00000085 1px 1px 10px 1px;
+    border-radius: 20px;
+    padding: 30px 10px;
+}
+
+
+.lesRessources > .mb {
+    margin: 10px 10px;
+}

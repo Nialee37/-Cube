@@ -1,11 +1,22 @@
-﻿<p>Page accueil mes ressources</p>
+﻿
+@section Styles {
+    <link rel='stylesheet' href='~/css/card-Ressource.css'>
+    <link rel='stylesheet' href='~/css/mesRessources.css'>
+}
 
-<a target="_blank" href="/Ressource/Create">Créé une ressource</a>
+<div id="container" class="container">
+    <div class="row cardPage">
+        <div class="titleRessource">
+            <h1>Page accueil mes ressources</h1>
 
-<p>Vos ressources</p>
-<div id="container">
+            <a target="_blank" href="/Ressource/Create">Créé une ressource</a>
 
-
+            <h2>Vos ressources</h2>
+        </div>
+        <div class="row d-flex justify-content-between lesRessources">
+            
+        </div>
+    </div>
 </div>
 
 <script> //js pour appeler la fonction en ajax "Mesressources"
@@ -14,10 +25,8 @@ $(document).ready(function(){
     $.ajax({
         //L'URL de la requête 
         url: "Ressource/Mesressources",
-
         //La méthode d'envoi (type de requête)
         method: "GET",
-
         //Le format de réponse attendu
         dataType : "json",
     })
@@ -28,18 +37,34 @@ $(document).ready(function(){
         //let data = JSON.stringify(response);
         let data = response;
         console.log(data);
-      var divinsert = document.getElementById("container");
-
         for (var i = 0; i < data.length; i++) {
-          
-      var a = document.createElement('a');
-      var linkText = document.createTextNode(data[i].nom);
-      a.appendChild(linkText);
-      a.title = data[i].nom;
-      a.href = "/Ressource/GetRessource?Id=" + data[i].Id;
-      document.body.appendChild(a);
-}
-        
+          $(".lesRessources").html('<div class="col-lg-4 col-md-4 col-sm-4 mb"> '
+                                        +'<div class="ressourceCard card">'
+                                            +'<div class="wrapper">'
+                                                +'<div class="background">'
+                                                    +'<img src="img/type_ressource/excel.png" alt="logo excel">'
+                                                +'</div> '
+                                                +'<div class="date">'
+                                                    +'<span class="day">21</span><span class="month">Déc</span><span class="year">2021</span>'
+                                                +'</div>'
+                                                +'<div class="data">'
+                                                    +' <div class="content">'
+                                                        +'<span class="author">'+data[i].nomPersonne+'</span>'
+                                                        +'<h1 class="title">'+data[i].nom+'</h1>'
+                                                        +'<p class="text">Catégorie : '+data[i].categorie.libelle+'</p>'
+                                                        +'<label for="show-menu" class="menu-button"><span></span></label>'
+                                                    +'</div>'
+                                                    +'<input type="checkbox" id="show-menu"/>'
+                                                    +'<ul class="menu-content">'
+                                                        +'<li><a href="#" class="fa fa-bookmark-o"></a></li>'
+                                                        +'<li><a href="#" class="fa fa-heart-o"><span>47</span></a></li>'
+                                                        +'<li><a href="#" class="fa fa-comment-o"><span>8</span></a></li>'
+                                                    +'</ul>'
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div>'
+                                     +'</div>');
+        }
     })
     
     //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
