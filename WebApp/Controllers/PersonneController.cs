@@ -7,6 +7,7 @@ using ServiceDAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace WebApp.Controllers
 {
@@ -149,19 +150,17 @@ namespace WebApp.Controllers
             }
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
-            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
-            ViewBag.Roles = lesRoles;
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditVilleUser(Personne user)
+        public void EditVilleUser(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
             getUser.Adresse = Service.AdresseManager.Get(getUser.IdAdresse);
-            
-            getUser.Roles = Service.RolesManager.Get(getUser.IdRoles);
 
             getUser.Adresse.Numero = user.Adresse.Numero;
             getUser.Adresse.Type = user.Adresse.Type;
@@ -174,24 +173,42 @@ namespace WebApp.Controllers
             getUser = Service.PersonneManager.Get(getUser.Id);
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
-            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
-            ViewBag.Roles = lesRoles;
-            return View(getUser);
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
+            Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSecuriter(Personne user)
+        public void EditSecuriter(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
             Service.PersonneManager.Update(user);
+            if (user.Mail != getUser.Mail)
+            {
+                Personne checkMail = Service.PersonneManager.GetByMail(user.Mail);
+                if (user.Mail == checkMail.Mail)
+                {
+                    ViewBag.message = "Bonjour, un compte existe deja avec cet identifiant !";
+                   
+                }
+                else
+                {
+                    getUser.Mail = user.Mail;
+                }
+            }
 
+            if (user.PasswordHash != "")
+            {
+                getUser.PasswordHash = BCryptNet.HashPassword(user.PasswordHash);
+            }
+            
             user = Service.PersonneManager.Get(user.Id);
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
-            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
-            ViewBag.Roles = lesRoles;
-            return View(user);
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
+            Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
         // GET: PersonneController/Delete/5

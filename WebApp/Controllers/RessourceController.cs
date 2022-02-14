@@ -26,22 +26,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public bool Addfav(int id)
-        {
-            try
-            {
-                Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-                Favori fav = new Favori();
-                fav.IdPersonne = userConnected.Id;
-                fav.IdRessource = id;
-                Service.FavoriManager.Add(fav);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }    
-        }
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
