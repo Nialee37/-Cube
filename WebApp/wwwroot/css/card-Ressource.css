@@ -4,14 +4,13 @@
 }
 
 .ressourceCard > h1 {
-    font-family: "Open Sans", sans-serif;
     font-weight: 300;
 }
 
 .background > img{
-    width: 90%;
+    width: 80%;
     padding-top: 35%;
-    padding-left: 5%;
+    margin-left: 10%;
 } 
 
 .card {
@@ -50,7 +49,7 @@
     top: 0;
     font-size: 10px;
     font-weight: 700;
-    font-family: "Open Sans";
+    font-family: "Sofia-light","Open Sans";
     transform: translate(-50%, 0);
 }
 
@@ -60,7 +59,7 @@
     width: 14rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 19px 19px rgb(87 87 87 / 2%), 0 15px 12px rgb(0 0 0 / 12%);
 }
 
 .card .wrapper:hover .data {
@@ -133,7 +132,7 @@
 
 .ressourceCard .content {
     background-color: #fff;
-    box-shadow: 0 5px 30px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 30px 10px rgb(0 0 0 / 10%);
 }
 
 .ressourceCard .title a {

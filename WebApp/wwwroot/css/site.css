@@ -1,6 +1,22 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@font-face {
+  font-family: 'Sofia';
+  src: url('../webfonts/Sofia/SofiaRegular.otf');
+  src: local('☺'), url('../webfonts/Sofia/SofiaRegular.woff') format('woff'), url('../webfonts/Sofia/SofiaRegular.ttf') format('truetype'), url('../webfonts/Sofia/SofiaRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia-light';
+  src: url('../webfonts/Sofia/Sofia/SofiaLight.otf');
+  src: local('☺'), url('../webfonts/Sofia/SofiaLight.woff') format('woff'), url('../webfonts/Sofia/SofiaLight.ttf') format('truetype'), url('../webfonts/Sofia/SofiaLight.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -61,7 +77,11 @@ html {
 body {
   /* Margin bottom by footer height */
   /* margin-bottom: 60px; */
+font-family: "Sofia-light","Open Sans", sans-serif;
+}
 
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Sofia","Open Sans", sans-serif;
 }
 
 .div-main {
