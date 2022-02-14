@@ -29,7 +29,13 @@ namespace ServiceDAL.BusinessLayer
                 .Where(p => p.IdPersonne == idP)
                 .FirstOrDefault();
         }
-
+        public List<Favori> Getal(int idP)
+        {
+            List<Favori> favoris = Service.DbContext.Favori
+               .Where(p => p.IdPersonne == idP)
+               .ToList();
+            return favoris;
+        }
         public Favori Get(int idP, int idR)
         {
             return Service.DbContext.Favori

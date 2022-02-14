@@ -27,6 +27,43 @@ namespace WebApp.Controllers
             return View();
         }
 
+        public ActionResult Historique()
+        {
+            return View();
+        }
+        public ActionResult Favoris()
+        {
+            return View();
+        }
+
+        public JsonResult GetHistorique()
+        {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            List<Ressources> listressource = new List<Ressources>();
+            List<Historique> listfav= Service.HistoriqueManager.Getal(userConnected.Id);
+
+            foreach (Historique item in listfav)
+            {
+                listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+            }
+
+            return Json(listressource);
+        }
+
+        public JsonResult GetFavoris()
+        {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            List<Ressources> listressource = new List<Ressources>();
+            List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
+
+            foreach (Favori item in listfav)
+            {
+                listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+            }
+
+            return Json(listressource);
+        }
+
         public bool Addfav(int id)
         {
             try
@@ -43,6 +80,7 @@ namespace WebApp.Controllers
                 return false;
             }
         }
+
 
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {

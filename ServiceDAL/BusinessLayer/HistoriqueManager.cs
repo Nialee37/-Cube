@@ -22,13 +22,20 @@ namespace ServiceDAL.BusinessLayer
         }
 
 
+        public List<Historique> Getal(int idP)
+        {
+             List<Historique> historiques = Service.DbContext.Historique
+                .Where(p => p.IdPersonne == idP)
+                .ToList();
+            return historiques;
+        }
         public Historique Get(int idP)
         {
             return Service.DbContext.Historique
-                .Where(p => p.IdPersonne == idP)
-                .FirstOrDefault();
+               .Where(p => p.IdPersonne == idP)
+               .First();
+            
         }
-
         public Historique Get(int idP, int idR)
         {
             return Service.DbContext.Historique
