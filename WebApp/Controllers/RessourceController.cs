@@ -156,7 +156,21 @@ namespace WebApp.Controllers
         }
         public ActionResult GetRessource(int id)
         {
-            Ressources ressource = Service.RessourcesManager.Get(id);
+            Ressources ressource = Service.RessourcesManager.Get(id); //récupération de la ressource
+
+            if (HttpContext.Session.GetString("user") != null) //si le user est non null
+            {
+                Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); // récupération de la persone
+                Historique histoold = Service.HistoriqueManager.Get(userConnected.Id, ressource.Id); //recupératon du l'historique
+
+                if(histoold != null)
+                {
+                    histoold.IdPersonne = userConnected.Id;
+                    histoold.IdRessource = ressource.Id;
+                    Service.HistoriqueManager.Add(histoold);
+                } // si c'est null on ajoute sinon on y affiche simplement
+            }
+
             switch (ressource.IdType)
             {
                 case 2 : //cas excel
