@@ -10,6 +10,12 @@
 @{
          Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
 }
+@if(ViewBag.messageEdit != null){
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>@ViewBag.messageEdit</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
 <div class="container">
     <div class="row row-card">
         <div class="col-md-12 col-lg-9 ml-auto card-register">
@@ -87,10 +93,12 @@
                      </div>
                    <div class="row">
                        <!-- Numéro adresse -->
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="AfficheGeneral">
                                 <i class="fas fa-map-pin"></i><span>Adresse : @Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
                             </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-map-pin"></i></div>
                                 <input required asp-for="Adresse.Numero" value="@Model.Adresse.Numero" class="form-control verifForm" data-nom="numéro d'adresse" placeholder="Numéro" />
@@ -133,12 +141,12 @@
             </form>
         </div>
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" id="form-userSecu" asp-action="Edit" method="POST">
+            <form class="form-horizontal" id="form-userSecu" asp-action="EditSecuriter" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
                          <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
-                         <button class="editCard editBTN" id="editSecu" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard editBTN" id="editSecu" onclick="checkOnInput('#form-userSecu')" type="button"><i class="fas fa-pen"></i> Modifier</button>
                          <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
@@ -149,7 +157,7 @@
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-envelope"></i></div>
-                                <input required asp-for="Mail" type="email" class="form-control verifForm" data-nom="adresse mail" placeholder="Adresse mail" value="@Model.Mail"/>
+                                <input  asp-for="Mail" type="email" class="form-control verifForm" data-nom="adresse mail" placeholder="Adresse mail" value="@Model.Mail"/>
                                 <div asp-validation-for="Mail" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
@@ -160,7 +168,7 @@
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-lock"></i></div>
-                                <input required asp-for="PasswordHash" type="password" id="password" data-nom="mot de passe" minlength="8" class="form-control verifForm" placeholder="Mot de passe" />
+                                <input  asp-for="PasswordHash" type="password" id="password" data-nom="mot de passe" minlength="8" class="form-control verifForm" placeholder="Mot de passe" />
                                 <div asp-validation-for="PasswordHash" class="invalid-feedback fw-bold" id="passwordAlert"></div>
                             </div>
                         </div>
@@ -168,7 +176,7 @@
                         <div class="col-md-6">
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-lock"></i></div>
-                                <input required id="confirmPassword" type="password" class="form-control verifForm" data-nom="confirmation de mot de passe" placeholder="Confirmation du mot de passe" />
+                                <input  id="confirmPassword" type="password" class="form-control verifForm" data-nom="confirmation de mot de passe" placeholder="Confirmation du mot de passe" />
                                 <div class="invalid-feedback fw-bold" id="confirmPasswordAlert"></div>
                             </div>
                         </div>
@@ -183,7 +191,7 @@
         @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ) && Model.Id != user.Id)
             {
                <div class="col-md-12 col-lg-9 ml-auto card-register">
-                <form class="form-horizontal" asp-action="RegisterCreate">
+                <form class="form-horizontal" asp-action="EditRole">
                     <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                      <div class="div-general">
                          <div class="cardTitle">
@@ -194,7 +202,7 @@
                          <div class="row">
                             <!-- Adresse mail -->
                             <div class="AfficheGeneral">
-                                <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text)</span>
+                                <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.IdRoles.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-users"></i></div>
@@ -203,7 +211,7 @@
                             </div>
                              <!-- Bouton submit -->
                             <div class="col-md-12 submit-btn EditGeneral" hidden>
-                                <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                                <button class="btn signin" type="submit" id="login-btn">Enregistrer</button>
                             </div>
                        </div>
                    </div>
