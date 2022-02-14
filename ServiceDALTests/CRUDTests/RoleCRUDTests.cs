@@ -43,17 +43,14 @@ namespace ServiceDALTests.CRUDTests
         public void Role_CreateTwoRole_Find2()
         {
             // Arrange
-            const long EXCEPTED = 2;
+            const long EXCEPTED = 5;
 
             // Act
-            Manager.Add(new Roles()
-            {
-                Libelle = "Role1"
-            });
-            Manager.Add(new Roles()
-            {
-                Libelle = "Role2"
-            });
+            Manager.Add(new Roles(){Libelle = "Role1"});
+            Manager.Add(new Roles() { Libelle = "Citoyen" });
+            Manager.Add(new Roles() { Libelle = "Modérateur" });
+            Manager.Add(new Roles() { Libelle = "Administrateur" });
+            Manager.Add(new Roles() { Libelle = "SuperAdministrateur" });
             long actual = Manager.GetAll().Count;
 
             // Assert
