@@ -3,17 +3,20 @@
     <link rel='stylesheet' href='~/css/card-Ressource.css'>
     <link rel='stylesheet' href='~/css/mesRessources.css'>
 }
+@{
+  ViewData["Title"] = "Mes ressources";
+}
 
 <div id="container" class="container">
     <div class="row cardPage">
         <div class="titleRessource">
-            <h1>Page accueil mes ressources</h1>
+            <h1 class="text-center">Mes ressources</h1>
 
-            <a target="_blank" href="/Ressource/Create">Créé une ressource</a>
+            <a target="_blank" class="btn btn-success btnCreate" href="/Ressource/Create"><i class="fas fa-book"></i> Créé une ressource</a>
 
-            <h2>Vos ressources</h2>
+            <h2>Liste de mes ressources</h2>
         </div>
-        <div class="row d-flex justify-content-between lesRessources">
+        <div class="row d-flex justify-content-evenly lesRessources">
             
         </div>
     </div>
@@ -39,8 +42,8 @@ $(document).ready(function(){
         console.log(data);
         for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
-            var month = ((date.getMonth()+1) < 10 ? "0"+(date.getMonth()+1) : (date.getMonth()+1));
-          $(".lesRessources").html('<div class="col-lg-4 col-md-4 col-sm-4 mb"> '
+            var month = date.toLocaleString('FR-FR', { month: 'short' });
+          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb"> '
                                         +'<div class="ressourceCard card">'
                                             +'<div class="wrapper">'
                                                 +'<div class="background">'

@@ -2,9 +2,14 @@
     box-shadow: #00000085 1px 1px 10px 1px;
     border-radius: 20px;
     padding: 30px 10px;
+    position: relative;
 }
 
-
+.cardPage .btnCreate {
+    position: absolute;
+    top: 2.2rem;
+    right: 1.5rem;
+}
 .lesRessources > .mb {
     margin: 10px 10px;
 }

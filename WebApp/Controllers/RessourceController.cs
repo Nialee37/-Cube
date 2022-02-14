@@ -30,7 +30,7 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
 
-            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.NomPersonne == (userConnected.Nom + userConnected.Prenom)).ToList();
+            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.NomPersonne == (userConnected.Nom +" "+ userConnected.Prenom)).ToList();
             return Json(mesressources);
         }
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil

@@ -43,17 +43,15 @@ namespace ServiceDALTests.CRUDTests
         public void Type_CreateTwoType_Find2()
         {
             // Arrange
-            const long EXCEPTED = 2;
+            const long EXCEPTED = 6;
 
             // Act
-            Manager.Add(new Type()
-            {
-                Libelle = "Type1"
-            });
-            Manager.Add(new Type()
-            {
-                Libelle = "Type2"
-            });
+            Manager.Add(new Type() {Libelle = "ExcelPasModif"});
+            Manager.Add(new Type() {Libelle = "Excel"});
+            Manager.Add(new Type() {Libelle = "Word"});
+            Manager.Add(new Type() {Libelle = "PDF"});
+            Manager.Add(new Type() {Libelle = "Vidéo"});
+            Manager.Add(new Type() {Libelle = "Image"});
             long actual = Manager.GetAll().Count;
 
             // Assert
@@ -66,7 +64,7 @@ namespace ServiceDALTests.CRUDTests
         {
             // Arrange
             const int ID = 1;
-            const string EXCEPTED = "Type1";
+            const string EXCEPTED = "ExcelPasModif";
 
             // Act
             Type unType = Manager.Get(ID);
@@ -81,7 +79,7 @@ namespace ServiceDALTests.CRUDTests
         {
             // Arrange
             const int ID = 1;
-            const string EXCEPTED = "TypesModifié";
+            const string EXCEPTED = "Excel";
 
             // Act
             Type unType = Manager.Get(ID);
