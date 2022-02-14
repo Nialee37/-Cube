@@ -144,23 +144,23 @@ namespace WebApp.Controllers
             switch (ressource.IdCategorie)
             {
                 case 2 : //cas excel
-                    return View(ressource);
+                    return View("RessourceExcel",ressource);
                     break;
 
                 case 3: //cas word
-                    return View(ressource);
+                    return View("RessourceWord", ressource);
                     break;
 
                 case 4: //cas pdf
-                    return View(ressource);
+                    return View("RessourcePDF", ressource);
                     break;
 
                 case 5: //video
-                    return View(ressource);
+                    return View("RessourceVideo", ressource);
                     break;
 
                 case 6: // cas images
-                    return View(ressource);
+                    return View("RessourceIMG", ressource);
                     break;
 
                 default: //cas si ca ne passe pas dans les autres
