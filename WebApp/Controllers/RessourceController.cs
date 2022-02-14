@@ -141,7 +141,7 @@ namespace WebApp.Controllers
         public ActionResult GetRessource(int id)
         {
             Ressources ressource = Service.RessourcesManager.Get(id);
-            switch (ressource.IdCategorie)
+            switch (ressource.IdType)
             {
                 case 2 : //cas excel
                     return View("RessourceExcel",ressource);
