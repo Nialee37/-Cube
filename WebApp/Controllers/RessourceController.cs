@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -24,6 +25,23 @@ namespace WebApp.Controllers
         public ActionResult Index() //fonction qui va retourner une page surlaquelle sera dispoible les ressources de la personne et un onglet de création de ressources
         {
             return View();
+        }
+
+        public bool Addfav(int id)
+        {
+            try
+            {
+                Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+                Favori fav = new Favori();
+                fav.IdPersonne = userConnected.Id;
+                fav.IdRessource = id;
+                Service.FavoriManager.Add(fav);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
@@ -60,7 +78,7 @@ namespace WebApp.Controllers
             ViewBag.ListCategories = selectListcat;
 
             IDictionary<int, string> ListType = new Dictionary<int, string>();
-            IEnumerable<Type> types = Service.TypeManager.GetAll();
+            IEnumerable<ServiceDAL.BusinessObjet.Type> types = Service.TypeManager.GetAll();
             foreach (var item in types)
             {
                 ListType.Add(item.Id, $"{item.Libelle}");
@@ -147,11 +165,14 @@ namespace WebApp.Controllers
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); // récupération de la persone
                 Historique histoold = Service.HistoriqueManager.Get(userConnected.Id, ressource.Id); //recupératon du l'historique
 
-                if(histoold != null)
+                if(histoold == null)
                 {
-                    histoold.IdPersonne = userConnected.Id;
-                    histoold.IdRessource = ressource.Id;
-                    Service.HistoriqueManager.Add(histoold);
+                    Historique histotamere = new Historique();
+                    histotamere.IdPersonne = userConnected.Id;
+                    histotamere.IdRessource = ressource.Id;
+                    histotamere.Date = DateTime.Now;
+                    
+                    Service.HistoriqueManager.Add(histotamere);
                 } // si c'est null on ajoute sinon on y affiche simplement
             }
 
