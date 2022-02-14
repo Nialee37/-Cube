@@ -141,7 +141,32 @@ namespace WebApp.Controllers
         public ActionResult GetRessource(int id)
         {
             Ressources ressource = Service.RessourcesManager.Get(id);
-            return View(ressource);
+            switch (ressource.IdCategorie)
+            {
+                case 2 : //cas excel
+                    return View(ressource);
+                    break;
+
+                case 3: //cas word
+                    return View(ressource);
+                    break;
+
+                case 4: //cas pdf
+                    return View(ressource);
+                    break;
+
+                case 5: //video
+                    return View(ressource);
+                    break;
+
+                case 6: // cas images
+                    return View(ressource);
+                    break;
+
+                default: //cas si ca ne passe pas dans les autres
+                    return View(ressource);
+                    break;
+            }
         }
     }
 }
