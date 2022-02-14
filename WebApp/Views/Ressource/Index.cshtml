@@ -43,11 +43,11 @@ $(document).ready(function(){
         for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
             var month = date.toLocaleString('FR-FR', { month: 'short' });
-          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb"> '
+          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb  mb-5"> '
                                         +'<div class="ressourceCard card">'
                                             +'<div class="wrapper">'
                                                 +'<div class="background">'
-                                                    +'<img src="img/type_ressource/excel.png" alt="logo excel">'
+                                                    +'<img src="img/type_ressource/'+data[i].type.libelle+'.png" alt="logo excel">'
                                                 +'</div> '
                                                 +'<div class="date">'
                                                     +'<span class="day">'+date.getDate()+'</span><span class="month">'+month+'</span><span class="year">'+date.getFullYear()+'</span>'
