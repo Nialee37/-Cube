@@ -15,50 +15,7 @@
         $(this).parent().parent().find(".discardBTN").attr("hidden", "hidden");
     });
     
-    $("#editSecu").click(function (){
-        var checkPass = false;
-        $("#confirmPassword").keyup(function () {
-            if (checkPass) {
-                if ($("#confirmPassword").val() != $("#password").val()) {
-                    $("#confirmPasswordAlert").text("Les mots de passe ne sont pas identique !");
-                    $("#passwordAlert").text("");
-                    $("#password").addClass("is-invalid");
-                    $("#confirmPassword").addClass("is-invalid");
-                    checkFinalPassword = false;
-                    //$("#login-btn").attr("disabled", "disabled");
-                } else {
-                    checkFinalPassword = true;
-                    $("#passwordAlert").text("");
-                    $("#confirmPasswordAlert").text("");
-                    //$("#login-btn").removeAttr("disabled");
-                    $("#password").removeClass("is-invalid");
-                    $("#confirmPassword").removeClass("is-invalid");
-                }
-            }
-        });
-        $("#password").keyup(function () {
-            if (checkPassword($("#password"))) {
-                checkPass = true;
-                if ($("#confirmPassword").val() != $("#password").val()) {
-                    $("#passwordAlert").text("Les mots de passe ne sont pas identique !");
-                    $("#confirmPasswordAlert").text("");
-                    $("#password").addClass("is-invalid");
-                    $("#confirmPassword").addClass("is-invalid");
-                    checkFinalPassword = false;
-                    //$("#login-btn").attr("disabled","disabled");
-                } else {
-                    checkFinalPassword = true;
-                    $("#passwordAlert").text("");
-                    $("#confirmPasswordAlert").text("");
-                    // $("#login-btn").removeAttr("disabled");
-                    $("#password").removeClass("is-invalid");
-                    $("#confirmPassword").removeClass("is-invalid");
-                }
-            } else {
-                checkPass = false;
-            }
-        });
-    });
+    
 });
 
 var checkFinalPassword = false;
@@ -208,10 +165,8 @@ function checkOnInput() {
     $('select, input:not(#search-custom-2, [name=__RequestVerificationToken])').each(function (i) {
         $(this).on("keyup change", function () {
             if ($(this).attr("type") == "email") {
-                if($(this).val() != "") {
-                    var pathMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    checkInput($(this), "Veuillez saisir un courriel !", pathMail, "Veuillez saisir un courriel avec le format exemple@mail.com");
-                }
+                var pathMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                checkInput($(this), "Veuillez saisir un courriel !", pathMail, "Veuillez saisir un courriel avec le format exemple@mail.com");
             } else if ($(this).attr("type") != "password") {
                 if (this.tagName == "INPUT") {
                     checkInput($(this), "Veuillez saisir votre " + $(this).data("nom") + ".");

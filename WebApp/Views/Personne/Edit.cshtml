@@ -18,12 +18,12 @@
         </div>
         <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="EditGeneral" asp-controller="Personne" method="POST">
+            <form class="form-horizontal" id="form-general" asp-action="EditGeneral" asp-controller="Personne" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
                          <h2><i class="fas fa-user-circle"></i> Général</h2>
-                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard editBTN" type="button" onclick="checkOnInput('#form-general')"><i class="fas fa-pen"></i> Modifier</button>
                          <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
@@ -70,19 +70,19 @@
                         </div>
                          <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" >Enregistrer</button>
                         </div>
                    </div>
                </div>
             </form>
         </div>
          <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="EditVilleUser" method="POST">
+            <form class="form-horizontal" asp-action="EditVilleUser" id="form-villeUser" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                <div class="div-adresse">
                    <div class="cardTitle">
                          <h2><i class="fas fa-map-marked"></i> Adresse</h2>
-                         <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard editBTN" type="button" onclick="checkOnInput('#form-villeUser')"><i class="fas fa-pen"></i> Modifier</button>
                          <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                    <div class="row">
@@ -126,14 +126,14 @@
                         </div>
                         <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" >Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" >Enregistrer</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="Edit" method="POST">
+            <form class="form-horizontal" id="form-userSecu" asp-action="Edit" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
@@ -174,7 +174,7 @@
                         </div>
                          <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" disabled>Enregistrer</button>
                         </div>
                    </div>
                </div>

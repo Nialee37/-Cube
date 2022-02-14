@@ -57,12 +57,12 @@ $(document).ready(function(){
                                                         +'<span class="author">'+data[i].nomPersonne+'</span>'
                                                         +'<h1 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h1>'
                                                         +'<p class="text">Catégorie : '+data[i].categorie.libelle+'</p>'
-                                                        +'<label for="show-menu" class="menu-button"><span></span></label>'
+                                                        +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
                                                     +'</div>'
-                                                    +'<input type="checkbox" id="show-menu"/>'
+                                                    +'<input type="checkbox" id="show-menu'+i+'"/>'
                                                     +'<ul class="menu-content">'
                                                         +'<li><a href="#" class="fa fa-bookmark-o"></a></li>'
-                                                        +'<li><a href="#" class="far fa-star"></a></li>'
+                                                        +'<li><a href="#" data-id="'+ data[i].id +'" class="addFav far fa-star"></a></li>'
                                                         +'<li><a href="#" class="far fa-comment"><span>8</span></a></li>'
                                                     +'</ul>'
                                                 +'</div>'
@@ -70,6 +70,17 @@ $(document).ready(function(){
                                         +'</div>'
                                      +'</div>');
         }
+        $(".addFav").on("click", function() { alert()
+                $.ajax({
+                        //L'URL de la requête 
+                        url: "Ressource/Addfav",
+                        //La méthode d'envoi (type de requête)
+                        method: "GET",
+                        data: "id=" + $(this).data("id")
+                }).done(function(response){
+                    console.log(response);
+                })
+        });
     })
     
     //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
@@ -80,4 +91,7 @@ $(document).ready(function(){
 
     //Ce code sera exécuté que la requête soit un succès ou un échec
     });
+    
+    
+    
 </script>
