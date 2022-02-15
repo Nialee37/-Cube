@@ -3,6 +3,12 @@
     text-decoration: none;
 }
 
+.ressourceCard button {
+    outline: none;
+    border: none;
+    background: none;
+}
+
 .ressourceCard > h1 {
     font-weight: 300;
 }
@@ -39,7 +45,7 @@
     display: inline-block;
 }
 
-.card .menu-content a {
+.card .menu-content button, .card .menu-content a {
     color: #fff;
 }
 
@@ -196,7 +202,7 @@
     position: relative;
 }
 
-.ressourceCard .menu-content a {
+.ressourceCard .menu-content button, .ressourceCard .menu-content a {
     position: absolute;
     top: 50%;
     left: 50%;
