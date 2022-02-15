@@ -93,13 +93,57 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
 
+            List<Favori> mesfavoris = new List<Favori>();
+
+            mesfavoris = (List<Favori>)Service.FavoriManager.Getal(userConnected.Id);
+
             List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IdPersonne == (userConnected.Id)).ToList();
+            for (int i = 0; i < mesressources.Count; i++)
+            {
+                if (mesfavoris.Find(x => x.IdPersonne == userConnected.Id && x.IdRessource == mesressources[i].Id) != null)
+                {
+                    mesressources[i].isfav = 1;
+                }
+                else
+                {
+                    mesressources[i].isfav = 0;
+                }
+
+            }
             return Json(mesressources);
         }
+
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
         {
-            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
-            return Json(mesressources);
+            
+            if(HttpContext.Session.GetString("user") != null)
+            {
+                Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+                List<Favori> mesfavoris = new List<Favori>();
+
+                mesfavoris = (List<Favori>)Service.FavoriManager.Getal(userConnected.Id);
+
+                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
+                for (int i = 0; i < mesressources.Count; i++)
+                {
+                    if (mesfavoris.Find(x => x.IdPersonne == userConnected.Id && x.IdRessource == mesressources[i].Id) != null)
+                    {
+                        mesressources[i].isfav = 1;
+                    }
+                    else
+                    {
+                        mesressources[i].isfav = 0;
+                    }
+
+                }
+                return Json(mesressources);
+            }
+            else
+            {
+                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
+                return Json(mesressources);
+            }
+           
         }
 
         // GET: RessourceController/Details/5
