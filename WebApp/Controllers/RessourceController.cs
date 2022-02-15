@@ -64,23 +64,30 @@ namespace WebApp.Controllers
             return Json(listressource);
         }
 
-        public bool Addfav(int id)
+        public int Addfav(int id)
         {
             try
             {
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+                //on delete pour ne pas avoir de doublon
+                Favori oldfav = Service.FavoriManager.Get(id, userConnected.Id);
+                if(oldfav != null)
+                {
+                    Service.FavoriManager.DeleteObj(oldfav);
+                    return 2;
+                }
+
                 Favori fav = new Favori();
                 fav.IdPersonne = userConnected.Id;
                 fav.IdRessource = id;
                 Service.FavoriManager.Add(fav);
-                return true;
+                return 1;
             }
             catch
             {
-                return false;
+                return 99;
             }
         }
-
 
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
