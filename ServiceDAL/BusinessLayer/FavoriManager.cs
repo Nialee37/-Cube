@@ -21,6 +21,12 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return true;
         }
+        public bool DeleteObj(Favori favori)
+        {
+            Service.DbContext.Favori.Remove(favori);
+            Service.DbContext.SaveChanges();
+            return true;
+        }
 
 
         public Favori Get(int idP)
