@@ -138,8 +138,7 @@ namespace WebApp.Controllers
             ressource.IdPersonne = userConnected.Id;
             Service.RessourcesManager.Add(ressource);
 
-            Ressources ressourcetemp = (Ressources)Service.RessourcesManager.GetAll().OrderByDescending(x => x.Date).FirstOrDefault();
-            return Edit(ressourcetemp.Id);
+            return Redirect("/Ressource");
         }
 
         // GET: RessourceController/Edit/5
