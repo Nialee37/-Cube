@@ -75,16 +75,16 @@
         SIDEBBAR
     -->
     <FlyoutItem Title="Édition du profil" Icon="icon_about.png">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Route="ProfilPage" ContentTemplate="{DataTemplate local:ProfilPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Mes resources" Icon="icon_about.png">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Route="RessourcePage" ContentTemplate="{DataTemplate local:RessourcePage}" />
     </FlyoutItem>
     <FlyoutItem Title="Historique" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Route="HistoriquePage" ContentTemplate="{DataTemplate local:HistoriquePage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Favoris" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+    <FlyoutItem Title="Favorie" Icon="icon_feed.png">
+        <ShellContent Route="FavoriePage" ContentTemplate="{DataTemplate local:FavoriePage}" />
     </FlyoutItem>
 
 
