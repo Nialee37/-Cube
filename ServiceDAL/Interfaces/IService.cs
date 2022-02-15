@@ -13,7 +13,8 @@ namespace ServiceDAL.Interfaces
         AdresseManager AdresseManager { get; }
         PersonneManager PersonneManager { get; }
 
-
+        HistoriqueManager HistoriqueManager { get; }
+        FavoriManager FavoriManager { get; }
         RessourcesManager  RessourcesManager { get; }
         void Dispose();
 

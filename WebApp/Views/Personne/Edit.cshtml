@@ -10,6 +10,12 @@
 @{
          Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
 }
+@if(ViewBag.messageEdit != null){
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>@ViewBag.messageEdit</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
 <div class="container">
     <div class="row row-card">
         <div class="col-md-12 col-lg-9 ml-auto card-register">
@@ -18,18 +24,19 @@
         </div>
         <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" id="form-general" asp-action="EditGeneral" asp-controller="Personne" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
-                         <h2>Général</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-user-circle"></i> Général</h2>
+                         <button class="editCard editBTN" type="button" onclick="checkOnInput('#form-general')"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
                         <!-- Prénom -->
                         <div class="col-md-6">            
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-address-card"></i>Prénom : </span>
+                                <i class="fas fa-address-card"></i><span>Identité : @Model.Prenom @Model.Nom</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-address-card"></i></div>
@@ -39,9 +46,6 @@
                         </div>
                         <!-- Nom -->
                         <div class="col-md-6">    
-                            <div class="AfficheGeneral">
-                                <span>@Model.Prenom @Model.Nom</span>
-                            </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-address-card"></i></div>
                                 <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" required value="@Model.Nom"/>
@@ -51,7 +55,7 @@
                         <!-- Date de naissance -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-calendar-week"></i>Date de naissance : @Model.DateNaissance.ToString("yyyy/MM-dd").Replace('/','-')</span>
+                                <i class="fas fa-calendar-week"></i><span>Date de naissance : @Model.DateNaissance.ToString("dd/MM/yyyy").Replace('-','/')</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
@@ -62,7 +66,7 @@
                         <!-- Genre -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-genderless"></i>Genre : @Html.Raw(new SelectList(ViewBag.ListGenres,"Value", "Text").Where(x => x.Value == Model.Genre.ToString()).First().Text)</span>
+                                <i class="fas fa-genderless"></i><span>Genre : @Html.Raw(new SelectList(ViewBag.ListGenres,"Value", "Text").Where(x => x.Value == Model.Genre.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-genderless"></i></div>
@@ -72,26 +76,29 @@
                         </div>
                          <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" >Enregistrer</button>
                         </div>
                    </div>
                </div>
             </form>
         </div>
          <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" asp-action="EditVilleUser" id="form-villeUser" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                <div class="div-adresse">
                    <div class="cardTitle">
-                         <h2>Adresse</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-map-marked"></i> Adresse</h2>
+                         <button class="editCard editBTN" type="button" onclick="checkOnInput('#form-villeUser')"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                    <div class="row">
                        <!-- Numéro adresse -->
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-map-pin"></i>Adresse : </span>
+                                <i class="fas fa-map-pin"></i><span>Adresse : @Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
                             </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-map-pin"></i></div>
                                 <input required asp-for="Adresse.Numero" value="@Model.Adresse.Numero" class="form-control verifForm" data-nom="numéro d'adresse" placeholder="Numéro" />
@@ -100,9 +107,6 @@
                         </div>
                         <!-- Type d'adresse' -->
                         <div class="col-md-4">
-                            <div class="AfficheGeneral">
-                                <span>@Model.Adresse.Numero @Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text) @Model.Adresse.Nom</span>
-                            </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
                                 <select required class="form-control verifForm" asp-for="Adresse.Type" value="@Model.Adresse.Type" data-nom="type d'adresse" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
@@ -120,7 +124,7 @@
                         <!-- Choix ville -->
                         <div class="col-md-12">
                             <div class="AfficheGeneral">
-                                <span><i class="fas fa-building"></i>Ville : @Html.Raw(new SelectList(ViewBag.ListVilles,"Value", "Text").Where(x => x.Value == Model.Adresse.IdVille.ToString()).First().Text)</span>
+                                <i class="fas fa-building"></i><span>Ville : @Html.Raw(new SelectList(ViewBag.ListVilles,"Value", "Text").Where(x => x.Value == Model.Adresse.IdVille.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fas fa-city"></i></div>
@@ -130,40 +134,41 @@
                         </div>
                         <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" >Enregistrer</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="RegisterCreate">
+            <form class="form-horizontal" id="form-userSecu" asp-action="EditSecuriter" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                  <div class="div-general">
                      <div class="cardTitle">
-                         <h2>Adresse mail et mot de passe</h2>
-                         <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                         <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
+                         <button class="editCard editBTN" id="editSecu" onclick="checkOnInput('#form-userSecu')" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                         <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                      </div>
                      <div class="row">
                         <!-- Adresse mail -->
                         <div class="col-md-12">
                             <div class="AfficheGeneral">
-                                <span><i class="fa fa-envelope"></i>Adresse mail : @Model.Mail</span>
+                               <i class="fas fa-envelope"></i><span>Adresse mail : @Model.Mail</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-envelope"></i></div>
-                                <input required asp-for="Mail" type="email" class="form-control verifForm" data-nom="adresse mail" placeholder="Adresse mail" value="@Model.Mail"/>
+                                <input  asp-for="Mail" type="email" class="form-control verifForm" data-nom="adresse mail" placeholder="Adresse mail" value="@Model.Mail"/>
                                 <div asp-validation-for="Mail" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
                         <!-- Mot de passe -->
                         <div class="col-md-6">
                             <div class="AfficheGeneral">
-                                <span><i class="fa fa-lock"></i>Mot de passe : ************</span>
+                                <i class="fas fa-lock"></i><span>Mot de passe : ************</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-lock"></i></div>
-                                <input required asp-for="PasswordHash" type="password" id="password" data-nom="mot de passe" minlength="8" class="form-control verifForm" placeholder="Mot de passe" />
+                                <input  asp-for="PasswordHash" type="password" id="password" data-nom="mot de passe" minlength="8" class="form-control verifForm" placeholder="Mot de passe" />
                                 <div asp-validation-for="PasswordHash" class="invalid-feedback fw-bold" id="passwordAlert"></div>
                             </div>
                         </div>
@@ -171,13 +176,13 @@
                         <div class="col-md-6">
                             <div class="form-group EditGeneral" hidden>
                                 <div class="input-icon"><i class="fa fa-lock"></i></div>
-                                <input required id="confirmPassword" type="password" class="form-control verifForm" data-nom="confirmation de mot de passe" placeholder="Confirmation du mot de passe" />
+                                <input  id="confirmPassword" type="password" class="form-control verifForm" data-nom="confirmation de mot de passe" placeholder="Confirmation du mot de passe" />
                                 <div class="invalid-feedback fw-bold" id="confirmPasswordAlert"></div>
                             </div>
                         </div>
                          <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn EditGeneral" hidden>
-                            <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                            <button class="btn signin login-btn" type="submit" disabled>Enregistrer</button>
                         </div>
                    </div>
                </div>
@@ -186,26 +191,27 @@
         @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ) && Model.Id != user.Id)
             {
                <div class="col-md-12 col-lg-9 ml-auto card-register">
-                <form class="form-horizontal" asp-action="RegisterCreate">
+                <form class="form-horizontal" asp-action="EditRole">
                     <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                      <div class="div-general">
                          <div class="cardTitle">
-                             <h2>Adresse mail et mot de passe</h2>
-                             <button class="editCard"><i class="fas fa-pen"></i> Modifier</button>
+                             <h2><i class="fas fa-users"></i> Gestion du role</h2>
+                             <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                             <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
                          </div>
                          <div class="row">
                             <!-- Adresse mail -->
                             <div class="AfficheGeneral">
-                                <span>@Html.Raw(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text").Where(x => x.Value == Model.Adresse.Type.ToString()).First().Text)</span>
+                                <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.IdRoles.ToString()).First().Text)</span>
                             </div>
                             <div class="form-group EditGeneral" hidden>
-                                <div class="input-icon"><i class="fas fa-location-arrow"></i></div>
-                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListTypeAdresse,"Value", "Text"))"><option value="-1" disabled selected hidden>Type d'adresse</option></select>
+                                <div class="input-icon"><i class="fas fa-users"></i></div>
+                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListRoles,"Value", "Text"))"><option value="-1" disabled selected hidden>Type de rôle</option></select>
                                 <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
                             </div>
                              <!-- Bouton submit -->
                             <div class="col-md-12 submit-btn EditGeneral" hidden>
-                                <button class="btn signin" type="submit" id="login-btn" disabled>Enregistrer</button>
+                                <button class="btn signin" type="submit" id="login-btn">Enregistrer</button>
                             </div>
                        </div>
                    </div>
@@ -215,3 +221,5 @@
           }
     </div>
 </div>
+
+<script src="~/js/Edit.js"></script>

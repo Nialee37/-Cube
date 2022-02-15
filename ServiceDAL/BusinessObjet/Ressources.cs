@@ -22,5 +22,8 @@ namespace ServiceDAL.BusinessObjet
         public bool IsValidate { get; set; }
         public virtual Type Type { get; set; }
         public virtual Categorie Categorie { get; set; }
+
+        [NotMapped]
+        public int nbcom { get; set; }
     }
 }

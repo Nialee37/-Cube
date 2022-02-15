@@ -7,6 +7,7 @@ using ServiceDAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace WebApp.Controllers
 {
@@ -131,16 +132,105 @@ namespace WebApp.Controllers
         // POST: PersonneController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Personne user)
+        public void EditGeneral(Personne user)
         {
-            Service.PersonneManager.Update(user);
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            getUser.Prenom = user.Prenom;
+            getUser.Nom = user.Nom;
+            getUser.Genre = user.Genre;
+            getUser.DateNaissance = user.DateNaissance;
+            Service.PersonneManager.Update(getUser);
 
+            getUser = Service.PersonneManager.Get(getUser.Id);
+            if(userConnected.Id == user.Id)
+            {
+                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(getUser);
+                HttpContext.Session.SetString("user", jsonUser);
+            }
+            /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+            HttpContext.Session.SetString("user", jsonUser);*/
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
+            Response.Redirect("/Personne/Edit?id="+ getUser.Id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EditVilleUser(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            getUser.Adresse = Service.AdresseManager.Get(getUser.IdAdresse);
+
+            getUser.Adresse.Numero = user.Adresse.Numero;
+            getUser.Adresse.Type = user.Adresse.Type;
+            getUser.Adresse.Nom = user.Adresse.Nom;
+            getUser.Adresse.IdVille = user.Adresse.IdVille;
+            getUser.Adresse.Ville = Service.VilleManager.Get(getUser.Adresse.IdVille);
+
+            Service.PersonneManager.Update(getUser);
+
+            getUser = Service.PersonneManager.Get(getUser.Id);
+            /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+            HttpContext.Session.SetString("user", jsonUser);*/
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
+            Response.Redirect("/Personne/Edit?id="+ getUser.Id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EditSecuriter(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            if(user.Mail != "" && user.Mail != null){
+                if (user.Mail != getUser.Mail)
+                {
+                    Personne checkMail = Service.PersonneManager.GetByMail(user.Mail);
+                    if (checkMail != null)
+                    {
+                        if (user.Mail == checkMail.Mail)
+                        {
+                            ViewBag.messageEdit = "Bonjour, un compte existe deja avec cet identifiant !";
+                            Response.Redirect("/Personne/Edit?id=" + getUser.Id);
+                        }
+                        else
+                        {
+                            getUser.Mail = user.Mail;
+                        }
+                    }
+                    else
+                    {
+                        getUser.Mail = user.Mail;
+                    }
+                }
+            }
+            if (user.PasswordHash != "" && user.PasswordHash != null)
+            {
+                getUser.PasswordHash = BCryptNet.HashPassword(user.PasswordHash);
+            }
+
+            Service.PersonneManager.Update(getUser);
             user = Service.PersonneManager.Get(user.Id);
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
-            List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
-            ViewBag.Roles = lesRoles;
-            return View(user);
+            /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
+            ViewBag.Roles = lesRoles;*/
+            Response.Redirect("/Personne/Edit?id="+ getUser.Id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EditRole(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            if (user.IdRoles != null && user.IdRoles > 1)
+            {
+                getUser.IdRoles = user.IdRoles;
+            }
+
+            Service.PersonneManager.Update(getUser);
+            Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
         // GET: PersonneController/Delete/5

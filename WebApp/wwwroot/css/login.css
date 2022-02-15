@@ -1,6 +1,6 @@
 ﻿.form-container {
     background: linear-gradient(#FF5964, #cc4454);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Sofia-light', sans-serif;
     font-size: 0;
     padding: 0 15px;
     border: 1px solid #DC2036;
@@ -133,6 +133,10 @@
     text-decoration: underline;
 }
 
+.py-4 {
+    margin-top: 10rem;
+}
+
 @media only screen and (max-width:576px) {
     .form-container {
         padding-bottom: 15px;
@@ -146,6 +150,10 @@
     .form-container .form-horizontal {
         width: 100%;
         margin: 0;
+    }
+
+    .py-4 {
+        margin-top: 1rem;
     }
 }
 

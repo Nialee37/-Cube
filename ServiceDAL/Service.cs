@@ -23,6 +23,9 @@ namespace ServiceDAL
             TypeManager = new TypeManager();
             AdresseManager = new AdresseManager();
             PersonneManager = new PersonneManager();
+            HistoriqueManager = new HistoriqueManager();
+            FavoriManager = new FavoriManager();
+
         }
 
         public RolesManager RolesManager { get; private set; }
@@ -33,12 +36,18 @@ namespace ServiceDAL
         public CategorieManager CategorieManager { get; private set; }
         public TypeManager TypeManager { get; private set; }
 
+        public HistoriqueManager HistoriqueManager { get; private set; }
+
+        public FavoriManager FavoriManager { get; private set; }
+
         public AdresseManager AdresseManager { get; private set; }
         public PersonneManager PersonneManager { get; private set; }
 
         public void Dispose()
         {
             RolesManager.Dispose();
+            FavoriManager.Dispose();
+            HistoriqueManager.Dispose();
             RessourcesManager.Dispose();
             CommentaireManager.Dispose();
             VilleManager.Dispose();

@@ -122,7 +122,7 @@
 
 .row-card {
     margin-left: 15vw !important;
-    margin-top: 20vh !important;
+    margin-top: 10% !important;
 }
 
 .profilPicture {
@@ -148,6 +148,14 @@
 
 .cardTitle > h2 {
     display: contents;
+}
+
+.recalText {
+    margin-left:-78%;
+}
+
+.AfficheGeneral > .fas {
+    width: 25px;
 }
 
 @media only screen and (max-width:568px) {

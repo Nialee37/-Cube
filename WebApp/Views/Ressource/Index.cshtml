@@ -1,11 +1,25 @@
-﻿<p>Page accueil mes ressources</p>
+﻿
+@section Styles {
+    <link rel='stylesheet' href='~/css/card-Ressource.css'>
+    <link rel='stylesheet' href='~/css/mesRessources.css'>
+}
+@{
+  ViewData["Title"] = "Mes ressources";
+}
 
-<a target="_blank" href="/Ressource/Create">Créé une ressource</a>
+<div id="container" class="container">
+    <div class="row cardPage">
+        <div class="titleRessource">
+            <h1 class="text-center">Mes ressources</h1>
 
-<div>
+            <a target="_blank" class="btn btn-success btnCreate" href="/Ressource/Create"><i class="fas fa-book"></i> Créé une ressource</a>
 
-    ENDROIT OU SERONT APPELER LES RESSOURCES DE LA PERRSONNE EN AJAX ET UN GENRATEUR DE TEMPLATE CLIQUABLE AFIN DY ACCEDER EN MODIFICATION
-
+            <h2>Liste de mes ressources</h2>
+        </div>
+        <div class="row d-flex justify-content-evenly lesRessources">
+            
+        </div>
+    </div>
 </div>
 
 <script> //js pour appeler la fonction en ajax "Mesressources"
@@ -14,10 +28,8 @@ $(document).ready(function(){
     $.ajax({
         //L'URL de la requête 
         url: "Ressource/Mesressources",
-
         //La méthode d'envoi (type de requête)
         method: "GET",
-
         //Le format de réponse attendu
         dataType : "json",
     })
@@ -25,10 +37,52 @@ $(document).ready(function(){
     /*On peut par exemple convertir cette réponse en chaine JSON et insérer
      * cette chaine dans un div id="res"*/
     .done(function(response){
-        let data = JSON.stringify(response);
+        //let data = JSON.stringify(response);
+        let data = response;
         console.log(data);
+        for (var i = 0; i < data.length; i++) {
+            var date = new Date(data[i].date);
+            var month = date.toLocaleString('FR-FR', { month: 'short' });
+          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb  mb-5"> '
+                                        +'<div class="ressourceCard card">'
+                                            +'<div class="wrapper">'
+                                                +'<div class="background">'
+                                                    +'<img src="img/type_ressource/'+data[i].type.libelle+'.png" alt="logo excel">'
+                                                +'</div> '
+                                                +'<div class="date">'
+                                                    +'<span class="day">'+date.getDate()+'</span><span class="month">'+month+'</span><span class="year">'+date.getFullYear()+'</span>'
+                                                +'</div>'
+                                                +'<div class="data">'
+                                                    +' <div class="content">'
+                                                        +'<span class="author">'+data[i].nomPersonne+'</span>'
+                                                        +'<h1 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h1>'
+                                                        +'<p class="text">Catégorie : '+data[i].categorie.libelle+'</p>'
+                                                        +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
+                                                    +'</div>'
+                                                    +'<input type="checkbox" id="show-menu'+i+'"/>'
+                                                    +'<ul class="menu-content">'
+                                                        +'<li><a href="#" class="fa fa-bookmark-o"></a></li>'
+                                                        +'<li><a href="#" data-id="'+ data[i].id +'" class="addFav far fa-star"></a></li>'
+                                                        +'<li><a href="#" class="far fa-comment"><span>8</span></a></li>'
+                                                    +'</ul>'
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div>'
+                                     +'</div>');
+        }
+        $(".addFav").on("click", function() { alert()
+                $.ajax({
+                        //L'URL de la requête 
+                        url: "Ressource/Addfav",
+                        //La méthode d'envoi (type de requête)
+                        method: "GET",
+                        data: "id=" + $(this).data("id")
+                }).done(function(response){
+                    console.log(response);
+                })
+        });
     })
-
+    
     //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
     //On peut afficher les informations relatives à la requête et à l'erreur
     .fail(function(error){
@@ -37,4 +91,7 @@ $(document).ready(function(){
 
     //Ce code sera exécuté que la requête soit un succès ou un échec
     });
+    
+    
+    
 </script>
