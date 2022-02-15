@@ -24,7 +24,11 @@ namespace ServiceDAL.BusinessObjet
         public virtual Type Type { get; set; }
         public virtual Categorie Categorie { get; set; }
         public virtual Personne Personne { get; set; }
+
         [NotMapped]
         public int nbcom { get; set; }
+
+        [NotMapped]
+        public int isfav { get; set; }
     }
 }
