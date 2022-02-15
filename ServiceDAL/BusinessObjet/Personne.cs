@@ -15,6 +15,7 @@ namespace ServiceDAL.BusinessObjet
         public DateTime DateNaissance { get; set; }        
         public int Genre { get; set; }
         public string PasswordHash { get; set; }
+        public string IconProfile { get; set; }
         public string Mail { get; set; }
         [ForeignKey("Adresse")]
         public int IdAdresse { get; set; }
