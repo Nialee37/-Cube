@@ -60,9 +60,7 @@ namespace ServiceDALTests.CRUDTests
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie,
-                //IdPersonne = 2,
-                //Personne = UnePersonne
+                Categorie = UneCategorie
 
             }); 
             Manager.Add(new Ressources()
@@ -76,9 +74,7 @@ namespace ServiceDALTests.CRUDTests
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie,
-                //IdPersonne = 2,
-                //Personne = UnePersonne
+                Categorie = UneCategorie
 
             });
             long actual = Manager.GetAll().Count;

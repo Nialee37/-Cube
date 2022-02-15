@@ -45,7 +45,6 @@ namespace ServiceDAL.AccessLayer
         public virtual DbSet<Personne> Personnes { get; set; }
         public virtual DbSet<Commentaire> Commentaire { get; set; }
         public virtual DbSet<Ressources> Ressources { get; set; }
-        public virtual DbSet<LinkRessCat> LinkRessCat { get; set; }
         public virtual DbSet<Categorie> Categorie { get; set; }
         public virtual DbSet<Type> Type { get; set; }
         public virtual DbSet<Historique> Historique { get; set; }

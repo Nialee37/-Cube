@@ -149,12 +149,6 @@ namespace WebApp.Controllers
             
             Ressources ressource = Service.RessourcesManager.Get(id);
 
-            //if((ressource.idCreator == userConnected.id && ressource.validate == false) || (userConnected.Roles.Libelle =="SuperAdministrateur" || userConnected.Roles.Libelle == "Administrateur"))
-            //{
-            //    return View("Edit", ressource);
-            //}
-            //return View("index");
-
             return View("Edit", ressource);
         }
 

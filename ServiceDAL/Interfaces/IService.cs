@@ -16,7 +16,7 @@ namespace ServiceDAL.Interfaces
         HistoriqueManager HistoriqueManager { get; }
         FavoriManager FavoriManager { get; }
         RessourcesManager  RessourcesManager { get; }
-        void Dispose();
+        new void Dispose();
 
     }
 }
