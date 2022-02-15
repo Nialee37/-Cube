@@ -74,6 +74,13 @@ html {
   min-height: 100%;
 }
 
+.card-photo i {
+    font-size: 10vw;
+    color: white;
+    text-align: center;
+    padding: 5%;
+}
+
 body {
   /* Margin bottom by footer height */
   /* margin-bottom: 60px; */
