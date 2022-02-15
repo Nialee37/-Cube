@@ -54,5 +54,15 @@ namespace ServiceDAL.AccessLayer
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Ville> Villes { get; set; }
 
+        #region Required
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ressources>()
+                    .HasRequired(c => c.Personne)
+                    .WithMany()
+                    .WillCascadeOnDelete(false);
+        }
+        #endregion
+
     }
 }

@@ -54,7 +54,7 @@ $(document).ready(function(){
                                                 +'</div>'
                                                 +'<div class="data">'
                                                     +' <div class="content">'
-                                                        +'<span class="author">'+data[i].nomPersonne+'</span>'
+                                                        +'<span class="author">'+data[i].personne.prenom+' '+data[i].personne.nom+'</span>'
                                                         +'<h1 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h1>'
                                                         +'<p class="text">Catégorie : '+data[i].categorie.libelle+'</p>'
                                                         +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
@@ -70,7 +70,8 @@ $(document).ready(function(){
                                         +'</div>'
                                      +'</div>');
         }
-        $(".addFav").on("click", function() { alert()
+        $(".addFav").on("click", function() { 
+            var thisFav = $(this);
                 $.ajax({
                         //L'URL de la requête 
                         url: "Ressource/Addfav",
@@ -78,6 +79,11 @@ $(document).ready(function(){
                         method: "GET",
                         data: "id=" + $(this).data("id")
                 }).done(function(response){
+                    if(response){
+                        thisFav.removeClass("far").addClass("fas");
+                    }else {
+                        thisFav.removeClass("fas").addClass("far");
+                    }
                     console.log(response);
                 })
         });

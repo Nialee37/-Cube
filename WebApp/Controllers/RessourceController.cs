@@ -86,7 +86,7 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
 
-            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.NomPersonne == (userConnected.Nom +" "+ userConnected.Prenom)).ToList();
+            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IdPersonne == (userConnected.Id)).ToList();
             return Json(mesressources);
         }
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
@@ -134,8 +134,8 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
-            ressource.NomPersonne = userConnected.Nom +" "+ userConnected.Prenom;
             ressource.IsValidate = false;
+            ressource.IdPersonne = userConnected.Id;
             Service.RessourcesManager.Add(ressource);
 
             Ressources ressourcetemp = (Ressources)Service.RessourcesManager.GetAll().OrderByDescending(x => x.Date).FirstOrDefault();

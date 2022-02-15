@@ -56,11 +56,12 @@ namespace ServiceDALTests.CRUDTests
                 CheminAcces = "unCheminDacces1",
                 Source = "uneSource1",
                 IsValidate = true,
-                NomPersonne = "NomPersonne1",
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie
+                Categorie = UneCategorie,
+                IdPersonne = 2,
+                Personne = UnePersonne
 
             }); 
             Manager.Add(new Ressources()
@@ -70,11 +71,12 @@ namespace ServiceDALTests.CRUDTests
                 CheminAcces = "unCheminDacces2",
                 Source = "uneSource2",
                 IsValidate = true,
-                NomPersonne = "NomPersonne2",
                 IdType = 2,
                 Type = UnType,
                 IdCategorie = 2,
-                Categorie = UneCategorie
+                Categorie = UneCategorie,
+                IdPersonne = 2,
+                Personne = UnePersonne
 
             });
             long actual = Manager.GetAll().Count;
