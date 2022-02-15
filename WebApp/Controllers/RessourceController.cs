@@ -74,7 +74,7 @@ namespace WebApp.Controllers
                 if(oldfav != null)
                 {
                     Service.FavoriManager.DeleteObj(oldfav);
-                    return 2;
+                    return 0;
                 }
 
                 Favori fav = new Favori();

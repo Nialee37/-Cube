@@ -1,65 +1,74 @@
 ﻿@model ServiceDAL.BusinessObjet.Ressources
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Création d'une ressource";
 }
+@section Styles {
+    <link rel='stylesheet' href='~/css/box_form.css'>
+}
+<div class="container center-element">
+    <div class="row py-5 mt-4 align-items-center">
+        <!-- Logo -->
+        <div class="col-md-12 col-lg-3 pr-lg-5 mb-5 mb-md-0 card-photo">
+            <i class="logo-submit img-logo fas fa-book-reader"></i>
+        </div>
 
-<h1>Create</h1>
-
-<h4>Ressources</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-      
-            <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CheminAcces" class="control-label"></label>
-                <input asp-for="CheminAcces" class="form-control" />
-                <span asp-validation-for="CheminAcces" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Source" class="control-label"></label>
-                <input asp-for="Source" class="form-control" />
-                <span asp-validation-for="Source" class="text-danger"></span>
-            </div>
-
-              <div class="col-md-12">
-              @*  <div class="AfficheGeneral">
-                    <span><i class="fas fa-building"></i>Type de ressource : @Html.Raw(new SelectList(ViewBag.ListType,"Value", "Text").Where(x => x.Value == Model.IdType.ToString()).First().Text)</span>
-                </div>*@
-                <div class="form-group EditGeneral">
-                    <div class="input-icon"><i class="fas fa-city"></i></div>
-                    <select required asp-for="IdType" class="form-control verifForm" asp-items="@(new SelectList(ViewBag.ListType,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner un type de ressource</option></select>
-                    <div asp-validation-for="IdType" class="invalid-feedback fw-bold"></div>
-                </div>
-            </div>
-
-
-                <div class="col-md-12">
-                @*<div class="AfficheGeneral">
-                    <span><i class="fas fa-building"></i>Catégorie de ressource : @Html.Raw(new SelectList(ViewBag.ListCategories,"Value", "Text").Where(x => x.Value == Model.IdCategorie.ToString()).First().Text)</span>
-                </div>*@
-                <div class="form-group EditGeneral">
-                    <div class="input-icon"><i class="fas fa-city"></i></div>
-                    <select required asp-for="IdCategorie" class="form-control verifForm" asp-items="@(new SelectList(ViewBag.ListCategories,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
-                    <div asp-validation-for="IdCategorie" class="invalid-feedback fw-bold"></div>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        <!-- Formulaire d'inscription -->
+        <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <form class="form-horizontal" asp-action="Create">
+                 <h1>Création d'une ressource</h1>
+                 <div class="div-general">
+                     <h2>Ressources</h2>
+                     <hr />
+                     <div class="row">
+                        <!-- Nom -->
+                        <div class="col-md-6">                        
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
+                                <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" required/>
+                                <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- CheminAcces -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
+                                <input asp-for="CheminAcces" class="form-control verifForm" data-nom="CheminAcces" placeholder="Chemin accès" required/>
+                                <div asp-validation-for="CheminAcces" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Source -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
+                                <input asp-for="Source" class="form-control verifForm" data-nom="Source" placeholder="Source" required/>
+                                <div asp-validation-for="Source" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- IdType -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-file"></i></div>
+                                <select required class="form-control verifForm" id="IdType" data-nom="IdType" asp-for="IdType" asp-items="@(new SelectList(ViewBag.ListType,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un type de ressource</option></select>
+                                <div asp-validation-for="IdType" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- IdCategorie -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-filter"></i></div>
+                                <select required class="form-control verifForm" id="IdCategorie" data-nom="IdCategorie" asp-for="IdCategorie" asp-items="@(new SelectList(ViewBag.ListCategories,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
+                                <div asp-validation-for="IdCategorie" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Bouton submit -->
+                        <div class="col-md-12 submit-btn">
+                            <button class="btn signin" type="submit" id="login-btn">Créer la ressource !</button>
+                        </div>
+                   </div>
+               </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
