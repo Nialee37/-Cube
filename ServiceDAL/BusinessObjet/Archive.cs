@@ -5,12 +5,12 @@ namespace ServiceDAL.BusinessObjet
 {
     public class Archive
     {
-
         [Key]
+        [ForeignKey("Personne")]
         [Column(Order = 0)]
         public int IdPersonne { get; set; }
-
         [Key]
+        [ForeignKey("Ressources")]
         [Column(Order = 1)]
         public int IdRessource { get; set; }
 
