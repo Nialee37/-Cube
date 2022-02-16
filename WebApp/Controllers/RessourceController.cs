@@ -70,7 +70,7 @@ namespace WebApp.Controllers
             {
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
                 //on delete pour ne pas avoir de doublon
-                Favori oldfav = Service.FavoriManager.Get(id, userConnected.Id);
+                Favori oldfav = Service.FavoriManager.Get(userConnected.Id,id);
                 if(oldfav != null)
                 {
                     Service.FavoriManager.DeleteObj(oldfav);
