@@ -1,5 +1,5 @@
 ﻿var checkFinalPassword = false;
-
+var checkFDate = false;
 /**
  * Fonction qui permet de vérifier si le mot de passe est valide ou non.
  * @param {*} password le mot de passe a vérifié.
@@ -160,7 +160,7 @@ function checkOnInput() {
 }
 
 function validForm() {
-    if (checkFinalPassword && checkAllInput())
+    if (checkFinalPassword && checkAllInput() && checkFDate)
         $("#login-btn").removeAttr("disabled");
     else
         $("#login-btn").attr("disabled", "disabled");
@@ -188,10 +188,52 @@ function checkAllInput() {
     }
 }
 
+function checkDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; 
+    var yyyy = today.getFullYear();
 
+    yyyy = yyyy - 13;
+    if (mm < 10) {
+        mm = "0" + mm;
+    }
+
+    $(".dateNaissance").attr("max", yyyy + "-" + mm + "-" + dd);
+
+    $(".dateNaissance").on("change", function () {
+        var dateSaisie = new Date($(this).val());
+        var dd = dateSaisie.getDate();
+        var mm = dateSaisie.getMonth() + 1;
+        var yyyy = dateSaisie.getFullYear();
+
+        var today = new Date();
+        var Tdd = today.getDate();
+        var Tmm = today.getMonth() + 1;
+        var Tyyyy = today.getFullYear();
+        Tyyyy = Tyyyy - 13;
+        if (yyyy == Tyyyy) {
+            if (mm == Tmm) {
+                if (dd <= Tdd) {
+                    checkFDate = true;
+                } else {
+                    checkFDate = false;
+                }
+            } else if (mm < Tmm) {
+                checkFDate = true;
+            } else {
+                checkFDate = false;
+            }
+        } else if (yyyy < Tyyyy) {
+            checkFDate = true;
+        } else {
+            checkFDate = false;
+        }
+        validForm();
+    });
+}
 
 $(document).ready(function () {
-    
     var checkPass = false;
     $("#confirmPassword").keyup(function () {
         if (checkPass) {
@@ -236,4 +278,5 @@ $(document).ready(function () {
     });
 
     checkOnInput();
+    checkDate();
 });
