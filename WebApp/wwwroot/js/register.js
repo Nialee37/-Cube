@@ -193,13 +193,14 @@ function checkDate() {
     var dd = today.getDate();
     var mm = today.getMonth() + 1; 
     var yyyy = today.getFullYear();
-
+    ymin = yyyy - 150;
     yyyy = yyyy - 13;
     if (mm < 10) {
         mm = "0" + mm;
     }
 
     $(".dateNaissance").attr("max", yyyy + "-" + mm + "-" + dd);
+    $(".dateNaissance").attr("min", ymin + "-" + mm + "-" + dd);
 
     $(".dateNaissance").on("change", function () {
         var dateSaisie = new Date($(this).val());
@@ -211,21 +212,40 @@ function checkDate() {
         var Tdd = today.getDate();
         var Tmm = today.getMonth() + 1;
         var Tyyyy = today.getFullYear();
+        Tmin = Tyyyy - 150;
         Tyyyy = Tyyyy - 13;
-        if (yyyy == Tyyyy) {
+        
+
+        if (yyyy == Tmin) {
             if (mm == Tmm) {
-                if (dd <= Tdd) {
+                if (dd >= Tdd) {
                     checkFDate = true;
                 } else {
                     checkFDate = false;
                 }
-            } else if (mm < Tmm) {
+            } else if (mm > Tmm) {
                 checkFDate = true;
             } else {
                 checkFDate = false;
             }
-        } else if (yyyy < Tyyyy) {
-            checkFDate = true;
+        } else if (yyyy > Tmin) {
+            if (yyyy == Tyyyy) {
+                if (mm == Tmm) {
+                    if (dd <= Tdd) {
+                        checkFDate = true;
+                    } else {
+                        checkFDate = false;
+                    }
+                } else if (mm < Tmm) {
+                    checkFDate = true;
+                } else {
+                    checkFDate = false;
+                }
+            } else if (yyyy < Tyyyy) {
+                checkFDate = true;
+            } else {
+                checkFDate = false;
+            }
         } else {
             checkFDate = false;
         }
