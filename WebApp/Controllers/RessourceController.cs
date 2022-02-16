@@ -64,6 +64,13 @@ namespace WebApp.Controllers
             return Json(listressource);
         }
 
+        public JsonResult GetAllressourcetovalidate()
+        {
+            List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
+
+            return Json(listressource);
+        }
+        
         public int Addfav(int id)
         {
             try
@@ -87,6 +94,17 @@ namespace WebApp.Controllers
             {
                 return 99;
             }
+        }
+        
+        public int validateressource(int id)
+        {
+            Ressources mesressources = Service.RessourcesManager.Get(id);
+
+            mesressources.IsValidate = true;
+
+            Service.RessourcesManager.Update(mesressources);
+            return 1;
+
         }
 
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 

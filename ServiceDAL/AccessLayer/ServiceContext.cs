@@ -19,7 +19,7 @@ namespace ServiceDAL.AccessLayer
         }
 
         public ServiceContext()
-             : base("server=(localdb)\\mssqllocaldb;database=ServiceDal_Local;Trusted_Connection=True;")
+             : base("server=(localdb)\\mssqllocaldb;database=ServiceDal_Local;Trusted_Connection=True;MultipleActiveResultSets=true;")
         {
             SetConfiguration();
         }

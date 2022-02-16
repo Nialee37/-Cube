@@ -35,6 +35,10 @@ namespace ServiceDAL.BusinessLayer
         {
             return Service.DbContext.Ressources.ToList();
         }
+        public IList<Ressources> Getallfalse()
+        {
+            return Service.DbContext.Ressources.Where(x => x.IsValidate == false).ToList();
+        }
         //public IList<Ressources> GetAllByIdPersonne(int id )
         //{
         //    return Service.DbContext.Ressources.ToList().Where(x => x.CreatorId == id);

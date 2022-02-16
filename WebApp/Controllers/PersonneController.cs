@@ -24,6 +24,7 @@ namespace WebApp.Controllers
         // GET: PersonneController
         public ActionResult Index()
         {
+            ViewBag.dada = Service.RessourcesManager.Getallfalse();
             return View();
         }
 
