@@ -14,7 +14,8 @@
 
             <a target="_blank" class="btn btn-success btnCreate" href="/Ressource/Create"><i class="fas fa-book"></i> Créé une ressource</a>
 
-            <h2>Liste de mes ressources</h2>
+            <div id="ressourceExist" class="d-none"><h2>Liste de mes ressources</h2></div>
+            <div id="ressourceNone" class="center-element d-none" style="padding: 150px 0px;"><h2>Vous n'avez publier aucune ressources ! </h2></div>
         </div>
         <div class="row d-flex justify-content-evenly lesRessources">
             
@@ -40,6 +41,13 @@ $(document).ready(function(){
         //let data = JSON.stringify(response);
         let data = response;
         console.log(data);
+        if(data.length > 0) {
+            $("#ressourceNone").addClass("d-none");
+            $("#ressourceExist").removeClass("d-none");
+        }else {
+            $("#ressourceNone").removeClass("d-none");
+            $("#ressourceExist").addClass("d-none");
+        }
         for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
             var month = date.toLocaleString('FR-FR', { month: 'short' });
@@ -63,7 +71,7 @@ $(document).ready(function(){
                                                     +'<ul class="menu-content">'
                                                         +'<li><a href="Ressource/Edit?id='+data[i].id+'" class="editRessource fas fa-pen"></a></li>'
                                                         +'<li><button class="far fa-comment"><span>8</span></button></li>'
-                                                        +'<li><button data-id="'+ data[i].id +'" class="addFav far fa-star"></button></li>'
+                                                        +'<li><button data-id="'+ data[i].id +'" class="addFav '+(data[i].isfav ? "fas" : "far")+' fa-star"></button></li>'
                                                     +'</ul>'
                                                 +'</div>'
                                             +'</div>'
