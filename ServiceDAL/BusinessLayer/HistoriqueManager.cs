@@ -13,6 +13,13 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return historique;
         }
+        public bool Delete(int idpersonne , int idressource)
+        {
+            Historique historique = Service.DbContext.Historique.Where(p => p.IdPersonne == idpersonne && p.IdRessource == idressource).FirstOrDefault();
+            Service.DbContext.Historique.Remove(historique);
+            Service.DbContext.SaveChanges();
+            return true;
+        }
         public bool Delete(int id)
         {
             Historique historique = Service.DbContext.Historique.Find(id);
@@ -20,7 +27,6 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return true;
         }
-
 
         public List<Historique> Getal(int idP)
         {
