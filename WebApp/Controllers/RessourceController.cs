@@ -38,9 +38,9 @@ namespace WebApp.Controllers
 
         public JsonResult GetHistorique()
         {
-            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
             List<Ressources> listressource = new List<Ressources>();
-            List<Historique> listfav= Service.HistoriqueManager.Getal(userConnected.Id);
+            List<Historique> listfav= Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
 
             foreach (Historique item in listfav)
             {
@@ -255,7 +255,17 @@ namespace WebApp.Controllers
                     histotamere.Date = DateTime.Now;
                     
                     Service.HistoriqueManager.Add(histotamere);
-                } // si c'est null on ajoute sinon on y affiche simplement
+                }
+                else
+                {
+                    Service.HistoriqueManager.Delete(userConnected.Id, histoold.IdRessource);
+                    Historique histotamere = new Historique();
+                    histotamere.IdPersonne = userConnected.Id;
+                    histotamere.IdRessource = ressource.Id;
+                    histotamere.Date = DateTime.Now;
+
+                    Service.HistoriqueManager.Add(histotamere);
+                }
             }
 
             switch (ressource.IdType)
