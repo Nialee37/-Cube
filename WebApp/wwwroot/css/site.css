@@ -106,9 +106,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .div-main {
-    padding-top: 3%;
     height: 100%;
     position: relative;
+    padding-top: 20px;
 }
 
 .center-element-page {
