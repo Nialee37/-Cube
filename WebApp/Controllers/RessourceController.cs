@@ -141,7 +141,7 @@ namespace WebApp.Controllers
 
                 mesfavoris = (List<Favori>)Service.FavoriManager.Getal(userConnected.Id);
 
-                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
+                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date);
                 for (int i = 0; i < mesressources.Count; i++)
                 {
                     if (mesfavoris.Find(x => x.IdPersonne == userConnected.Id && x.IdRessource == mesressources[i].Id) != null)
@@ -158,7 +158,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll();
+                List<Ressources> mesressources = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
                 return Json(mesressources);
             }
            
