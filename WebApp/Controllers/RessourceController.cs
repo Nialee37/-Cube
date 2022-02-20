@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Web;
 using static System.Net.WebRequestMethods;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace WebApp.Controllers
 {
@@ -209,22 +210,67 @@ namespace WebApp.Controllers
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
 
-            var fileName = Path.GetFileName(dadadadadad.FileName);
-
-
-            
-            var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName);
-            if (System.IO.File.Exists(path))
-                System.IO.File.Delete(path);
-            using (Stream fileStream = new FileStream(path, FileMode.Create))
+            if(dadadadadad != null)
             {
-                 dadadadadad.CopyToAsync(fileStream);
-            }
-                ressource.CheminAcces = path;
-    
-            Service.RessourcesManager.Add(ressource);
+                var fileName = Path.GetFileName(dadadadadad.FileName);
 
-            return Redirect("/Ressource");
+                
+                string extensstion = fileName.Split(".").Last().ToLower(); //get l'extenstion du docuement
+
+                switch (extensstion)
+                {
+                    case "docx": //cas word
+                        ressource.IdType = 3;  
+                        break;
+
+                    case "mp4": //cas vidéo
+                        ressource.IdType= 5;
+                        break;
+
+                    case "png": //cas image
+                        ressource.IdType = 5;
+                        break;
+
+                    case "jpg": //cas image
+                        ressource.IdType = 6;
+                        break;
+
+                    case "xlsx": //cas image
+                        ressource.IdType = 6;
+                        break;
+
+                    case "pdf": //cas image
+                        ressource.IdType = 4;
+                        break;
+
+                    default: //cas ou c'est la merde
+                        ressource.IdType = 7;
+                        break;
+                }
+
+                
+
+                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName + "_" + BCryptNet.HashString(dadadadadad.FileName) + "." + extensstion);
+                if (System.IO.File.Exists(path))
+                    System.IO.File.Delete(path);
+                using (Stream fileStream = new FileStream(path, FileMode.Create))
+                {
+                    dadadadadad.CopyToAsync(fileStream);
+                }
+                ressource.CheminAcces = path;
+
+
+                Service.RessourcesManager.Add(ressource);
+
+                return Redirect("/Ressource");
+            }
+            else
+            {
+                //faire le message d'erreur visuellement
+                ViewBag.message = "Il n'y a pas de document lié a votre ressource.";
+                return Redirect("/Create");
+            }
+                
         }
 
         // GET: RessourceController/Edit/5
