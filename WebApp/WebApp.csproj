@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ServiceDAL\ServiceDAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PDF_FOLDER\" />
+  </ItemGroup>
+
 </Project>

@@ -15,7 +15,7 @@
 
         <!-- Formulaire d'inscription -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <form class="form-horizontal" asp-action="Create">
+            <form class="form-horizontal" asp-action="Create" enctype="multipart/form-data">
                  <h1>Création d'une ressource</h1>
                  <div class="div-general">
                      <h2>Ressources</h2>
@@ -65,6 +65,12 @@
                         <div class="col-md-12 submit-btn">
                             <button class="btn signin" type="submit" id="login-btn">Créer la ressource !</button>
                         </div>
+
+                      <label for="file">Choose a profile picture:</label>
+
+<input type="file"
+       id="file" name="dadadadadad"
+       accept="image/png, image/jpeg">
                    </div>
                </div>
             </form>

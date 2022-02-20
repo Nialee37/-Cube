@@ -6,8 +6,11 @@ using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Web;
+using static System.Net.WebRequestMethods;
 
 namespace WebApp.Controllers
 {
@@ -199,12 +202,26 @@ namespace WebApp.Controllers
         // POST: RessourceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ressources ressource)
+        public ActionResult Create(Ressources ressource, IFormFile dadadadadad)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
+
+            var fileName = Path.GetFileName(dadadadadad.FileName);
+
+
+            
+            var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName);
+            if (System.IO.File.Exists(path))
+                System.IO.File.Delete(path);
+            using (Stream fileStream = new FileStream(path, FileMode.Create))
+            {
+                 dadadadadad.CopyToAsync(fileStream);
+            }
+                ressource.CheminAcces = path;
+    
             Service.RessourcesManager.Add(ressource);
 
             return Redirect("/Ressource");
