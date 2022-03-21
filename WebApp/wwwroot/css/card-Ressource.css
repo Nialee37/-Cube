@@ -30,7 +30,7 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    background-color: #77d7b9;
+    background-color: #ff5964;
 }
 
 .card .isFavS {
@@ -70,6 +70,7 @@
 }
 
 .card .wrapper {
+    border-radius: 10px;
     background-color: #fff;
     min-height: 400px;
     width: 14rem;
@@ -121,9 +122,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #77d7b9;
+    background-color: #ff5964;
     color: #fff;
     padding: 0.8em;
+    border-radius: 10px 0 10px 0;
 }
 
 .ressourceCard .date span {
@@ -207,7 +209,7 @@
 .ressourceCard .menu-content li {
     width: 33.333333%;
     float: left;
-    background-color: #77d7b9;
+    background-color: #ff5964;
     height: 60px;
     position: relative;
 }
@@ -227,3 +229,30 @@
 .ressourceCard .title {
     font-size: 1rem !important;
 }
+
+.lesRessources {
+    overflow: auto;
+    height: 460px;
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  .lesRessources {
+    scrollbar-width: auto;
+    scrollbar-color: #ff5964 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  .lesRessources::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .lesRessources::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  .lesRessources::-webkit-scrollbar-thumb {
+    background-color: #ff5964;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }

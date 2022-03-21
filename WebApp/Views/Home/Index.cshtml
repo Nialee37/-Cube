@@ -18,14 +18,14 @@
 </div>
 }
 
-<div class="text-center">
-   <h1 class="display-4">Bienvenue @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
-</div>
-<div id="container" class="container">
-    <div class="row cardPage mt-5">
+
+<div id="container" class="container cardPage p-0">
+    <div class="center-element text-center">
+        <h1 class="display-4 txt-hello">Bienvenue @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
+    </div>
+    <div class="row mt-5">
         <div class="titleRessource">
-            <h1 class="text-center">Dernière ressources</h1>
-            <h2>Liste des dernières ressources</h2>
+            <h2 class="text-center">Liste des dernières ressources</h2>
         </div>
         <div class="row d-flex justify-content-evenly lesRessources">
             
@@ -75,7 +75,7 @@ $(document).ready(function(){
                                                         +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
                                                     +'</div>'
                                                     +'<input type="checkbox" id="show-menu'+i+'"/>'
-                                                    +'<ul class="menu-content">'
+                                                    +'<ul class="menu-content center-element">'
                                                         +(user != "null" && user != "" ? (userId == data[i].personne.id ? '<li><a href="Ressource/Edit?id='+data[i].id+'" class="editRessource fas fa-pen"></a></li>' : '') : '')
                                                         +'<li><button class="far fa-comment"><span>8</span></button></li>'
                                                         +(user != "null" && user != "" ? '<li><button data-id="'+ data[i].id +'" class="addFav '+(data[i].isfav ? "fas" : "far")+' fa-star"></button></li>' : '')

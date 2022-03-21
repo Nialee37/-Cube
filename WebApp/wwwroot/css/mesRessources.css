@@ -1,8 +1,10 @@
 ﻿.cardPage {
     box-shadow: #00000085 1px 1px 10px 1px;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 30px 10px;
     position: relative;
+    background-color:white;
+    margin-top: 10px;
 }
 
 .cardPage .btnCreate {
@@ -12,4 +14,8 @@
 }
 .lesRessources > .mb {
     margin: 10px 10px;
+}
+
+.titleRessource {
+    margin-bottom: 40px;
 }

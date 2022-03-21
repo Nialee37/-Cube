@@ -1,10 +1,10 @@
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --first-color: #FF5964;
+    --first-color: #1b1b1b;
     --first-color-light: #AFA5D9;
     --white-color: #F7F6FB;
-    --dark-color: #1b1b1b;
+    --dark-color: #FF5964;
     --body-font: 'Sofia-light', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 10000
@@ -30,7 +30,7 @@ a {
 }
 
 .dropdown-toggle {
-    color: #FF5964;
+    color: #432c2c;
 }
 
 .header {
@@ -67,7 +67,7 @@ a {
     width: var(--nav-width);
     height: 100vh;
     background-color: var(--first-color);
-    padding: .5rem 1rem 0 0;
+    padding: .5rem .5rem 0 0;
     transition: .5s;
     z-index: var(--z-fixed)
 }
@@ -146,7 +146,7 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-    body {
+    .div-main {
         /*margin: calc(var(--header-height) + 1rem) 0 0 0;*/
         padding-top: calc(var(--header-height) + 1rem);
         padding-left: calc(var(--nav-width) + 2rem)
@@ -159,7 +159,7 @@ a {
 
     .l-navbar {
         left: 0;
-        padding: 0.2rem 1rem 0 0
+        padding: 0.2rem .5rem 0 0
     }
 
     .show-nav {
@@ -174,6 +174,7 @@ a {
 .logo {
     width: 40px;
     height: 40px;
+    border-radius:50%;
 }
 
 .title-logo {
