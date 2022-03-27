@@ -203,16 +203,16 @@ namespace WebApp.Controllers
         // POST: RessourceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ressources ressource, IFormFile dadadadadad)
+        public ActionResult Create(Ressources ressource, IFormFile file)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
 
-            if(dadadadadad != null)
+            if(file != null)
             {
-                var fileName = Path.GetFileName(dadadadadad.FileName);
+                var fileName = Path.GetFileName(file.FileName);
 
                 
                 string extensstion = fileName.Split(".").Last().ToLower(); //get l'extenstion du docuement
@@ -250,12 +250,12 @@ namespace WebApp.Controllers
 
                 
 
-                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName + "_" + BCryptNet.HashString(dadadadadad.FileName) + "." + extensstion);
+                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion);
                 if (System.IO.File.Exists(path))
                     System.IO.File.Delete(path);
                 using (Stream fileStream = new FileStream(path, FileMode.Create))
                 {
-                    dadadadadad.CopyToAsync(fileStream);
+                    file.CopyToAsync(fileStream);
                 }
                 ressource.CheminAcces = path;
 
@@ -268,7 +268,7 @@ namespace WebApp.Controllers
             {
                 //faire le message d'erreur visuellement
                 ViewBag.message = "Il n'y a pas de document lié a votre ressource.";
-                return Redirect("/Create");
+                return Redirect("/Ressource/Create");
             }
                 
         }

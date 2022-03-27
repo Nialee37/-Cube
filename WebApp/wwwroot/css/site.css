@@ -122,6 +122,7 @@ h1,h2,h3,h4,h5,h6 {
     display: flex;
     align-content: center;
     justify-content: center;
+    align-items: center;
 }
 
 .wave {
@@ -138,4 +139,22 @@ h1,h2,h3,h4,h5,h6 {
     padding: 0 20px 10px;
     color: #432c2c;
     display: inline;
+}
+
+.dropdown-menu-dark {
+    background-color: #1b1b1b;
+}
+
+/* Style for input file */
+.inputfile {
+    width: 0.1px !important;
+    height: 0.1px !important;
+    opacity: 0;
+    overflow: hidden !important;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+   color: #b5b5b5;
 }
