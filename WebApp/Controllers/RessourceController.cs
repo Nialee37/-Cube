@@ -248,16 +248,17 @@ namespace WebApp.Controllers
                         break;
                 }
 
-                
 
-                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion);
+                var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
+                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileNewName);
                 if (System.IO.File.Exists(path))
                     System.IO.File.Delete(path);
                 using (Stream fileStream = new FileStream(path, FileMode.Create))
                 {
                     file.CopyToAsync(fileStream);
                 }
-                ressource.CheminAcces = path;
+                ressource.CheminAcces = "../WebApp/PDF_FOLDER/";
+                ressource.Source = fileNewName;
 
 
                 Service.RessourcesManager.Add(ressource);

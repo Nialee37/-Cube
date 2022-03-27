@@ -71,7 +71,7 @@ $(document).ready(function(){
                                                     +' <div class="content">'
                                                         +'<span class="author">'+data[i].personne.prenom+' '+data[i].personne.nom+'</span>'
                                                         +'<h1 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h1>'
-                                                        +'<p class="text">Catégorie : '+data[i].categorie.libelle+'</p>'
+                                                        +'<p class="text">Catégorie : <span class="badge bg-danger">'+data[i].categorie.libelle+'</span></p>'
                                                         +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
                                                     +'</div>'
                                                     +'<input type="checkbox" id="show-menu'+i+'"/>'

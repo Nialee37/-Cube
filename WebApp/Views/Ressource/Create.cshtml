@@ -29,30 +29,30 @@
                                 <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
                             </div>
                         </div>
-                        <!-- CheminAcces -->
+                        @*<!-- CheminAcces -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
                                 <input asp-for="CheminAcces" class="form-control verifForm" data-nom="CheminAcces" placeholder="Chemin accès" required/>
                                 <div asp-validation-for="CheminAcces" class="invalid-feedback fw-bold"></div>
                             </div>
-                        </div>
-                        <!-- Source -->
+                        </div>*@
+@*                        <!-- Source -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-icon"><i class="fas fa-calendar-week"></i></div>
                                 <input asp-for="Source" class="form-control verifForm" data-nom="Source" placeholder="Source" required/>
                                 <div asp-validation-for="Source" class="invalid-feedback fw-bold"></div>
                             </div>
-                        </div>
-                        <!-- IdType -->
+                        </div>*@
+@*                        <!-- IdType -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="input-icon"><i class="fas fa-file"></i></div>
                                 <select required class="form-control verifForm" id="IdType" data-nom="IdType" asp-for="IdType" asp-items="@(new SelectList(ViewBag.ListType,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un type de ressource</option></select>
                                 <div asp-validation-for="IdType" class="invalid-feedback fw-bold"></div>
                             </div>
-                        </div>
+                        </div>*@
                         <!-- IdCategorie -->
                         <div class="col-md-6">
                             <div class="form-group">
@@ -62,14 +62,13 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group center-element">
                                 <div class="input-icon"><i class="fas fa-file"></i></div>
                                 <input class="form-control inputfile" type="file" id="file" accept="image/png, image/jpeg" name="file" placeholder="Glisser ou sélectionner le fichier à upload">
                                 <label for="file">Glisser ou sélectionner le fichier à upload</label>
                                 <div class="invalid-feedback fw-bold"></div>
                             </div>
-                          
                         </div>
                         <!-- Bouton submit -->
                         <div class="col-md-12 submit-btn">
