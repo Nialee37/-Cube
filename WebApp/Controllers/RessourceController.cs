@@ -228,18 +228,18 @@ namespace WebApp.Controllers
                         break;
 
                     case "png": //cas image
-                        ressource.IdType = 5;
+                        ressource.IdType = 6;
                         break;
 
                     case "jpg": //cas image
                         ressource.IdType = 6;
                         break;
 
-                    case "xlsx": //cas image
-                        ressource.IdType = 6;
+                    case "xlsx": //cas excel
+                        ressource.IdType = 2;
                         break;
 
-                    case "pdf": //cas image
+                    case "pdf": //cas pdf
                         ressource.IdType = 4;
                         break;
 
