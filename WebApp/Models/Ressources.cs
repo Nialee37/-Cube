@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceDAL.BusinessObjet;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models
@@ -12,6 +13,10 @@ namespace WebApp.Models
         public string CheminAcces { get; set; }
         public string Source { get; set; }
         public int IdType { get; set; }
-        public virtual Type Type { get; set; }
+        public int IdCategorie { get; set; }
+        public int IdPersonne { get; set; }
+        public virtual ServiceDAL.BusinessObjet.Type Type { get; set; }
+        public virtual Categorie Categorie { get; set; }
+        public virtual Personne Personne { get; set; }
     }
 }

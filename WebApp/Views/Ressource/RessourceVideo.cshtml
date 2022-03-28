@@ -1,2 +1,60 @@
-﻿<p> COUCOU TU VEUX VOIR MA PLANETTE</p>
-<p>video</p>
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@model ServiceDAL.BusinessObjet.Ressources
+@{
+    ViewData["Title"] = Model.Nom;
+    ViewData["Page"] = "Ressource";
+
+    Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+}
+@section Styles {
+    <link rel='stylesheet' href='~/css/maRessource.css'>
+    <link rel='stylesheet' href='~/css/video-js.min.css'>
+}
+
+<div class="box_general_ressource">
+    <div class="row">
+        <div class="col-6"><span>Auteur : @Model.Personne.Prenom @Model.Personne.Nom</span></div>
+        <div class="col-6"><div class="profilPicture"><i class="fas fa-user"></i></div></div>
+    </div>
+    <div class="row">
+        <div class="col-6"><span>Catégorie : @Model.Categorie.Libelle</span></div>
+    </div>
+    <div class="row">
+        <div class="col-6"><span class="fst-italic">Crée le  : @Model.Date</span></div>
+        <div class="col-6 text-end"><span>Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span></div>
+    </div>
+</div>
+
+<div>
+
+</div>
+
+<div class="box_data_ressource">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Titre : @Model.Nom</h1>
+        </div>
+        <div class="col-2 text-end">
+            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger la vidéo</a>
+        </div>
+        <div class="col-12 center-element">
+            <video
+            id="my-video"
+            class="video-js"
+            controls
+            preload="auto"
+            width="824"
+            height="624"
+            data-setup="{}">
+            <source src="@Model.CheminAcces@Model.Source" type="video/@System.IO.Path.GetExtension(Model.CheminAcces + Model.Source).Remove(0,1)" />
+            <p class="vjs-no-js">
+              Pour voir la vidéo merci d'activer javascript sur votre navigateur.
+              <a href="https://videojs.com/html5-video-support/" target="_blank">Type de vidéo supporter par les navigateurs</a>
+            </p>
+          </video>
+        </div>
+    </div>
+</div>
+
+<script src='~/js/video-js.min.js'></script>

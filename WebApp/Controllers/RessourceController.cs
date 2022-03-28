@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Web;
 using static System.Net.WebRequestMethods;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -203,7 +204,7 @@ namespace WebApp.Controllers
         // POST: RessourceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ressources ressource, IFormFile file)
+        public async Task<IActionResult> Create(Ressources ressource, IFormFile file)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             ressource.Date = System.DateTime.Today;
@@ -250,14 +251,14 @@ namespace WebApp.Controllers
 
 
                 var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
-                var path = Path.Combine("../WebApp/PDF_FOLDER/", fileNewName);
+                var path = Path.Combine("../WebApp/wwwroot/PDF_FOLDER/", fileNewName);
                 if (System.IO.File.Exists(path))
                     System.IO.File.Delete(path);
                 using (Stream fileStream = new FileStream(path, FileMode.Create))
                 {
-                    file.CopyToAsync(fileStream);
+                    await file.CopyToAsync(fileStream);
                 }
-                ressource.CheminAcces = "../WebApp/PDF_FOLDER/";
+                ressource.CheminAcces = "/PDF_FOLDER/";
                 ressource.Source = fileNewName;
 
 
@@ -273,6 +274,7 @@ namespace WebApp.Controllers
             }
                 
         }
+
 
         // GET: RessourceController/Edit/5
         public ActionResult Edit(int id)
