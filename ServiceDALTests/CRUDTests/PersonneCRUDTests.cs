@@ -59,6 +59,7 @@ namespace ServiceDALTests.CRUDTests
                 Mail = "email1@test.fr",
                 IdAdresse = 1,
                 IdRoles = 1,
+                IsActivate = true,
                 Adresse = UneAdresse,
                 Roles = UnRoles
             });
@@ -73,6 +74,7 @@ namespace ServiceDALTests.CRUDTests
                 Mail = "email2@test.fr",
                 IdAdresse = 2,
                 IdRoles = 2,
+                IsActivate = true,
                 Adresse = UneAdresse,
                 Roles = UnRoles
             });

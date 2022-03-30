@@ -3,34 +3,49 @@
   ViewData["Page"] = "Dashboard";
 }
 
-<table class="display" width="100%" id="example">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Mail</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+@section Styles {
+    <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+}
+<div class="row justify-content-evenly ">
+    <h1 class="dashboard-title">Dashboard des Administrateurs</h1>
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des utilisateurs</h2>
+        <table class="table table-striped" style="width:100%" id="managePersonne">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Mail</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-
-<table class="display" width="100%" id="example2">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>date</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des publications non valide</h2>
+        <table class="table table-striped" style="width:100%" id="manageRessource">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 <script>
 
 $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#managePersonne').DataTable( {
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
         "ajax": {
             "url": "/Personne/GetAllPersonne",
             "dataSrc": ""
@@ -39,7 +54,8 @@ $(document).ready(function() {
             { "data": "id" },
             { "data": "nom" },
             { "data": "prenom" },
-            { "data": "mail" }
+            { "data": "mail" },
+            { "data": "IsActivate" }
         ],
         "columnDefs":[
             {visible: false, targets: [0]},
@@ -48,6 +64,14 @@ $(document).ready(function() {
                 render: function(data,type,row,meta){
                     return '<a target="_blank" href="/Personne/Edit/' + row.id + '">' + row.nom + '</a>'
                 }
+                
+            },
+            {
+                targets: 4,
+                render: function(data,type,row,meta){
+                    console.log(row);
+                    return (row.isActivate ? '<span class="badge bg-success">Activer</span>' : '<span class="badge bg-danger">Désactiver</span>')
+                }
             }
         ]
 
@@ -55,7 +79,10 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function() {
-    $('#example2').DataTable( {
+    $('#manageRessource').DataTable( {
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
         "ajax": {
             "url": "/Ressource/GetAllressourcetovalidate",
             "dataSrc": ""

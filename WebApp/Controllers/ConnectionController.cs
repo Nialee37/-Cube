@@ -127,6 +127,7 @@ namespace WebApp.Controllers
                 //enregitrement de l'adresse au préalable afin d'avoir l'id
                 user.PasswordHash = BCryptNet.HashPassword(user.PasswordHash); //hashage du password pour save en base de donnée
                 user.IdRoles = 2; //role normal citoyen connecté
+                user.IsActivate = true;
                 user.Roles = Service.RolesManager.Get(user.IdRoles);
 
                 Service.PersonneManager.Add(user);
