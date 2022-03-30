@@ -234,6 +234,20 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EditStatut(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            if (user.IsActivate ==  getUser.IsActivate)
+            {
+                getUser.IsActivate = !user.IsActivate;
+            }
+
+            Service.PersonneManager.Update(getUser);
+            Response.Redirect("/Personne/Edit?id=" + getUser.Id);
+        }
+
         // GET: PersonneController/Delete/5
         public ActionResult Delete(int id)
         {

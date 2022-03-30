@@ -191,32 +191,41 @@
         @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" ) && Model.Id != user.Id)
             {
                <div class="col-md-12 col-lg-9 ml-auto card-register">
-                <form class="form-horizontal" asp-action="EditRole">
-                    <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
-                     <div class="div-general">
-                         <div class="cardTitle">
-                             <h2><i class="fas fa-users"></i> Gestion du role</h2>
-                             <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
-                             <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
-                         </div>
-                         <div class="row">
-                            <!-- Adresse mail -->
-                            <div class="AfficheGeneral">
-                                <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.IdRoles.ToString()).First().Text)</span>
-                            </div>
-                            <div class="form-group EditGeneral" hidden>
-                                <div class="input-icon"><i class="fas fa-users"></i></div>
-                                <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListRoles,"Value", "Text"))"><option value="-1" disabled selected hidden>Type de rôle</option></select>
-                                <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
-                            </div>
-                             <!-- Bouton submit -->
-                            <div class="col-md-12 submit-btn EditGeneral" hidden>
-                                <button class="btn signin" type="submit" id="login-btn">Enregistrer</button>
-                            </div>
+                    <form class="form-horizontal" asp-action="EditRole">
+                        <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+                         <div class="div-general">
+                             <div class="cardTitle">
+                                 <h2><i class="fas fa-users"></i> Gestion du role</h2>
+                                 <button class="editCard editBTN" type="button"><i class="fas fa-pen"></i> Modifier</button>
+                                 <button class="editCard discardBTN" type="button" style="color: red;" hidden><i class="fas fa-times"></i> Annuler</button>
+                             </div>
+                             <div class="row">
+                                <!-- Adresse mail -->
+                                <div class="AfficheGeneral">
+                                    <span>@Html.Raw(new SelectList(ViewBag.ListRoles,"Value", "Text").Where(x => x.Value == Model.IdRoles.ToString()).First().Text)</span>
+                                </div>
+                                <div class="form-group EditGeneral" hidden>
+                                    <div class="input-icon"><i class="fas fa-users"></i></div>
+                                    <select required class="form-control verifForm" asp-for="IdRoles" value="@Model.IdRoles" data-nom="rôle" asp-items="@(new SelectList(ViewBag.ListRoles,"Value", "Text"))"><option value="-1" disabled selected hidden>Type de rôle</option></select>
+                                    <div asp-validation-for="Adresse.Type" class="invalid-feedback fw-bold"></div>
+                                </div>
+                                 <!-- Bouton submit -->
+                                <div class="col-md-12 submit-btn EditGeneral" hidden>
+                                    <button class="btn signin" type="submit" id="login-btn">Enregistrer</button>
+                                </div>
+                           </div>
                        </div>
-                   </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+                <div class="col-md-12 col-lg-9 ml-auto ">
+                    <form class="form-horizontal" asp-action="EditStatut">
+                        <div class="col-md-12 submit-btn EditGeneral">
+                              <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
+                              <input asp-for="IsActivate" type="text" value="@(Model.IsActivate)" hidden />
+                             <button class="btn @(Model.IsActivate ? "btn-danger" : "btn-success")" type="submit" id="statutCompte">@(Model.IsActivate ? "Désactiver le compte" : "Activer le compte")</button>
+                        </div>
+                    </form>
+                </div>
              }   
           }
     </div>
