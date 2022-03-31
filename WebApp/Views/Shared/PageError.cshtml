@@ -1,0 +1,25 @@
+﻿@model WebApp.Models.Error;
+
+@{
+    ViewData["Title"] = "Erreur "+ Model.code_erreur;
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/css/error.css'>
+}
+
+<div class="cont_principal">
+<div class="cont_error ">
+  
+<h1>@Model.code_erreur</h1>  
+  <p>@Model.message</p>
+  </div>
+<div class="cont_aura_1"></div>
+<div class="cont_aura_2"></div>
+</div>
+
+<script>
+    window.onload = function(){
+        document.querySelector('.cont_principal').className= "cont_principal cont_error_active center-element";  
+    }
+</script>

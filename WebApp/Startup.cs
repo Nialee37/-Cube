@@ -47,6 +47,9 @@ namespace WebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseStatusCodePagesWithRedirects("/Error/Http?statusCode={0}");
+
             app.UseStaticFiles();
 
             app.UseRouting();

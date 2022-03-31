@@ -81,24 +81,31 @@ namespace WebApp.Controllers
 
                     if (user != null)
                     {
-                        if (BCryptNet.Verify(password, user.PasswordHash) && password != "")
+                        if (user.IsActivate)
                         {
+                            if (BCryptNet.Verify(password, user.PasswordHash) && password != "")
+                            {
 
-                            //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
-                            ViewBag.message = "Bonjour " + user.Prenom.ToString();
-                     
-                            Service.PersonneManager.Update(user);
-                            string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
-                            HttpContext.Session.SetString("user", jsonUser);
-                            Response.Redirect("/");
-                            return View("~/Views/Home/Index.cshtml");
-                        }
-                        else
+                                //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
+                                ViewBag.message = "Bonjour " + user.Prenom.ToString();
+
+                                Service.PersonneManager.Update(user);
+                                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                                HttpContext.Session.SetString("user", jsonUser);
+                                Response.Redirect("/");
+                                return View("~/Views/Home/Index.cshtml");
+                            }
+                            else
+                            {
+                                ViewBag.message = "Votre mot de passe est incorrect";
+                                return View("Index");
+                            }
+                        }else
                         {
-                            ViewBag.message = "Votre mot de passe est incorrect";
-                            return View("Index");
+                            WebApp.Models.Error erreur = new WebApp.Models.Error(403, "Votre compte a été désactivé,\n veuillez nous contacter à l'adresse source.relationnel@gmail.com,\n pour pouvoir réactiver votre compte");
+                            
+                            return View("~/Views/Shared/PageError.cshtml", erreur);
                         }
-
                     }
                     else
                     {
