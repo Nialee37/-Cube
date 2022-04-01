@@ -7,6 +7,11 @@
     <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='~/css/dashboard.css'>
 }
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <div class="row justify-content-evenly ">
     <h1 class="dashboard-title">Dashboard des Administrateurs</h1>
     <div class="col-lg-5 col-12 dashboard-card">
@@ -38,8 +43,138 @@
             <tbody></tbody>
         </table>
     </div>
+
+     <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des catégories de ressources</h2>
+        <a href="/Categorie/Create">Créer une catégorie</a>
+        <table class="table table-striped" style="width:100%" id="manageCategorie">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Libelle</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des villes</h2>
+        <a href="/Villes/Create">Créer une ville</a>
+        <table class="table table-striped" style="width:100%" id="manageVille">
+            <thead>
+                <tr>
+                    <th>IdVille</th>
+                    <th>Nom</th>
+                    <th>CPostal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+     <h1 class="dashboard-title">Statistiques des Administrateurs</h1>
+
+     <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Nombre de ressource par mois</h2>
+
+        <figure class="highcharts-figure">
+          <div id="chart2"></div>
+          <p class="highcharts-description">
+           Ce graphique montre l'évolution du nombre de ressources par mois
+          </p>
+        </figure>
+
+    </div>
+
+         <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Nombre de ressources par catégorie</h2>
+
+        <figure class="highcharts-figure">
+          <div id="chart1"></div>
+          <p class="highcharts-description">
+            Ce graphique nous permet de voir le nombre de ressource par catégories.
+          </p>
+       </figure>
+
+    </div>
+
+    <div class="col-lg-5 col-12 dashboard-card"> @*a center et grossir*@
+        <h2>Nombre moyen de ressource lu par les utilisateurs</h2>
+        <div> 
+            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">12</p>
+        </div> 
+         <h2>Nombre de ressources créé par les utilisateurs</h2>
+        <div> 
+            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">12</p>
+        </div> 
+    </div>
+
+
+
 </div>
 <script>
+    
+
+    $(document).ready(function() {
+    $('#manageVille').DataTable( {
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "ajax": {
+            "url": "/Villes/GetAllVille",
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "idVille" },
+            { "data": "nom" },
+            { "data": "cPostal" },
+           
+            
+        ],
+        "columnDefs":[
+            
+            {
+                targets: 1,
+                render: function(data,type,row,meta){
+                    return '<a target="_blank" href="/Villes/Edit/' + row.idVille + '">' + row.nom + '</a>'
+                }
+                
+            }
+          
+        ]
+
+    } );
+} );
+
+$(document).ready(function() {
+    $('#manageCategorie').DataTable( {
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "ajax": {
+            "url": "/Categorie/GetAllCategorie",
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "Libelle" },
+            
+        ],
+        "columnDefs":[
+            
+            {
+                targets: 1,
+                render: function(data,type,row,meta){
+                    return '<a target="_blank" href="/Categorie/Edit/' + row.id + '">' + row.libelle + '</a>'
+                }
+                
+            }
+          
+        ]
+
+    } );
+} );
 
 $(document).ready(function() {
     $('#managePersonne').DataTable( {
@@ -106,3 +241,140 @@ $(document).ready(function() {
 } );
 </script>
 
+
+<script>
+    $(document).ready(function() {
+ chart1 = new Highcharts.chart('chart1', {
+  chart: {
+    type: 'column',
+    events: {
+                load: requestData
+            }
+  },
+  title: {
+    text: 'Nombre de ressources par catégorie'
+  },
+  
+  xAxis: {
+    type: 'category',
+    labels: {
+      rotation: -45,
+      style: {
+        fontSize: '13px',
+        fontFamily: 'Verdana, sans-serif'
+      }
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: 'Population (millions)'
+    }
+  },
+  legend: {
+    enabled: false
+  },
+  tooltip: {
+    pointFormat: 'nombre de ressources'
+  },
+  series: []
+});
+} );
+
+function requestData() {
+     console.log("coucou");
+    $.ajax({
+        url: '/Ressource/getressourcebycat/',
+        type: "GET",
+
+        success: function(response) {
+            console.log(response);
+            chart1.addSeries({
+              name: "nombre_de_ressources",
+              data: JSON.parse(response)
+            });
+        }
+    });
+}
+
+</script>
+
+<script>
+    $(document).ready(function() {
+chart2 = new Highcharts.chart('chart2', {
+  chart: {
+    type: 'line',
+     events: {
+                load: requestData2
+            }
+  },
+  title: {
+    text: 'Nombre de ressource par mois'
+  },
+
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  },
+  yAxis: {
+    title: {
+      text: 'Nombre de ressource'
+    }
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true
+      },
+      enableMouseTracking: false
+    }
+  },
+  series: [
+  //    {
+  //  name: 'nombre_de_ressources',
+  //  data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
+  //}
+  ]
+});
+  });
+
+  function requestData2() {
+     console.log("coucou");
+    $.ajax({
+        url: '/Ressource/getressourcebymonth/',
+        type: "GET",
+
+        success: function(response) {
+            console.log(response);
+            chart2.addSeries({
+              name: "nombre_de_ressources",
+              data: JSON.parse(response)
+            });
+        }
+    });
+}
+
+
+</script>
+
+
+<script>
+    
+      $.ajax({
+        url: '/Ressource/getmoyressourcelu/',
+        type: "GET",
+        success: function(response) {
+            console.log(response);
+            document.getElementById("moyressourcelu").innerHTML = response;
+        }
+    });
+
+     $.ajax({
+        url: '/Ressource/moyressourcecree/',
+        type: "GET",
+        success: function(response) {
+            console.log(response);
+            document.getElementById("moyressourcecree").innerHTML = response;
+        }
+    });
+
+</script>

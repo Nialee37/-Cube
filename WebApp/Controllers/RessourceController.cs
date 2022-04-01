@@ -38,9 +38,20 @@ namespace WebApp.Controllers
         }
         public ActionResult Favoris()
         {
+
             return View();
         }
 
+        public string getmoyressourcelu()
+        {
+            return "15";
+        }
+
+        public string moyressourcecree()
+        {
+            return "3";
+        }
+        
         public JsonResult GetHistorique()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
@@ -175,6 +186,20 @@ namespace WebApp.Controllers
             Ressources maressource = Service.RessourcesManager.Get(id);
             return View(maressource);
         }
+        [HttpGet]
+        public JsonResult getressourcebycat() //affichera la ressources sur une page a part 
+        {
+            
+            return Json("[[\"Shanghai\", 24.2],[\"Beijing\", 20.8],[\"Karachi\", 14.9],[\"Shenzhen\", 13.7],[\"Guangzhou\", 13.1],[\"Istanbul\", 12.7],[\"Mumbai\", 12.4]]");
+        }
+
+        [HttpGet]
+        public JsonResult getressourcebymonth() //affichera la ressources sur une page a part 
+        {
+
+            return Json("[7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]");
+        }
+      
 
         // GET: RessourceController/Create
         public ActionResult Create()

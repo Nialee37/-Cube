@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApp.Controllers
 {
@@ -26,6 +28,13 @@ namespace WebApp.Controllers
         {
             var villes = Service.VilleManager.GetAll();
             return Json(villes);
+        }
+
+        public JsonResult GetAllVille()
+        {
+            List<Ville> listVille = Service.VilleManager.GetAll().ToList();
+
+            return Json(listVille);
         }
 
         // GET: VillesController/Details/5
@@ -59,7 +68,7 @@ namespace WebApp.Controllers
             {
                 Service.VilleManager.Add(ville);
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminPersonne", "Personne");
         }
 
         // GET: VillesController/Edit/5
@@ -80,37 +89,20 @@ namespace WebApp.Controllers
         // POST: VillesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("IdVille,Nom,CPostal")] Ville ville)
+        public ActionResult Edit(Ville ville)
         {
             if (ModelState.IsValid)
             {
-                Service.VilleManager.Add(ville);
+                Service.VilleManager.Update(ville);
             }
-            return View(ville);
+            return RedirectToAction("AdminPersonne", "Personne");
         }
 
-        // GET: VillesController/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            Ville ville = Service.VilleManager.Get((int)id);
-            if (ville == null)
-            {
-                return NotFound();
-            }
-            return View(ville);
-        }
-
-        // POST: VillesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+    
         public ActionResult Delete(int id)
         {
             Service.VilleManager.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminPersonne", "Personne");
         }
     }
 }
