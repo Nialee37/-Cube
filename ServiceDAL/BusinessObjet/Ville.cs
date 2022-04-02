@@ -9,5 +9,7 @@ namespace ServiceDAL.BusinessObjet
         [Display(Name = "Ville :", AutoGenerateFilter = false)]
         public string Nom { get; set; }
         public string CPostal { get; set; }
+        public string code_departement { get; set; }
+        public string code_commune { get; set; }
     }
 }
