@@ -29,6 +29,13 @@ namespace ServiceDAL.BusinessLayer
                 .FirstOrDefault();
         }
 
+        public IList<Commentaire> GetCommentaireBuyRessource(int id)
+        {
+            return Service.DbContext.Commentaire
+                .Where(p => p.IdRessource == id)
+                .ToList();
+        }
+
         public IList<Commentaire> GetAll()
         {
             return Service.DbContext.Commentaire.ToList();

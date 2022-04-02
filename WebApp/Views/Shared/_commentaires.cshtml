@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<p>coucou je suis le commentaire</p>
+
+<div id="commentaire_container">
+
+
+</div>
+
+<label for="fname">Commentaire</label>
+<input type="text" id="fname" name="fname">
+<button id="btn_send">Envoyer le commentaire</button>
+
+<script>
+    $( document ).ready(function() {
+    refreshcommentaire(@Model.Id)
+});
+
+document.querySelector('#btn_send').addEventListener('click',createcommentaire);
+
+function refreshcommentaire(id) {
+    //GetCommentaireBuyRessource
+  console.log("refresh");
+  console.log(id);
+
+  $.ajax({
+        //L'URL de la requête 
+        url: "/Commentaire/GetCommentaireBuyRessource",
+
+        //La méthode d'envoi (type de requête)
+        method: "POST",
+        data : {
+            id : @Model.Id ,
+        }
+        
+    })
+
+    .done(function(response){
+        console.log(response);
+    });
+}
+
+function createcommentaire() {
+  console.log("add");
+  console.log(@Model.Id);
+  console.log(document.querySelector('#fname').value);
+
+    $.ajax({
+        //L'URL de la requête 
+        url: "/Commentaire/Create",
+
+        //La méthode d'envoi (type de requête)
+        method: "POST",
+        data : {
+            id_ressource : @Model.Id ,
+            corp : document.querySelector('#fname').value
+        }
+        
+    })
+
+    .done(function(response){
+        refreshcommentaire(@Model.Id);
+    });
+}
+</script>
