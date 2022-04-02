@@ -1,0 +1,4 @@
+#Thu Mar 31 19:21:15 CEST 2022
+base.0=D\:\\Perso\\GitHub_Projet\\Mobile_Sample\\samples\\platform_design\\build\\app\\intermediates\\dex\\profile\\mergeDexProfile\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

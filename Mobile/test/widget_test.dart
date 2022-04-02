@@ -1,30 +1,30 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:projectcubeandroid/main.dart';
+import 'package:platform_design/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Platform tests', () {
+    testWidgets('Builds for Android correctly', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      await tester.pumpWidget(const MyAdaptingApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      expect(find.byIcon(Icons.menu), findsOneWidget);
+      expect(find.byIcon(Icons.refresh), findsOneWidget);
+      debugDefaultTargetPlatformOverride = null;
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('Builds for iOS correctly', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      await tester.pumpWidget(const MyAdaptingApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      expect(find.byType(CupertinoSliverNavigationBar), findsOneWidget);
+      expect(find.byIcon(CupertinoIcons.music_note), findsOneWidget);
+      expect(find.byIcon(Icons.menu), findsNothing);
+
+      debugDefaultTargetPlatformOverride = null;
+    });
   });
 }
