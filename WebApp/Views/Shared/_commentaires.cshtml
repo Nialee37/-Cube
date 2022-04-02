@@ -16,16 +16,15 @@
 
 <script>
     $( document ).ready(function() {
-    refreshcommentaire(@Model.Id)
+    refreshcommentaire()
 });
 
 document.querySelector('#btn_send').addEventListener('click',createcommentaire);
 
-function refreshcommentaire(id) {
+
+function refreshcommentaire() {
     //GetCommentaireBuyRessource
   console.log("refresh");
-  console.log(id);
-
   $.ajax({
         //L'URL de la requête 
         url: "/Commentaire/GetCommentaireBuyRessource",
@@ -42,6 +41,29 @@ function refreshcommentaire(id) {
         console.log(response);
     });
 }
+
+//EN CAS DE BESOIN ADAPTER LA FONCTION SI DESSOUS
+//function refreshcommentaire(id) {
+//    //GetCommentaireBuyRessource
+//  console.log(id);
+
+//  $.ajax({
+//        //L'URL de la requête 
+//        url: "/Commentaire/Delete",
+
+//        //La méthode d'envoi (type de requête)
+//        method: "POST",
+//        data : {
+//            id : idcommentaire ,
+//        }
+        
+//    })
+
+//    .done(function(response){
+//        console.log(response);
+//    });
+//}
+
 
 function createcommentaire() {
   console.log("add");
@@ -62,7 +84,10 @@ function createcommentaire() {
     })
 
     .done(function(response){
-        refreshcommentaire(@Model.Id);
+        refreshcommentaire();
     });
 }
+
+setInterval(refreshcommentaire,20000); /* rappel après 2 secondes = 2000 millisecondes */
+
 </script>

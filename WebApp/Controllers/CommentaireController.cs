@@ -103,11 +103,11 @@ namespace WebApp.Controllers
         //    return RedirectToAction("AdminPersonne", "Personne");
         //}
 
-
-        public ActionResult Delete(int id)
+        [HttpPost]
+        public string Delete(int id)
         {
             Service.CommentaireManager.Delete(id);
-            return RedirectToAction("AdminPersonne", "Personne");
+            return "commentaire supprimé";
         }
     }
 }
