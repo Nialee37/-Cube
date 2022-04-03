@@ -22,7 +22,7 @@
             <div class="profilPicture"><i class="fas fa-user"></i></div>
             <h1>Mon profil</h1>
         </div>
-        <!-- Formulaire d'inscription -->
+        <!-- Formulaire d'edit -->
         <div class="col-md-12 col-lg-9 ml-auto card-register">
             <form class="form-horizontal" id="form-general" asp-action="EditGeneral" asp-controller="Personne" method="POST">
                 <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
@@ -232,3 +232,45 @@
 </div>
 
 <script src="~/js/Edit.js"></script>
+
+<script>
+$(document).ready(function(){
+    
+    $("#search-custom-2").on("keyup", function() { 
+        var search = $("#search-custom-2").val();
+        if(search != ""){
+            $.ajax({
+            //L'URL de la requête 
+            url: "/Villes/GetByCPOrVille",
+            //La méthode d'envoi (type de requête)
+            method: "GET",
+            data: {data: search},
+
+            //Le format de réponse attendu
+            dataType : "json",
+            })
+            //Ce code sera exécuté en cas de succès - La réponse du serveur est passée à done()
+            /*On peut par exemple convertir cette réponse en chaine JSON et insérer
+             * cette chaine dans un div id="res"*/
+            .done(function(response){
+                let data = response;
+                console.log(data);
+                if(data.length > 0 ){
+                    $("#Adresse_IdVille").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#Adresse_IdVille").append('<option value="'+data[i].idVille+'"><i class="fas fa-building"></i> - '+data[i].cPostal+' - '+data[i].nom+'</option>');
+                    }
+                    regen_custom_dropdowns("#Adresse_IdVille");
+                }
+            
+            })
+            //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
+            //On peut afficher les informations relatives à la requête et à l'erreur
+            .fail(function(error){
+                alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));
+            })
+        //Ce code sera exécuté que la requête soit un succès ou un échec
+        }
+    });    
+});
+</script>
