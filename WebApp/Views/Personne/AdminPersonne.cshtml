@@ -1,4 +1,5 @@
 ﻿@{
+
   ViewData["Title"] = "Dashboard Admin";
   ViewData["Page"] = "Dashboard";
 }
@@ -243,13 +244,11 @@ $(document).ready(function() {
 
 
 <script>
-    $(document).ready(function() {
- chart1 = new Highcharts.chart('chart1', {
+
+var config1 =  {
   chart: {
-    type: 'column',
-    events: {
-                load: requestData
-            }
+    type: 'column'
+  
   },
   title: {
     text: 'Nombre de ressources par catégorie'
@@ -268,7 +267,7 @@ $(document).ready(function() {
   yAxis: {
     min: 0,
     title: {
-      text: 'Population (millions)'
+      text: 'Nombre de ressoruce'
     }
   },
   legend: {
@@ -278,8 +277,9 @@ $(document).ready(function() {
     pointFormat: 'nombre de ressources'
   },
   series: []
-});
-} );
+}
+ $(document).ready(function() {requestData()});
+
 
 function requestData() {
      console.log("coucou");
@@ -288,11 +288,31 @@ function requestData() {
         type: "GET",
 
         success: function(response) {
+            
+            var data = new Array;
+                var cat = new Array;
+                for (var i = 0; i < response.length; i++) {
+                    
+                    cat[i] = response[i].name;
+                    data[i] = {
+                        y: response[i].value,
+                        name: response[i].name,
+                        color: response[i].color,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                }
+                config1.series = [{ data: data }];
+                config1.xAxis.categories = cat
+
+            
+            var chart1 = new Highcharts.chart('chart1', config1 );
+           
+          
+        },
+        error :  function(response) {
             console.log(response);
-            chart1.addSeries({
-              name: "nombre_de_ressources",
-              data: JSON.parse(response)
-            });
         }
     });
 }
@@ -338,16 +358,17 @@ chart2 = new Highcharts.chart('chart2', {
   });
 
   function requestData2() {
-     console.log("coucou");
+
     $.ajax({
         url: '/Ressource/getressourcebymonth/',
         type: "GET",
 
         success: function(response) {
+            console.log("toto");
             console.log(response);
             chart2.addSeries({
               name: "nombre_de_ressources",
-              data: JSON.parse(response)
+              data: response
             });
         }
     });

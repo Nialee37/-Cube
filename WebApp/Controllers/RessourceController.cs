@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
+
 using static System.Net.WebRequestMethods;
 using BCryptNet = BCrypt.Net.BCrypt;
 
@@ -44,12 +45,31 @@ namespace WebApp.Controllers
 
         public string getmoyressourcelu()
         {
-            return "15";
+            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+
+            List<int> moy = new List<int>();
+
+            foreach (var item in listfav)
+            {
+                moy.Add(item.Count());
+            }
+            
+            return moy.Average().ToString();
         }
 
         public string moyressourcecree()
         {
-            return "3";
+
+            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x=> x.IdPersonne).ToList();
+
+            List<int> moy = new List<int>();
+
+            foreach (var item in ressourcelist)
+            {
+                moy.Add(item.Count());
+            }
+
+            return  Math.Round(moy.Average()).ToString();
         }
         
         public JsonResult GetHistorique()
@@ -241,15 +261,45 @@ namespace WebApp.Controllers
         [HttpGet]
         public JsonResult getressourcebycat() //affichera la ressources sur une page a part 
         {
-            
-            return Json("[[\"Shanghai\", 24.2],[\"Beijing\", 20.8],[\"Karachi\", 14.9],[\"Shenzhen\", 13.7],[\"Guangzhou\", 13.1],[\"Istanbul\", 12.7],[\"Mumbai\", 12.4]]");
+
+            List<Ressources> newlistressoruce = Service.RessourcesManager.GetAll().ToList();
+
+            List<Categorie> newlistcategorie = Service.CategorieManager.GetAll().ToList();
+
+            List<HighChartHisto.HistoBar> serial = new List<HighChartHisto.HistoBar>();
+
+            for (int i = 0; i < newlistcategorie.Count; i++) // 2 correspond au premier id de categorie
+            {
+                if (newlistressoruce.Any(x=> x.IdCategorie == newlistcategorie[i].Id))
+                {
+                    HighChartHisto.HistoBar serie = new HighChartHisto.HistoBar()
+                    {
+                        Name = newlistcategorie.FirstOrDefault(x=> x.Id == newlistcategorie[i].Id).Libelle,
+                        value = newlistressoruce.Count(x=> x.IdCategorie == newlistcategorie[i].Id)
+                    };
+
+                    serial.Add(serie);
+                }
+            }
+
+
+            return Json(serial);
         }
 
         [HttpGet]
         public JsonResult getressourcebymonth() //affichera la ressources sur une page a part 
         {
 
-            return Json("[7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]");
+            List<Ressources> newlistressoruce = Service.RessourcesManager.GetAll().ToList();
+
+            List<HighchartBar> serial = new List<HighchartBar>();
+            List<int> ressbymonth = new List<int>();
+            for (int i = 1; i < 12; i++)
+            {
+                ressbymonth.Add(newlistressoruce.Where(x => x.Date >= new DateTime(2022, i, 01) && x.Date <= new DateTime(2022, i + 1, 01)).Count());
+            }
+
+            return Json(ressbymonth);
         }
       
 
