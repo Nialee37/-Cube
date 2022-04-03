@@ -198,6 +198,9 @@ function checkDate() {
     if (mm < 10) {
         mm = "0" + mm;
     }
+    if (dd < 10) {
+        dd = "0" + dd;
+    }
 
     $(".dateNaissance").attr("max", yyyy + "-" + mm + "-" + dd);
     $(".dateNaissance").attr("min", ymin + "-" + mm + "-" + dd);

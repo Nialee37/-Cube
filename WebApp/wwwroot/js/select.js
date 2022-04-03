@@ -1,4 +1,9 @@
-﻿function custom_dropdowns() {
+﻿var convert = function (convert) {
+    return $("<span />", { html: convert }).text();
+    //return document.createElement("span").innerText;
+};
+
+function custom_dropdowns() {
     $('select').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             var icon = "";
@@ -16,13 +21,38 @@
                 var attr = $(o).attr('hidden');
                 if (typeof attr == 'undefined' || attr == false) {
                     var display = $(o).data('display-text') || '';
-                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o, { html: convert }).text() + '</li>');
                 }
             });
             var attr = $(this).attr('searching');
             if (typeof attr !== 'undefined' && attr !== false) {
                 $(this).next().find('ul').before('<div class="dd-search"><input id="search-custom-' + i + '"autocomplete="off" placeholder="Recherche.." onkeyup="filter(\'search-custom-\',\'' + i + '\')" class="dd-searchbox" type="text"></div>');
             }
+        }
+    });
+
+    $('li[class="option selected"]').append(' <i class="fas fa-check prefix"></i>');
+}
+
+function regen_custom_dropdowns(idSelect) {
+    $(idSelect).each(function (i, select) {
+        if ($(this).next().hasClass('dropdown-select')) {
+            var icon = "";
+            if ($(this).parent().hasClass("form-group") && $(this).parent().find(".input-icon").children().hasClass("fas")) {
+                icon = '<div class="input-icon baseIcon">' + $(this).parent().find(".input-icon").html() + '</div>';
+            }
+            $(this).next().find('ul').empty();
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(icon + (selected.data('display-text') || selected.text()));
+            options.each(function (j, o) {
+                var attr = $(o).attr('hidden');
+                if (typeof attr == 'undefined' || attr == false) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).html() + '</li>');
+                }
+            });
         }
     });
 

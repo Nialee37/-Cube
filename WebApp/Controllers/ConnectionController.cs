@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
 
                 IDictionary<int, string> ListVilles = new Dictionary<int, string>();
-                IEnumerable<Ville> villes = Service.VilleManager.GetAll().OrderBy(v => v.CPostal);
+                IEnumerable<Ville> villes = Service.VilleManager.Get30last().OrderBy(v => v.CPostal);
                 //ListVilles.Add(-1, "Veuillez sélectionner une ville");
                 foreach (var item in villes)
                 {

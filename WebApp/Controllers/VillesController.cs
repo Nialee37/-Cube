@@ -37,6 +37,13 @@ namespace WebApp.Controllers
             return Json(listVille);
         }
 
+        public JsonResult GetByCPOrVille(string data)
+        {
+            List<Ville> listVille = Service.VilleManager.GetbyCPOrVille(data).ToList();
+
+            return Json(listVille);
+        }
+
         // GET: VillesController/Details/5
         public ActionResult Details(int? id)
         {
