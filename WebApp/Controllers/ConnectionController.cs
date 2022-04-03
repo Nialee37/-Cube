@@ -93,7 +93,8 @@ namespace WebApp.Controllers
                                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
-                                return View("~/Views/Home/Index.cshtml");
+                            return RedirectToAction("Index", "Home");
+                                //return View("~/Views/Home/Index.cshtml");
                             }
                             else
                             {
@@ -126,7 +127,7 @@ namespace WebApp.Controllers
                 if (user.Mail == userbdd.Mail)
                 {
                     ViewBag.message = "Bonjour un compte existe deja avec cet identifiant.";
-                    return View("~/Views/Home/Index.cshtml");
+                    return RedirectToAction("Index", "Home");
                 }
             }
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
@@ -146,7 +147,7 @@ namespace WebApp.Controllers
         {
             Response.Redirect("/");
             HttpContext.Session.Clear();
-            return View("~/Views/Home/index.cshtml");
+            return RedirectToAction("Index", "Home");
         }
 
     }

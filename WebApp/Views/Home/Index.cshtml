@@ -18,6 +18,19 @@
 </div>
 }
 
+@*FILTRE*@
+
+<div>
+
+    <select  class="form-control " id="idcat" data-nom="idcat" asp-items="@(new SelectList(ViewBag.Categories,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
+
+    <select  class="form-control " id="idtype" data-nom="idtype" asp-items="@(new SelectList(ViewBag.Types,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un type</option></select>
+
+    <input type="text" id="searchfiltre" />
+
+    <button id="sendfiltres">SEND</button>
+</div>
+
 
 <div id="container" class="container cardPage p-0">
     <div class="center-element text-center">
@@ -118,3 +131,100 @@ $(document).ready(function(){
     //Ce code sera exécuté que la requête soit un succès ou un échec
     });
 </script>
+
+
+<script>
+
+
+    document.querySelector('#sendfiltres').addEventListener('click',sendfiltre);
+  
+    function sendfiltre() {
+     var user = '@(user != null ? user : null)';
+    var userId = '@(user != null ? user.Id : null)';
+    
+
+  $.ajax({
+        //L'URL de la requête 
+        url: "/Ressource/GetAllressourceFiltreby",
+
+        //La méthode d'envoi (type de requête)
+        method: "POST",
+        data : {
+            idcat : $('#idcat').val(),
+            idtype : $('#idtype').val(),
+            search : $('#searchfiltre').val()
+      
+        }
+        
+    })
+
+    .done(function(response){
+
+        $('.lesRessources').html("");
+        let data = response;
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+            var date = new Date(data[i].date);
+            var month = date.toLocaleString('FR-FR', { month: 'short' });
+          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb  mb-5"> '
+                                        +'<div class="ressourceCard card">'
+                                            +'<div class="wrapper">'
+                                                +'<div class="background">'
+                                                    +'<img src="img/type_ressource/'+data[i].type.libelle+'.png" alt="logo excel">'
+                                                +'</div> '
+                                                +'<div class="date">'
+                                                    +'<span class="day">'+date.getDate()+'</span><span class="month">'+month+'</span><span class="year">'+date.getFullYear()+'</span>'
+                                                +'</div>'
+                                                +'<div class="data"><div class="isFavS '+(data[i].isfav ? "" : "d-none")+'"><i class="fas fa-star"></i></div>'
+                                                    +' <div class="content">'
+                                                        +'<span class="author">'+data[i].personne.prenom+' '+data[i].personne.nom+'</span>'
+                                                        +'<h3 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h3>'
+                                                        +'<p class="text">Catégorie : <span class="badge bg-danger">'+data[i].categorie.libelle+'</span></p>'
+                                                        +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
+                                                    +'</div>'
+                                                    +'<input type="checkbox" id="show-menu'+i+'"/>'
+                                                    +'<ul class="menu-content center-element">'
+                                                        +(user != "null" && user != "" ? (userId == data[i].personne.id ? '<li><a href="Ressource/Edit?id='+data[i].id+'" class="editRessource fas fa-pen"></a></li>' : '') : '')
+                                                        +'<li><button class="far fa-comment"><span>8</span></button></li>'
+                                                        +(user != "null" && user != "" ? '<li><button data-id="'+ data[i].id +'" class="addFav '+(data[i].isfav ? "fas" : "far")+' fa-star"></button></li>' : '')
+                                                    +'</ul>'
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div>'
+                                     +'</div>');
+        }
+        
+        if(user != "null" && user != ""){
+            $(".addFav").on("click", function() { 
+                var thisFav = $(this);
+                    $.ajax({
+                            //L'URL de la requête 
+                            url: "Ressource/Addfav",
+                            //La méthode d'envoi (type de requête)
+                            method: "GET",
+                            data: "id=" + $(this).data("id")
+                    }).done(function(response){
+                        if(response){
+                            thisFav.removeClass("far").addClass("fas");
+                            thisFav.parent().parent().parent().find(".isFavS").removeClass("d-none");
+                        }else {
+                            thisFav.removeClass("fas").addClass("far");
+                            thisFav.parent().parent().parent().find(".isFavS").addClass("d-none");
+                        }
+                        console.log(response);
+                    })
+            });
+        }
+    })
+
+    //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
+    //On peut afficher les informations relatives à la requête et à l'erreur
+    .fail(function(error){
+        alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));
+    })
+
+    //Ce code sera exécuté que la requête soit un succès ou un échec
+   
+    };
+</script>
+
