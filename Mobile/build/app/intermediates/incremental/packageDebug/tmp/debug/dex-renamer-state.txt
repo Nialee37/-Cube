@@ -1,4 +1,4 @@
-#Sat Apr 02 22:03:17 CEST 2022
+#Mon Apr 04 20:33:52 CEST 2022
 base.0=D\:\\Perso\\GitHub_Projet\\Cube\\-Cube\\Mobile\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

@@ -38,6 +38,14 @@ flutter_lorem
 2.12
 file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lorem-2.0.0/
 file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lorem-2.0.0/lib/
+http
+2.14
+file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/
+file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib/
+http_parser
+2.12
+file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/
+file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib/
 lints
 2.12
 file:///D:/Logiciel/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/
@@ -102,7 +110,7 @@ flutter_test
 2.12
 file:///D:/Logiciel/flutter/packages/flutter_test/
 file:///D:/Logiciel/flutter/packages/flutter_test/lib/
-platform_design
+cube_app
 2.12
 file:///D:/Perso/GitHub_Projet/Cube/-Cube/Mobile/
 file:///D:/Perso/GitHub_Projet/Cube/-Cube/Mobile/lib/
