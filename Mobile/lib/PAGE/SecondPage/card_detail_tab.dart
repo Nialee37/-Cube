@@ -5,7 +5,20 @@ import 'dart:async';
 import 'dart:convert';
 
 import '../../API/post_API.dart';
-import '../../widgets.dart';
+import 'model_widgets.dart';
+
+Future<List<Post>> fetchPost() async {
+  final response = await http
+      .get(Uri.parse('https://projetcube.tech/Ressource/RessourceAccueil'));
+
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+
+    return parsed.map<Post>((json) => Post.fromMap(json)).toList();
+  } else {
+    throw Exception('Failed to load post');
+  }
+}
 
 class DetailTab extends StatelessWidget {
   const DetailTab({

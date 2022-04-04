@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'SecondPage/card_detail_tab.dart';
 import '../utils.dart'; //Temporaire
-import '../widgets.dart';
+import 'SecondPage/model_widgets.dart';
 
 //Ceci est une template pour cloner les categories
 //A faire : Definir le nombre de Card / Ajouter les données via l'API

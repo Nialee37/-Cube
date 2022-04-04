@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widgets.dart';
+import 'SecondPage/model_widgets.dart';
 
 //Mise en forme
 

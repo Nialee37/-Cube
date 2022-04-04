@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'SecondPage/card_detail_tab.dart';
 import '../utils.dart';
-import '../widgets.dart';
+import 'SecondPage/model_widgets.dart';
 
 //Renome : PolitiqueTab
 

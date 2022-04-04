@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'PAGE/profile_tab.dart';
 import 'PAGE/politique_card_tab.dart';
 import 'PAGE/finance_card_tab.dart';
-import 'widgets.dart';
+import 'PAGE/SecondPage/model_widgets.dart';
 
 void main() => runApp(const MyAdaptingApp());
 
