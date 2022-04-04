@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'card_detail_tab.dart';
-import 'utils.dart'; //Temporaire
-import 'widgets.dart';
+import 'SecondPage/card_detail_tab.dart';
+import '../utils.dart'; //Temporaire
+import '../widgets.dart';
 
 //Ceci est une template pour cloner les categories
 //A faire : Definir le nombre de Card / Ajouter les données via l'API

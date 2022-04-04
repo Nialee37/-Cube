@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets.dart';
+import '../../widgets.dart';
 
 class DetailTab extends StatelessWidget {
   const DetailTab({

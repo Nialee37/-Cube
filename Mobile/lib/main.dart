@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'profile_tab.dart';
-import 'politique_card_tab.dart';
-import 'finance_card_tab.dart';
+import 'PAGE/profile_tab.dart';
+import 'PAGE/politique_card_tab.dart';
+import 'PAGE/finance_card_tab.dart';
 import 'widgets.dart';
 
 void main() => runApp(const MyAdaptingApp());

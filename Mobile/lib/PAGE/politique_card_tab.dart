@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'card_detail_tab.dart';
-import 'utils.dart';
-import 'widgets.dart';
+import 'SecondPage/card_detail_tab.dart';
+import '../utils.dart';
+import '../widgets.dart';
 
 //Renome : PolitiqueTab
 
