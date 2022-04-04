@@ -43,9 +43,10 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public string getmoyressourcelu()
+        public string getressourcecree()
         {
-            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            var listfav = Service.RessourcesManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
 
             List<int> moy = new List<int>();
 
@@ -54,6 +55,21 @@ namespace WebApp.Controllers
                 moy.Add(item.Count());
             }
             
+            return moy.Average().ToString();
+        }
+
+        public string getmoyressourcelu()
+        {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
+            var listfav = Service.HistoriqueManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+
+            List<int> moy = new List<int>();
+
+            foreach (var item in listfav)
+            {
+                moy.Add(item.Count());
+            }
+
             return moy.Average().ToString();
         }
 
@@ -99,7 +115,12 @@ namespace WebApp.Controllers
 
             return Json(listressource);
         }
+        public JsonResult GetAllressource()
+        {
+            List<Ressources> listressource = Service.RessourcesManager.GetAll().ToList();
 
+            return Json(listressource);
+        }
         public JsonResult GetAllressourcetovalidate()
         {
             List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
@@ -486,6 +507,7 @@ namespace WebApp.Controllers
                     break;
 
                 case 3: //cas word
+
                     return View("RessourceWord", ressource);
                     break;
 
