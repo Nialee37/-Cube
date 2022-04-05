@@ -30,5 +30,9 @@ namespace ServiceDAL.BusinessObjet
 
         [NotMapped]
         public int isfav { get; set; }
+
+        [NotMapped]
+        public string fullfiledowload { get; set; }
+        
     }
 }

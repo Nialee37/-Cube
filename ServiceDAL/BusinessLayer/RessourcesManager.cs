@@ -29,8 +29,6 @@ namespace ServiceDAL.BusinessLayer
                 .FirstOrDefault();
         }
 
-
-
         public IList<Ressources> GetAll()
         {
             return Service.DbContext.Ressources.ToList();

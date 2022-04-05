@@ -13,9 +13,31 @@
 <p> je suis la page dedit de la ressource</p>
 <p>@Model.Id</p>
 
+
+@if((user.IdRoles == 4 || user.IdRoles == 5 )){
+  <button class="btn btn-primary" id="didi">DELETE</button>
+
+
+  <script>
+          document.querySelector("#didi").addEventListener("click",  (e) => {
+       let request =         
+      $.ajax({
+        type: "POST", 	       
+        url: "/ressource/Delete?id=" + @Model.Id
+      });
+      request.done(function (output) {
+        console.log("good");
+         window.location.replace("/Personne/Adminpersonne");
+       
+      });
+})
+  </script>
+}
+
 @if(Model.IsValidate == false && (user.IdRoles == 4 || user.IdRoles == 5 || user.IdRoles == 3 )){
 
     <button class="btn btn-primary" id="dudu">VALIDATE</button>
+
 
     <script>
         document.querySelector("#dudu").addEventListener("click",  (e) => {
@@ -26,8 +48,10 @@
       });
       request.done(function (output) {
         console.log("good");
+         window.location.replace("/Personne/Adminpersonne");
        
       });
 })
+
     </script>
 }
