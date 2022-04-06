@@ -279,5 +279,11 @@ namespace WebApp.Controllers
             List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
             return Json(personnes);
         }
+
+        public ActionResult GetViewCgu()
+        {
+            
+            return View();
+        }
     }
 }
