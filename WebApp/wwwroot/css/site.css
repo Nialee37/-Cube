@@ -158,3 +158,30 @@ h1,h2,h3,h4,h5,h6 {
 .inputfile + label {
    color: #b5b5b5;
 }
+
+.btn-custom {
+    color: rgba(255, 255, 255, 0.8);
+    background: #E9374C;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: 0 0 10px 0;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.card-custom {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    font-size: 18px;
+    box-shadow: #00000085 1px 1px 10px 1px;
+}
+
+.w-100{
+    width: 100%;
+}

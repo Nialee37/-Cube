@@ -37,7 +37,7 @@
             <h1>Titre : @Model.Nom</h1>
         </div>
         <div class="col-2 text-end">
-            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger le WORD</a>
+            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger le fichier excel</a>
         </div>
         <div class="col-12 center-element">
             <object data="@Model.CheminAcces@Model.Source" type="application/pdf" width="100%" height="800px"> 
@@ -49,6 +49,7 @@
     </div>
 </div>
 
-@if(user != null){
+@if(user != null && Model.IsValidate)
+{
     <partial name="/Views/Shared/_commentaires.cshtml" />
 }

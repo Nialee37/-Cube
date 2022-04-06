@@ -26,11 +26,10 @@
     var repCom = false;
     $( document ).ready(function() {
         refreshcommentaire();
+        $("#btn_send").on('click', function () {
+            createcommentaire();
+        });
     });
-
-document.querySelector('#btn_send').addEventListener('click',createcommentaire);
-
-
 
 function refreshcommentaire() {
     //GetCommentaireBuyRessource
@@ -50,43 +49,46 @@ function refreshcommentaire() {
     .done(function(data){
         repCom = false;
         $("#commentaire_container").empty();
-        console.log(data);
-        for (var i = 0; i < data.length; i++) {
-            var date = new Date(data[i].date_com);
-            var heure = date.toLocaleTimeString("fr");
-            var datefr = date.toLocaleDateString("fr");
-            $("#commentaire_container").append('<div class="card_commentaire">'
-                    +'<div class="title_commentaire">'
-                        +'<span>'+data[i].personne.prenom+' '+data[i].personne.nom+' Le '+datefr+' à '+heure+'</span>'
-                        +'<button class="btn_rep_com" data-id_com="'+data[i].id+'"><i class="fas fa-reply"></i> Répondre</button>'
-                   +'</div>'
-                   + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de '+data[i].origineCommentaire.personne.prenom+' '+data[i].origineCommentaire.personne.nom+' :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> '+data[i].origineCommentaire.commentaire+' <i class="fas fa-quote-right"></i></div>') : '') : '')
-                    +'<div class="com_commentaire">'
-                        +'<p>'+data[i].commentaire+'</p>'
-                    +'</div>'
-                +'</div>'
-            );
-        }
-        $(".btn_rep_com").on('click', function() {
-            if(!repCom) {
-                pause = true;
-                var idComm = $(this).data("id_com");
-                $(this).parent().parent().append('<label for="fname_rep">Réponse au commentaire</label>'
-                +'<div class="form-horizontal">'
-                    +'<div class="form-group">'
-                        +'<div class="input-icon"><i class="fas fa-comment"></i></div>'
-                        +'<textarea id="fname_rep" name="fname_rep" class="form-control verifForm"  placeholder="Réponse au commentaire">'
-                        +'</textarea>'
-                        +'<div class="invalid-feedback fw-bold"></div>'
-                    +'</div>'
-                    +'<button id="btn_send_rep" data-id_com="'+$(this).data("id_com")+'" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>'
-                +'</div>');
-                $("#btn_send_rep").on("click", function(){
-                    createcommentaire(idComm);
-                })
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                var date = new Date(data[i].date_com);
+                var heure = date.toLocaleTimeString("fr");
+                var datefr = date.toLocaleDateString("fr");
+                $("#commentaire_container").append('<div class="card_commentaire">'
+                    + '<div class="title_commentaire">'
+                    + '<span>' + data[i].personne.prenom + ' ' + data[i].personne.nom + ' Le ' + datefr + ' à ' + heure + '</span>'
+                    + '<button class="btn_rep_com" data-id_com="' + data[i].id + '"><i class="fas fa-reply"></i> Répondre</button>'
+                    + '</div>'
+                    + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de ' + data[i].origineCommentaire.personne.prenom + ' ' + data[i].origineCommentaire.personne.nom + ' :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> ' + data[i].origineCommentaire.commentaire + ' <i class="fas fa-quote-right"></i></div>') : '') : '')
+                    + '<div class="com_commentaire">'
+                    + '<p>' + data[i].commentaire + '</p>'
+                    + '</div>'
+                    + '</div>'
+                );
             }
-            repCom = true;
-        });
+            $(".btn_rep_com").on('click', function () {
+                if (!repCom) {
+                    pause = true;
+                    var idComm = $(this).data("id_com");
+                    $(this).parent().parent().append('<label for="fname_rep">Réponse au commentaire</label>'
+                        + '<div class="form-horizontal">'
+                        + '<div class="form-group">'
+                        + '<div class="input-icon"><i class="fas fa-comment"></i></div>'
+                        + '<textarea id="fname_rep" name="fname_rep" class="form-control verifForm"  placeholder="Réponse au commentaire">'
+                        + '</textarea>'
+                        + '<div class="invalid-feedback fw-bold"></div>'
+                        + '</div>'
+                        + '<button id="btn_send_rep" data-id_com="' + $(this).data("id_com") + '" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>'
+                        + '</div>');
+                    $("#btn_send_rep").on("click", function () {
+                        createcommentaire(idComm);
+                    })
+                }
+                repCom = true;
+            });
+        } else {
+            $("#commentaire_container").html("<span>Aucun commentaire pour cette ressource ! </span>")
+        }
         
     });
 }
@@ -116,13 +118,13 @@ function refreshcommentaire() {
 
 function createcommentaire(idComReponse = null) {
   console.log("add");
-  console.log(@Model.Id);
+    console.log(@Model.Id);
+    console.log(idComReponse)
   console.log(document.querySelector('#fname').value);
   var copr = (idComReponse != null ? document.querySelector('#fname_rep').value : document.querySelector('#fname').value)
   var data = {
             id_ressource : @Model.Id ,
-            corp : copr
-            
+            corp : copr     
         }
         if(idComReponse != null){
                 data.idComReponse = idComReponse;

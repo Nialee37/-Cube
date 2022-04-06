@@ -45,6 +45,7 @@
     </div>
 </div>
 
-@if(user != null){
+@if(user != null && Model.IsValidate)
+{
     <partial name="/Views/Shared/_commentaires.cshtml" />
 }

@@ -10,50 +10,75 @@
 @section Styles {
     <link rel='stylesheet' href='~/css/card-Ressource.css'>
     <link rel='stylesheet' href='~/css/mesRessources.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
 }
-@if(ViewBag.message != null){
+@if (ViewBag.message != null)
+{
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>@ViewBag.message</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+        <strong>@ViewBag.message</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 
 @*FILTRE*@
 
-<div>
-
-    <select  class="form-control " id="idcat" data-nom="idcat" asp-items="@(new SelectList(ViewBag.Categories,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
-
-    <select  class="form-control " id="idtype" data-nom="idtype" asp-items="@(new SelectList(ViewBag.Types,"Value", "Text"))" ><option value="-1" disabled selected hidden>Sélectionner un type</option></select>
-
-    <input type="text" id="searchfiltre" />
-
-    <button id="sendfiltres">SEND</button>
+<div class="container mt-3">
+    <div class="row card-custom pt-0">
+        <div class="center-element text-center">
+            <h1 class="display-4 txt-hello">Bienvenue @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
+        </div>
+    </div>
+</div>
+<div class="container mt-3">
+    <div class="row card-custom form-horizontal">
+        <h3 class="text-center w-100">Filtrer les ressources</h3>
+        <div class="col-md-6 center-element">
+            <div class="form-group center-element w-100 m-2">
+                <div class="input-icon"><i class="fas fa-filter"></i></div>
+                <select class="form-control verifForm w-100 m-0" id="idcat" data-nom="idcat" asp-items="@(new SelectList(ViewBag.Categories,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
+            </div>
+        </div>
+        <div class="col-md-6 center-element">
+            <div class="form-group center-element w-100 m-2">
+                <div class="input-icon"><i class="fas fa-file"></i></div>
+                <select class="form-control verifForm w-100 m-0" id="idtype" data-nom="idtype" asp-items="@(new SelectList(ViewBag.Types,"Value", "Text"))"><option value="-1" disabled selected hidden>Sélectionner un type</option></select>
+            </div>
+        </div>
+        <div class="col-md-6 center-element">
+            <div class="form-group center-element w-100 m-2">
+                <div class="input-icon"><i class="fas fa-search"></i></div>
+                <input type="text" class="form-control verifForm w-100 m-0" id="searchfiltre" />
+            </div>
+        </div>
+        <div class="col-md-6 center-element">
+            <div class="center-element w-100 m-2">
+                <button id="sendfiltres" class="btn-custom w-100"><i class="fas fa-search"></i> Rechercher</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div id="container" class="container cardPage p-0">
-    <div class="center-element text-center">
-        <h1 class="display-4 txt-hello">Bienvenue @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
-    </div>
-    <div class="row mt-5">
-        <div class="titleRessource">
+    <div class="row mt-3">
+        <div class="titleRessource mt-2">
             <h2 class="text-center">Liste des dernières ressources</h2>
         </div>
         <div class="row d-flex justify-content-evenly lesRessources">
-            
+
         </div>
     </div>
 </div>
 
-<script> //js pour appeler la fonction en ajax "Mesressources"
+<script>
+ //js pour appeler la fonction en ajax "Mesressources"
 
 $(document).ready(function(){
     var user = '@(user != null ? user : null)';
     var userId = '@(user != null ? user.Id : null)';
     console.log(user);
     $.ajax({
-        //L'URL de la requête 
+        //L'URL de la requête
         url: "/Ressource/RessourceAccueil",
 
         //La méthode d'envoi (type de requête)
@@ -98,12 +123,12 @@ $(document).ready(function(){
                                         +'</div>'
                                      +'</div>');
         }
-        
+
         if(user != "null" && user != ""){
-            $(".addFav").on("click", function() { 
+            $(".addFav").on("click", function() {
                 var thisFav = $(this);
                     $.ajax({
-                            //L'URL de la requête 
+                            //L'URL de la requête
                             url: "Ressource/Addfav",
                             //La méthode d'envoi (type de requête)
                             method: "GET",
@@ -137,14 +162,14 @@ $(document).ready(function(){
 
 
     document.querySelector('#sendfiltres').addEventListener('click',sendfiltre);
-  
+
     function sendfiltre() {
      var user = '@(user != null ? user : null)';
     var userId = '@(user != null ? user.Id : null)';
-    
+
 
   $.ajax({
-        //L'URL de la requête 
+        //L'URL de la requête
         url: "/Ressource/GetAllressourceFiltreby",
 
         //La méthode d'envoi (type de requête)
@@ -153,9 +178,9 @@ $(document).ready(function(){
             idcat : $('#idcat').val(),
             idtype : $('#idtype').val(),
             search : $('#searchfiltre').val()
-      
+
         }
-        
+
     })
 
     .done(function(response){
@@ -193,12 +218,12 @@ $(document).ready(function(){
                                         +'</div>'
                                      +'</div>');
         }
-        
+
         if(user != "null" && user != ""){
-            $(".addFav").on("click", function() { 
+            $(".addFav").on("click", function() {
                 var thisFav = $(this);
                     $.ajax({
-                            //L'URL de la requête 
+                            //L'URL de la requête
                             url: "Ressource/Addfav",
                             //La méthode d'envoi (type de requête)
                             method: "GET",
@@ -224,7 +249,7 @@ $(document).ready(function(){
     })
 
     //Ce code sera exécuté que la requête soit un succès ou un échec
-   
+
     };
 </script>
 

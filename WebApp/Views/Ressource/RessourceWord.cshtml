@@ -9,6 +9,7 @@
 }
 @section Styles {
     <link rel='stylesheet' href='~/css/maRessource.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
     <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
 
@@ -36,7 +37,7 @@
             <h1>Titre : @Model.Nom</h1>
         </div>
         <div class="col-2 text-end">
-            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger le docx</a>
+            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger le document</a>
         </div>
         <div class="col-12 center-element">
            <iframe class="doc" src="https://docs.google.com/gview?url=https://localhost:44372/@(Model.CheminAcces)@(Model.Source)&embedded=true"></iframe>
@@ -44,6 +45,7 @@
     </div>
 </div>
 
-@if(user != null){
+@if(user != null && Model.IsValidate)
+{
     <partial name="/Views/Shared/_commentaires.cshtml" />
 }
