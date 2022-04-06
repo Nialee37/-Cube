@@ -43,12 +43,10 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public string getmoyressourcelu()
+        public string getressourcecree()
         {
-            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-            if(listfav.Count > 0)
-            {
-                List<int> moy = new List<int>();
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            var listfav = Service.RessourcesManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
 
                 foreach (var item in listfav)
                 {
@@ -62,6 +60,21 @@ namespace WebApp.Controllers
                 return "";
             }
             
+        }
+
+        public string getmoyressourcelu()
+        {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
+            var listfav = Service.HistoriqueManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+
+            List<int> moy = new List<int>();
+
+            foreach (var item in listfav)
+            {
+                moy.Add(item.Count());
+            }
+
+            return moy.Average().ToString();
         }
 
         public string moyressourcecree()
@@ -113,7 +126,12 @@ namespace WebApp.Controllers
 
             return Json(listressource);
         }
+        public JsonResult GetAllressource()
+        {
+            List<Ressources> listressource = Service.RessourcesManager.GetAll().ToList();
 
+            return Json(listressource);
+        }
         public JsonResult GetAllressourcetovalidate()
         {
             List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
@@ -255,12 +273,18 @@ namespace WebApp.Controllers
                         mesressources[i].isfav = 0;
                     }
 
+                    mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
                 }
+               
                 return Json(mesressources);
             }
             else
             {
                 List<Ressources> mesressources = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
+                for(int i = 0; i < mesressources.Count; i++)
+                {
+                    mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
+                }
                 return Json(mesressources);
             }
            
@@ -445,25 +469,12 @@ namespace WebApp.Controllers
             }
         }
 
-        // GET: RessourceController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: RessourceController/Delete/5
+      
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public string Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Service.RessourcesManager.Delete(id);
+            return "";
 
         }
         public ActionResult GetRessource(int id)
@@ -503,6 +514,7 @@ namespace WebApp.Controllers
                     break;
 
                 case 3: //cas word
+
                     return View("RessourceWord", ressource);
                     break;
 

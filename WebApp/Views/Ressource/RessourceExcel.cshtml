@@ -1,19 +1,51 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Text.Json
 @model ServiceDAL.BusinessObjet.Ressources
-
 @{
+    ViewData["Title"] = Model.Nom;
+    ViewData["Page"] = "Ressource";
+
     Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
 }
-
 @section Styles {
     <link rel='stylesheet' href='~/css/maRessource.css'>
-    <link rel='stylesheet' href='~/css/box_form.css'>
-    <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
 
-<p> COUCOU TU VEUX VOIR MA PLANETTE</p>
-<p>EXCEL</p>
+<div class="box_general_ressource">
+    <div class="row">
+        <div class="col-6"><span>Auteur : @Model.Personne.Prenom @Model.Personne.Nom</span></div>
+        <div class="col-6"><div class="profilPicture"><i class="fas fa-user"></i></div></div>
+    </div>
+    <div class="row">
+        <div class="col-6"><span>Catégorie : @Model.Categorie.Libelle</span></div>
+    </div>
+    <div class="row">
+        <div class="col-6"><span class="fst-italic">Crée le  : @Model.Date</span></div>
+        <div class="col-6 text-end"><span>Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span></div>
+    </div>
+</div>
+
+<div>
+
+</div>
+
+<div class="box_data_ressource">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Titre : @Model.Nom</h1>
+        </div>
+        <div class="col-2 text-end">
+            <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger le WORD</a>
+        </div>
+        <div class="col-12 center-element">
+            <object data="@Model.CheminAcces@Model.Source" type="application/pdf" width="100%" height="800px"> 
+          <p>Il semble que vous n'ayez pas de plug-in PDF pour ce navigateur.
+          Pas de problème... vous pouvez <a href="@Model.CheminAcces@Model.Source">cliquer ici pour
+          télécharger le fichier PDF.</a></p>  
+        </object>
+        </div>
+    </div>
+</div>
 
 @if(user != null){
     <partial name="/Views/Shared/_commentaires.cshtml" />
