@@ -46,7 +46,26 @@ namespace WebApp.Controllers
         public string getressourcecree()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            var listfav = Service.RessourcesManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+            var listfav = Service.RessourcesManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+
+            List<int> moy = new List<int>();
+
+            foreach (var item in listfav)
+            {
+                moy.Add(item.Count());
+            }
+
+            return moy.Average().ToString();
+        }
+
+        public string getmoyressourcelu()
+        {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
+            var listfav = Service.HistoriqueManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+
+            if (listfav.Count > 0)
+            {
+                List<int> moy = new List<int>();
 
                 foreach (var item in listfav)
                 {
@@ -59,29 +78,14 @@ namespace WebApp.Controllers
             {
                 return "";
             }
-            
-        }
-
-        public string getmoyressourcelu()
-        {
-            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
-            var listfav = Service.HistoriqueManager.GetAll().Where(x=> x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
-
-            List<int> moy = new List<int>();
-
-            foreach (var item in listfav)
-            {
-                moy.Add(item.Count());
-            }
-
-            return moy.Average().ToString();
         }
 
         public string moyressourcecree()
         {
 
-            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x=> x.IdPersonne).ToList();
-            if(ressourcelist.Count > 0)
+            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+
+            if (ressourcelist.Count > 0)
             {
                 List<int> moy = new List<int>();
 
@@ -96,14 +100,13 @@ namespace WebApp.Controllers
             {
                 return "";
             }
-            
         }
-        
+
         public JsonResult GetHistorique()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
             List<Ressources> listressource = new List<Ressources>();
-            List<Historique> listfav= Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
+            List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
 
             foreach (Historique item in listfav)
             {
@@ -146,10 +149,10 @@ namespace WebApp.Controllers
         [HttpPost]
         public JsonResult GetAllressourceFiltreby(int? idcat, int? idtype, string search)
         {
-            List<Ressources> listressource = Service.RessourcesManager.GetAll().Where(x=> x.IsValidate == true).ToList();
+            List<Ressources> listressource = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).ToList();
 
             // cas all
-            if((idcat != null) && (idtype != null) && (search != null && search != "")) //cas ou tous est remplis
+            if ((idcat != null) && (idtype != null) && (search != null && search != "")) //cas ou tous est remplis
             {
                 listressource = listressource.Where(x => x.IdCategorie == idcat && x.IdType == idtype && x.Nom.Contains(search)).ToList();
             }
@@ -158,7 +161,7 @@ namespace WebApp.Controllers
 
             if ((idcat == null) && (idtype != null) && (search != null && search != "")) // cas ou il manque le idcat
             {
-                listressource = listressource.Where(x =>  x.IdType == idtype && x.Nom.Contains(search)).ToList();
+                listressource = listressource.Where(x => x.IdType == idtype && x.Nom.Contains(search)).ToList();
             }
 
             if ((idcat != null) && (idtype == null) && (search != null && search != "")) //cas ou il manque le idtype
@@ -197,8 +200,8 @@ namespace WebApp.Controllers
             {
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
                 //on delete pour ne pas avoir de doublon
-                Favori oldfav = Service.FavoriManager.Get(userConnected.Id,id);
-                if(oldfav != null)
+                Favori oldfav = Service.FavoriManager.Get(userConnected.Id, id);
+                if (oldfav != null)
                 {
                     Service.FavoriManager.DeleteObj(oldfav);
                     return 0;
@@ -215,7 +218,7 @@ namespace WebApp.Controllers
                 return 99;
             }
         }
-        
+
         public int validateressource(int id)
         {
             Ressources mesressources = Service.RessourcesManager.Get(id);
@@ -253,8 +256,8 @@ namespace WebApp.Controllers
 
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
         {
-            
-            if(HttpContext.Session.GetString("user") != null)
+
+            if (HttpContext.Session.GetString("user") != null)
             {
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
                 List<Favori> mesfavoris = new List<Favori>();
@@ -275,19 +278,19 @@ namespace WebApp.Controllers
 
                     mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
                 }
-               
+
                 return Json(mesressources);
             }
             else
             {
                 List<Ressources> mesressources = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
-                for(int i = 0; i < mesressources.Count; i++)
+                for (int i = 0; i < mesressources.Count; i++)
                 {
                     mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
                 }
                 return Json(mesressources);
             }
-           
+
         }
 
         // GET: RessourceController/Details/5
@@ -308,12 +311,12 @@ namespace WebApp.Controllers
 
             for (int i = 0; i < newlistcategorie.Count; i++) // 2 correspond au premier id de categorie
             {
-                if (newlistressoruce.Any(x=> x.IdCategorie == newlistcategorie[i].Id))
+                if (newlistressoruce.Any(x => x.IdCategorie == newlistcategorie[i].Id))
                 {
                     HighChartHisto.HistoBar serie = new HighChartHisto.HistoBar()
                     {
-                        Name = newlistcategorie.FirstOrDefault(x=> x.Id == newlistcategorie[i].Id).Libelle,
-                        value = newlistressoruce.Count(x=> x.IdCategorie == newlistcategorie[i].Id)
+                        Name = newlistcategorie.FirstOrDefault(x => x.Id == newlistcategorie[i].Id).Libelle,
+                        value = newlistressoruce.Count(x => x.IdCategorie == newlistcategorie[i].Id)
                     };
 
                     serial.Add(serie);
@@ -339,7 +342,7 @@ namespace WebApp.Controllers
 
             return Json(ressbymonth);
         }
-      
+
 
         // GET: RessourceController/Create
         public ActionResult Create()
@@ -351,7 +354,7 @@ namespace WebApp.Controllers
                 ListCategories.Add(item.Id, $"{item.Libelle}");
             }
             var selectListcat = new SelectList(ListCategories, "Key", "Value");
-            
+
             ViewBag.ListCategories = selectListcat;
 
             IDictionary<int, string> ListType = new Dictionary<int, string>();
@@ -376,21 +379,21 @@ namespace WebApp.Controllers
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
 
-            if(file != null)
+            if (file != null)
             {
                 var fileName = Path.GetFileName(file.FileName);
 
-                
+
                 string extensstion = fileName.Split(".").Last().ToLower(); //get l'extenstion du docuement
 
                 switch (extensstion)
                 {
                     case "docx": //cas word
-                        ressource.IdType = 3;  
+                        ressource.IdType = 3;
                         break;
 
                     case "mp4": //cas vidéo
-                        ressource.IdType= 5;
+                        ressource.IdType = 5;
                         break;
 
                     case "png": //cas image
@@ -402,9 +405,6 @@ namespace WebApp.Controllers
                         break;
 
                     case "xlsx": //cas excel
-                        ressource.IdType = 2;
-                        break;
-                    case "xls": //cas excel
                         ressource.IdType = 2;
                         break;
 
@@ -440,7 +440,7 @@ namespace WebApp.Controllers
                 ViewBag.message = "Il n'y a pas de document lié a votre ressource.";
                 return Redirect("/Ressource/Create");
             }
-                
+
         }
 
 
@@ -448,7 +448,7 @@ namespace WebApp.Controllers
         public ActionResult Edit(int id)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            
+
             Ressources ressource = Service.RessourcesManager.Get(id);
 
             return View("Edit", ressource);
@@ -469,7 +469,7 @@ namespace WebApp.Controllers
             }
         }
 
-      
+
         [HttpPost]
         public string Delete(int id)
         {
@@ -486,13 +486,13 @@ namespace WebApp.Controllers
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); // récupération de la persone
                 Historique histoold = Service.HistoriqueManager.Get(userConnected.Id, ressource.Id); //recupératon du l'historique
 
-                if(histoold == null)
+                if (histoold == null)
                 {
                     Historique histotamere = new Historique();
                     histotamere.IdPersonne = userConnected.Id;
                     histotamere.IdRessource = ressource.Id;
                     histotamere.Date = DateTime.Now;
-                    
+
                     Service.HistoriqueManager.Add(histotamere);
                 }
                 else
@@ -509,8 +509,8 @@ namespace WebApp.Controllers
 
             switch (ressource.IdType)
             {
-                case 2 : //cas excel
-                    return View("RessourceExcel",ressource);
+                case 2: //cas excel
+                    return View("RessourceExcel", ressource);
                     break;
 
                 case 3: //cas word
