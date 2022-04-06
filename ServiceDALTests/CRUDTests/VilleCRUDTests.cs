@@ -47,14 +47,12 @@ namespace ServiceDALTests.CRUDTests
 
             // Act
             Manager.Add(new Ville() {
-                IdVille = 36831,
                 Nom = "ville1",
                 CPostal = "00001A",
                 code_departement = "test",
                 code_commune = "testC"
             });
             Manager.Add(new Ville() {
-                IdVille = 36832,
                 Nom = "ville2",
                 CPostal = "00002B",
                 code_departement = "test2",
@@ -71,7 +69,7 @@ namespace ServiceDALTests.CRUDTests
         public void Ville_GetVille_NameOk()
         {
             // Arrange
-            const int ID = 36831;
+            const int ID = 1;
             const string EXCEPTED = "ville1";
 
             // Act
@@ -86,7 +84,7 @@ namespace ServiceDALTests.CRUDTests
         public void Ville_UpdateVille_NameOk()
         {
             // Arrange
-            const int ID = 36831;
+            const int ID = 1;
             const string EXCEPTED = "villeModifié";
 
             // Act
@@ -104,7 +102,7 @@ namespace ServiceDALTests.CRUDTests
         public void Ville_DeleteVille_null()
         {
             // Arrange
-            const int ID = 36831;
+            const int ID = 1;
 
             // Act
             Manager.Delete(ID);

@@ -63,15 +63,20 @@ namespace WebApp.Controllers
 
         // POST: CommentairesController/Create
         [HttpPost]
-     
-        public string Create(int id_ressource, string corp)
+        public string Create(int id_ressource, string corp,int? idComReponse)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             Commentaire commentaire = new Commentaire();
                 commentaire.IdRessource = id_ressource;
                 commentaire.commentaire = corp;
                 commentaire.IdPersonne = userConnected.Id;
-                Service.CommentaireManager.Add(commentaire);
+                commentaire.date_com = System.DateTime.Now;
+                if (idComReponse != null)
+                {
+                    commentaire.isReponse = true;
+                    commentaire.IdCommentaireOrigine = idComReponse;
+                }
+            Service.CommentaireManager.Add(commentaire);
             
             return "Commentaire ajouté";
         }

@@ -51,18 +51,22 @@ namespace ServiceDALTests.CRUDTests
             Manager.Add(new Commentaire()
             {
                 commentaire = "Commentaire1",
+                date_com = System.DateTime.Now,
                 IdPersonne = 1,
                 IdRessource = 1,
                 Personne = UnePersonne,
-                Ressources = UneRessources
+                Ressources = UneRessources,
+                isReponse = false
             });
             Manager.Add(new Commentaire()
             {
                 commentaire = "Commentaire2",
+                date_com = System.DateTime.Now,
                 IdPersonne = 2,
                 IdRessource = 2,
                 Personne = UnePersonne,
-                Ressources = UneRessources
+                Ressources = UneRessources,
+                isReponse = false
             });
 
             long actual = Manager.GetAll().Count;

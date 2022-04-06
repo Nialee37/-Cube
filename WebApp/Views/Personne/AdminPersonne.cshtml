@@ -47,7 +47,10 @@
 
      <div class="col-lg-5 col-12 dashboard-card">
         <h2>Gestion des catégories de ressources</h2>
-        <a href="/Categorie/Create">Créer une catégorie</a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateCat">
+          Créer une catégorie
+        </button>
+        @*<a href="/Categorie/Create">Créer une catégorie</a>*@
         <table class="table table-striped" style="width:100%" id="manageCategorie">
             <thead>
                 <tr>
@@ -61,7 +64,9 @@
 
     <div class="col-lg-5 col-12 dashboard-card">
         <h2>Gestion des villes</h2>
-        <a href="/Villes/Create">Créer une ville</a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateVille">
+          Créer une ville
+        </button>
         <table class="table table-striped" style="width:100%" id="manageVille">
             <thead>
                 <tr>
@@ -114,9 +119,11 @@
 
 
 </div>
-<script>
-    
 
+<partial name="/Views/Categorie/Create.cshtml" />
+<partial name="/Views/Villes/Create.cshtml" />
+
+<script>
     $(document).ready(function() {
     $('#manageVille').DataTable( {
         "language": {

@@ -29,6 +29,15 @@
     margin-top: 15px;
 }
 
+.box_commentaire_ressource {
+    background: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 15px;
+}
+
 .download_btn {
     position: absolute;
     right: 15px;

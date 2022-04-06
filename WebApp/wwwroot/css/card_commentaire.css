@@ -1,0 +1,70 @@
+﻿.box_commentaire_ressource {
+    background: white;
+    padding: 20px;
+    box-shadow: 3px 2px 11px #b7b7b7;
+    border-radius: 10px;
+}
+
+#commentaire_container {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    width: 90%;
+    box-shadow: 3px 2px 11px #b7b7b7;
+    margin: 10px 10px;
+}
+
+.title_commentaire {
+    position: relative;
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.card_commentaire {
+    position: relative;
+    width: 90%;
+    box-shadow: rgb(183, 183, 183) 3px 2px 11px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.com_commentaire {
+    padding-top: 10px;
+}
+
+.btn_rep_com {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    background: none;
+    border: none;
+}
+
+.btn_com_write {
+    color: rgba(255, 255, 255, 0.8) !important;
+    background-color: #E9374C !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    width: 25% !important;
+    margin: 0 0 10px 0 !important;
+    border: none !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+    margin:0 10px!important;
+}
+
+#fname, #fname_rep {
+    height: 100px;
+}
+
+.repComQuote {
+    box-shadow: rgb(183, 183, 183) 3px 2px 11px;
+    padding: 20px;
+    background-color: #ebebeb;
+}

@@ -9,6 +9,8 @@
 }
 @section Styles {
     <link rel='stylesheet' href='~/css/maRessource.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
+    <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
 
 <div class="box_general_ressource">
@@ -23,10 +25,6 @@
         <div class="col-6"><span class="fst-italic">Crée le  : @Model.Date</span></div>
         <div class="col-6 text-end"><span>Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span></div>
     </div>
-</div>
-
-<div>
-
 </div>
 
 <div class="box_data_ressource">

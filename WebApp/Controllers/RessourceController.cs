@@ -46,30 +46,44 @@ namespace WebApp.Controllers
         public string getmoyressourcelu()
         {
             var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-
-            List<int> moy = new List<int>();
-
-            foreach (var item in listfav)
+            if(listfav.Count > 0)
             {
-                moy.Add(item.Count());
+                List<int> moy = new List<int>();
+
+                foreach (var item in listfav)
+                {
+                    moy.Add(item.Count());
+                }
+
+                return moy.Average().ToString();
+            }
+            else
+            {
+                return "";
             }
             
-            return moy.Average().ToString();
         }
 
         public string moyressourcecree()
         {
 
             var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x=> x.IdPersonne).ToList();
-
-            List<int> moy = new List<int>();
-
-            foreach (var item in ressourcelist)
+            if(ressourcelist.Count > 0)
             {
-                moy.Add(item.Count());
-            }
+                List<int> moy = new List<int>();
 
-            return  Math.Round(moy.Average()).ToString();
+                foreach (var item in ressourcelist)
+                {
+                    moy.Add(item.Count());
+                }
+
+                return Math.Round(moy.Average()).ToString();
+            }
+            else
+            {
+                return "";
+            }
+            
         }
         
         public JsonResult GetHistorique()
@@ -364,6 +378,9 @@ namespace WebApp.Controllers
                         break;
 
                     case "xlsx": //cas excel
+                        ressource.IdType = 2;
+                        break;
+                    case "xls": //cas excel
                         ressource.IdType = 2;
                         break;
 

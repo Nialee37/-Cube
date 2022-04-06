@@ -113,6 +113,29 @@
     margin-right: 10px !important;
 }
 
+.btn_right_card {
+    position: absolute;
+    width: 25% !important;
+    right: 5px;
+    top: 25px;
+}
+
+.btn_color_blue {
+    background: #5e76e7!important;
+}
+
+.btn_color_green {
+    background: #7bbf76 !important;
+}
+
+.editCat button, .editCat a{
+    width: 100% !important;
+}
+
+.card-register {
+    position: relative;
+}
+
 @media only screen and (max-width:568px) {
     .card-register {
         margin-left: 10vw !important;
