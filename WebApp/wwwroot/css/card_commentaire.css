@@ -44,6 +44,14 @@
     border: none;
 }
 
+.btn_supp_com {
+    position: absolute;
+    top: 0;
+    right: 140px;
+    background: none;
+    border: none;
+}
+
 .btn_com_write {
     color: rgba(255, 255, 255, 0.8) !important;
     background-color: #E9374C !important;
