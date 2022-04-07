@@ -152,41 +152,41 @@ namespace WebApp.Controllers
             List<Ressources> listressource = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).ToList();
 
             // cas all
-            if ((idcat != null) && (idtype != null) && (search != null && search != "")) //cas ou tous est remplis
+            if ((idcat != null) && (idtype != null) && (search != null)) //cas ou tous est remplis
             {
                 listressource = listressource.Where(x => x.IdCategorie == idcat && x.IdType == idtype && x.Nom.Contains(search)).ToList();
             }
 
             //cas chiant
 
-            if ((idcat == null) && (idtype != null) && (search != null && search != "")) // cas ou il manque le idcat
+            if ((idcat == null) && (idtype != null) && (search != null)) // cas ou il manque le idcat
             {
                 listressource = listressource.Where(x => x.IdType == idtype && x.Nom.Contains(search)).ToList();
             }
 
-            if ((idcat != null) && (idtype == null) && (search != null && search != "")) //cas ou il manque le idtype
+            if ((idcat != null) && (idtype == null) && (search != null)) //cas ou il manque le idtype
             {
                 listressource = listressource.Where(x => x.IdCategorie == idcat && x.Nom.Contains(search)).ToList();
             }
 
-            if ((idcat != null) && (idtype != null) && (search == null && search == "")) //cas ou il manque le search
+            if ((idcat != null) && (idtype != null) && (search == null)) //cas ou il manque le search
             {
                 listressource = listressource.Where(x => x.IdCategorie == idcat && x.IdType == idtype).ToList();
             }
 
             // cas unitaire
 
-            if ((idcat != null) && (idtype == null) && (search == null && search == "")) //cas ou il est présent uniquement le idcat
+            if ((idcat != null) && (idtype == null) && (search == null)) //cas ou il est présent uniquement le idcat
             {
                 listressource = listressource.Where(x => x.IdCategorie == idcat).ToList();
             }
 
-            if ((idcat == null) && (idtype != null) && (search == null && search == "")) //cas ou il est présent uniquement le idtype
+            if ((idcat == null) && (idtype != null) && (search == null)) //cas ou il est présent uniquement le idtype
             {
                 listressource = listressource.Where(x => x.IdType == idtype).ToList();
             }
 
-            if ((idcat == null) && (idtype == null) && (search != null && search != "")) //cas ou il est présent uniquement le search
+            if ((idcat == null) && (idtype == null) && (search != null)) //cas ou il est présent uniquement le search
             {
                 listressource = listressource.Where(x => x.Nom.Contains(search)).ToList();
             }

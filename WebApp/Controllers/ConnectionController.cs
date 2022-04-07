@@ -150,5 +150,21 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public JsonResult LoginfromMobile(string email, string motdepasse)
+        {
+            Personne user = Service.PersonneManager.GetByMail(email);
+            
+            if (user != null) 
+            {
+                user.PasswordHash = "";
+                return Json(user);
+            }
+            else
+            {
+                return Json("");
+            }
+
+        }
+
     }
 }
