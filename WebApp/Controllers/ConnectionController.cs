@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Http;
             using Microsoft.Extensions.Logging;
             using ServiceDAL.BusinessObjet;
             using ServiceDAL.Interfaces;
-using System;
-using System.Collections.Generic;
+            using System.Collections.Generic;
             using System.Linq;
             using BCryptNet = BCrypt.Net.BCrypt;
 
@@ -155,15 +154,29 @@ namespace WebApp.Controllers
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
             Personne user = Service.PersonneManager.GetByMail(email);
-         
+            
             if (user != null) 
             {
-                user.PasswordHash = "";
-                return Json(email + "333" + motdepasse);
+                if (user.IsActivate)
+                {
+                    if (BCryptNet.Verify(motdepasse, user.PasswordHash) && motdepasse != "")
+                    {
+                        user.PasswordHash = "";
+                        return Json(user);
+                    }
+                    else
+                    {
+                        return Json("");
+                    }
+                }else
+                {
+                    return Json("");
+                }
+                
             }
             else
             {
-                return Json(email + "333" + motdepasse);
+                return Json("");
             }
 
         }
