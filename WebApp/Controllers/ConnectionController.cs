@@ -150,7 +150,6 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
             Personne user = Service.PersonneManager.GetByMail(email);
