@@ -109,10 +109,25 @@ namespace WebApp.Controllers
         //}
 
         [HttpPost]
-        public string Delete(int id)
+        public bool Delete(int id,int idPersonneRessource)
         {
-            Service.CommentaireManager.Delete(id);
-            return "commentaire supprimé";
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            if (userConnected != null)
+            {
+                if(userConnected.IdRoles >= 3 || idPersonneRessource == userConnected.Id)
+                {
+                    Service.CommentaireManager.Delete(id);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

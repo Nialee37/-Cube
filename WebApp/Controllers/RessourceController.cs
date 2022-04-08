@@ -375,7 +375,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Create(Ressources ressource, IFormFile file)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            ressource.Date = System.DateTime.Today;
+            ressource.Date = System.DateTime.Now;
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
 
@@ -389,6 +389,14 @@ namespace WebApp.Controllers
                 switch (extensstion)
                 {
                     case "docx": //cas word
+                        ressource.IdType = 3;
+                        break;
+
+                    case "doc": //cas word
+                        ressource.IdType = 3;
+                        break;
+
+                    case "txt": //cas word
                         ressource.IdType = 3;
                         break;
 
@@ -408,6 +416,10 @@ namespace WebApp.Controllers
                         ressource.IdType = 2;
                         break;
 
+                    case "xls": //cas excel
+                        ressource.IdType = 2;
+                        break;
+
                     case "pdf": //cas pdf
                         ressource.IdType = 4;
                         break;
@@ -419,7 +431,7 @@ namespace WebApp.Controllers
 
 
                 var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
-                var path = Path.Combine("../WebApp/wwwroot/PDF_FOLDER/", fileNewName);
+                var path = Path.Combine("./wwwroot/PDF_FOLDER/", fileNewName);
                 if (System.IO.File.Exists(path))
                     System.IO.File.Delete(path);
                 using (Stream fileStream = new FileStream(path, FileMode.Create))
