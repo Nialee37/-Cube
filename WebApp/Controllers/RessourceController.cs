@@ -268,7 +268,15 @@ namespace WebApp.Controllers
 
             Service.RessourcesManager.Update(mesressources);
             return 1;
+        }
+        public int notvalidateressource(int id)
+        {
+            Ressources mesressources = Service.RessourcesManager.Get(id);
 
+            mesressources.IsValidate = false;
+
+            Service.RessourcesManager.Update(mesressources);
+            return 1;
         }
 
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
@@ -603,94 +611,8 @@ namespace WebApp.Controllers
 
             return Redirect("/Ressource");
         }
-
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            //public async Task<IActionResult> Create(Ressources ressource, IFormFile file)
-            //{
-            //    Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            //    ressource.Date = System.DateTime.Now;
-            //    ressource.IsValidate = false;
-            //    ressource.IdPersonne = userConnected.Id;
-
-            //    if (file != null)
-            //    {
-            //        var fileName = Path.GetFileName(file.FileName);
-
-
-            //        string extensstion = fileName.Split(".").Last().ToLower(); //get l'extenstion du docuement
-
-            //        switch (extensstion)
-            //        {
-            //            case "docx": //cas word
-            //                ressource.IdType = 3;
-            //                break;
-
-            //            case "doc": //cas word
-            //                ressource.IdType = 3;
-            //                break;
-
-            //            case "txt": //cas word
-            //                ressource.IdType = 3;
-            //                break;
-
-            //            case "mp4": //cas vidéo
-            //                ressource.IdType = 5;
-            //                break;
-
-            //            case "png": //cas image
-            //                ressource.IdType = 6;
-            //                break;
-
-            //            case "jpg": //cas image
-            //                ressource.IdType = 6;
-            //                break;
-
-            //            case "xlsx": //cas excel
-            //                ressource.IdType = 2;
-            //                break;
-
-            //            case "xls": //cas excel
-            //                ressource.IdType = 2;
-            //                break;
-
-            //            case "pdf": //cas pdf
-            //                ressource.IdType = 4;
-            //                break;
-
-            //            default: //cas ou c'est la merde
-            //                ressource.IdType = 7;
-            //                break;
-            //        }
-
-
-            //        var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
-            //        var path = Path.Combine("./wwwroot/PDF_FOLDER/", fileNewName);
-            //        if (System.IO.File.Exists(path))
-            //            System.IO.File.Delete(path);
-            //        using (Stream fileStream = new FileStream(path, FileMode.Create))
-            //        {
-            //            await file.CopyToAsync(fileStream);
-            //        }
-            //        ressource.CheminAcces = "/PDF_FOLDER/";
-            //        ressource.Source = fileNewName;
-
-
-            //        Service.RessourcesManager.Add(ressource);
-
-            //        return Redirect("/Ressource");
-            //    }
-            //    else
-            //    {
-            //        //faire le message d'erreur visuellement
-            //        ViewBag.message = "Il n'y a pas de document lié a votre ressource.";
-            //        return Redirect("/Ressource/Create");
-            //    }
-
-            //}
-
-
-            [HttpPost]
+          
+        [HttpPost]
         public string Delete(int id)
         {
             Service.RessourcesManager.Delete(id);

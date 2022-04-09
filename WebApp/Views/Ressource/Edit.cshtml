@@ -41,7 +41,15 @@
                 @if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5))
                 {
                     <button type="button" class="btn btn-danger" id="deleteRessource"><i class="fas fa-trash-alt"></i> Supprimmer la ressource</button>
+
+                }
+                @if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5) && !Model.IsValidate)
+                {
                     <button type="button" class="btn btn-success" id="validationValidation"><i class="fas fa-check"></i> Valider la ressource</button>
+                }
+                else if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5) && Model.IsValidate)
+                {
+                    <button type="button" class="btn btn-danger" id="notvalidationValidation" ><i class="fas fa-trash"></i> Desactiver la ressource</button>
                 }
             </div>
             <div class="col-12 text-end">
@@ -113,6 +121,22 @@
             console.log("good");
              window.location.replace("/Personne/Adminpersonne");
        
+          });
+        })
+    </script>
+}
+
+@if(Model.IsValidate == true && (user.IdRoles == 4 || user.IdRoles == 5 || user.IdRoles == 3 )){
+    <script>
+        document.querySelector("#notvalidationValidation").addEventListener("click",  (e) => {
+           let request =         
+          $.ajax({
+            type: "POST", 	       
+            url: "/ressource/notvalidateressource?id=" + @Model.Id
+          });
+          request.done(function (output) {
+            console.log("good");
+             window.location.replace("/Personne/Adminpersonne");
           });
         })
     </script>
