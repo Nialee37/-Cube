@@ -40,8 +40,8 @@
                 <span class="d-flex justify-content-end mb-3">Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span>
                 @if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5))
                 {
-                    <button class="btn btn-danger" id="deleteRessource"><i class="fas fa-trash-alt"></i> Supprimmer la ressource</button>
-                    <button class="btn btn-success" id="validationValidation"><i class="fas fa-check"></i> Valider la ressource</button>
+                    <button type="button" class="btn btn-danger" id="deleteRessource"><i class="fas fa-trash-alt"></i> Supprimmer la ressource</button>
+                    <button type="button" class="btn btn-success" id="validationValidation"><i class="fas fa-check"></i> Valider la ressource</button>
                 }
             </div>
         </div>
@@ -63,15 +63,25 @@
             </div>
             <div class="col-12 center-element">
                 <div class="dropzone-fichier">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <input class="form-control inputfile" type="file" id="file" name="file" placeholder="Glisser ou sélectionner le fichier à upload">
-                    <span>@Model.Source</span>
-                    <span>Glisser votre fichier ici pour remplacer le prècèdent</span>
+                    <i class="fas fa-cloud-upload-alt iconUpload"></i>
+                    <input class="form-control inputfileDrop" type="file" id="file" name="file" placeholder="Glisser ou sélectionner le fichier à upload">
+                    <span class="descriptionInput">Glisser votre fichier ici pour remplacer le prècèdent</span>
+                    <span class="nomFile">@Model.Source</span>
                 </div>
+            </div>
+            <div class="col-12 center-element">
+                <button type="submit" class="btn btn-success" id="deleteRessource"><i class="fas fa-save"></i> Enregistrer les modifications</button>
             </div>
         </div>
     </div>
 </form>
+
+
+<script>
+      $("#file").change(function(){
+          $(".nomFile").text(($(this).val() != "" ? $(this).val().replace(/^.*[\\\/]/, '') : "Aucun fichier valide sélectionner !"));
+      })
+</script>
 @if((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5 )){
   <script>
       document.querySelector("#deleteRessource").addEventListener("click",  (e) => {

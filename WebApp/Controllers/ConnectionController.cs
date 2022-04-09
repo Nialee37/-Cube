@@ -153,16 +153,16 @@ namespace WebApp.Controllers
         [HttpPost]
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
-            Personne user = Service.PersonneManager.GetByMail(email);
-            
+            Personne user = Service.PersonneManager.GetByMail(email);          
             if (user != null) 
             {
                 if (user.IsActivate)
                 {
                     if (BCryptNet.Verify(motdepasse, user.PasswordHash) && motdepasse != "")
                     {
-                        user.PasswordHash = "";
-                        return Json(user);
+                        Personne newUser = user;
+                        newUser.PasswordHash = "";
+                        return Json(newUser);
                     }
                     else
                     {
