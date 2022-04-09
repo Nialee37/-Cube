@@ -160,9 +160,9 @@ namespace WebApp.Controllers
                 {
                     if (BCryptNet.Verify(motdepasse, user.PasswordHash) && motdepasse != "")
                     {
-                        Personne newUser = user;
-                        newUser.PasswordHash = "";
-                        return Json(newUser);
+                        //Personne newUser = user;
+                        //newUser.PasswordHash = "";
+                        return Json(user);
                     }
                     else
                     {

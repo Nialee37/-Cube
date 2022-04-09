@@ -17,17 +17,17 @@
     <link rel='stylesheet' href='~/css/box_form.css'>
     <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
-<form class="form-horizontal">
+<form class="form-horizontal" >
     <div class="box_general_ressource">
         <div class="row">
             <div class="col-6"><span>Auteur : @Model.Personne.Prenom @Model.Personne.Nom</span></div>
             <div class="col-6"><div class="profilPicture"><i class="fas fa-user"></i></div></div>
         </div>
 
-        <div class="row">
-            <div class="col-6">
-                <span>Catégorie : @Model.Categorie.Libelle</span>
-                <div class="form-group">
+        <div class="row mt-2">
+            <div class="col-6 d-flex">
+                <span>Catégorie : </span>
+                <div class="form-group selectCatR">
                     <div class="input-icon"><i class="fas fa-filter"></i></div>
                     <select required class="form-control verifForm" id="IdCategorie" data-nom="IdCategorie" asp-for="IdCategorie" asp-items="@(listCat)"><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
                     <div asp-validation-for="IdCategorie" class="invalid-feedback fw-bold"></div>
@@ -37,12 +37,14 @@
         <div class="row">
             <div class="col-6"><span class="fst-italic">Crée le  : @Model.Date</span></div>
             <div class="col-6 text-end">
-                <span class="d-flex justify-content-end mb-3">Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span>
                 @if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5))
                 {
                     <button type="button" class="btn btn-danger" id="deleteRessource"><i class="fas fa-trash-alt"></i> Supprimmer la ressource</button>
                     <button type="button" class="btn btn-success" id="validationValidation"><i class="fas fa-check"></i> Valider la ressource</button>
                 }
+            </div>
+            <div class="col-12 text-end">
+                <span class=" justify-content-end mb-3">Status : <span class="ms-2 badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span>
             </div>
         </div>
     </div>
@@ -50,9 +52,9 @@
 
     <div class="box_data_ressource">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-12 d-flex justify-content-center">
                 <h1>Titre : </h1>
-                <div class="form-group">
+                <div class="form-group formTitleEditRessource">
                     <div class="input-icon"><i class="fas fa-address-card"></i></div>
                     <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" value="@Model.Nom" required />
                     <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
