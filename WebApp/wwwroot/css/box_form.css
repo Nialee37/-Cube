@@ -82,8 +82,6 @@
 }
 
 .form-horizontal .btn {
-    color: rgba(255, 255, 255, 0.8);
-    background: #E9374C;
     font-size: 15px;
     font-weight: 500;
     text-transform: uppercase;
@@ -94,6 +92,11 @@
     border-radius: 20px;
     transition: all 0.3s ease;
 }
+
+    .form-horizontal .btn:not(.btn-success) {
+        background: #E9374C;
+        color: rgba(255, 255, 255, 0.8);
+    }
 
 .form-group.is-invalid {
     border-color: #dc3545 !important;

@@ -1,57 +1,106 @@
-﻿@model ServiceDAL.BusinessObjet.Ressources
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 @using System.Text.Json
+@model ServiceDAL.BusinessObjet.Ressources
 @{
-    ViewData["Title"] = "Home Page";
-    ViewData["Page"] = "Home";
+    ViewData["Title"] = "Edition de la ressource : "+Model.Nom;
+    ViewData["Page"] = "Edit-Ressource";
 
     Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+
+    SelectList listCat = new SelectList(ViewBag.ListCategories, "Value", "Text");
+    SelectListItem selectedListItem = listCat.Where(x => x.Value == Model.Categorie.Id.ToString()).First();
+    selectedListItem.Selected = true;
+
 }
-@{
-    ViewData["Title"] = "Create";
+@section Styles {
+    <link rel='stylesheet' href='~/css/maRessource.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
+    <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
-<p> je suis la page dedit de la ressource</p>
-<p>@Model.Id</p>
+<form class="form-horizontal">
+    <div class="box_general_ressource">
+        <div class="row">
+            <div class="col-6"><span>Auteur : @Model.Personne.Prenom @Model.Personne.Nom</span></div>
+            <div class="col-6"><div class="profilPicture"><i class="fas fa-user"></i></div></div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <span>Catégorie : @Model.Categorie.Libelle</span>
+                <div class="form-group">
+                    <div class="input-icon"><i class="fas fa-filter"></i></div>
+                    <select required class="form-control verifForm" id="IdCategorie" data-nom="IdCategorie" asp-for="IdCategorie" asp-items="@(listCat)"><option value="-1" disabled selected hidden>Sélectionner une catégorie</option></select>
+                    <div asp-validation-for="IdCategorie" class="invalid-feedback fw-bold"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span class="fst-italic">Crée le  : @Model.Date</span></div>
+            <div class="col-6 text-end">
+                <span class="d-flex justify-content-end mb-3">Status : <span class="badge rounded-pill @(Model.IsValidate ? "bg-success" : "bg-danger")">@(Model.IsValidate ? "Validé" : "Non validé")</span></span>
+                @if ((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5))
+                {
+                    <button class="btn btn-danger" id="deleteRessource"><i class="fas fa-trash-alt"></i> Supprimmer la ressource</button>
+                    <button class="btn btn-success" id="validationValidation"><i class="fas fa-check"></i> Valider la ressource</button>
+                }
+            </div>
+        </div>
+    </div>
 
 
-@if((user.IdRoles == 4 || user.IdRoles == 5 )){
-  <button class="btn btn-primary" id="didi">DELETE</button>
-
-
+    <div class="box_data_ressource">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Titre : </h1>
+                <div class="form-group">
+                    <div class="input-icon"><i class="fas fa-address-card"></i></div>
+                    <input asp-for="Nom" class="form-control verifForm" data-nom="nom" placeholder="Nom" value="@Model.Nom" required />
+                    <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
+                </div>
+            </div>
+            <div class="col-2 text-end">
+                <a href="@Model.CheminAcces@Model.Source" download="@Model.Source" class="btn btn-success download_btn"><i class="fas fa-download"></i> Télécharger la ressource de type @Model.Type.Libelle</a>
+            </div>
+            <div class="col-12 center-element">
+                <div class="dropzone-fichier">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <input class="form-control inputfile" type="file" id="file" name="file" placeholder="Glisser ou sélectionner le fichier à upload">
+                    <span>@Model.Source</span>
+                    <span>Glisser votre fichier ici pour remplacer le prècèdent</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@if((user.IdRoles == 3 || user.IdRoles == 4 || user.IdRoles == 5 )){
   <script>
-          document.querySelector("#didi").addEventListener("click",  (e) => {
-       let request =         
-      $.ajax({
-        type: "POST", 	       
-        url: "/ressource/Delete?id=" + @Model.Id
-      });
-      request.done(function (output) {
-        console.log("good");
-         window.location.replace("/Personne/Adminpersonne");
-       
-      });
-})
+      document.querySelector("#deleteRessource").addEventListener("click",  (e) => {
+          let request =         
+          $.ajax({
+            type: "POST", 	       
+            url: "/ressource/Delete?id=" + @Model.Id
+          });
+          request.done(function (output) {
+            console.log("good");
+             window.location.replace("/Personne/Adminpersonne");  
+          });
+      })
   </script>
 }
 
 @if(Model.IsValidate == false && (user.IdRoles == 4 || user.IdRoles == 5 || user.IdRoles == 3 )){
-
-    <button class="btn btn-primary" id="dudu">VALIDATE</button>
-
-
     <script>
-        document.querySelector("#dudu").addEventListener("click",  (e) => {
-       let request =         
-      $.ajax({
-        type: "POST", 	       
-        url: "/ressource/validateressource?id=" + @Model.Id
-      });
-      request.done(function (output) {
-        console.log("good");
-         window.location.replace("/Personne/Adminpersonne");
+        document.querySelector("#validationValidation").addEventListener("click",  (e) => {
+           let request =         
+          $.ajax({
+            type: "POST", 	       
+            url: "/ressource/validateressource?id=" + @Model.Id
+          });
+          request.done(function (output) {
+            console.log("good");
+             window.location.replace("/Personne/Adminpersonne");
        
-      });
-})
-
+          });
+        })
     </script>
 }

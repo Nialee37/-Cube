@@ -460,6 +460,15 @@ namespace WebApp.Controllers
         public ActionResult Edit(int id)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            IDictionary<int, string> ListCategories = new Dictionary<int, string>();
+            IEnumerable<Categorie> categorie = Service.CategorieManager.GetAll();
+            foreach (var item in categorie)
+            {
+                ListCategories.Add(item.Id, $"{item.Libelle}");
+            }
+            var selectListcat = new SelectList(ListCategories, "Key", "Value");
+
+            ViewBag.ListCategories = selectListcat;
 
             Ressources ressource = Service.RessourcesManager.Get(id);
 
