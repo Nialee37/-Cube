@@ -17,7 +17,9 @@
     <link rel='stylesheet' href='~/css/box_form.css'>
     <link rel='stylesheet' href='~/css/card_commentaire.css'>
 }
-<form class="form-horizontal">
+
+<form class="form-horizontal" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" value="@Model.Id"/>
     <div class="box_general_ressource">
         <div class="row">
             <div class="col-6"><span>Auteur : @Model.Personne.Prenom @Model.Personne.Nom</span></div>
