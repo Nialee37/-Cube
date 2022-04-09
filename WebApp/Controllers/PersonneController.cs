@@ -127,6 +127,11 @@ namespace WebApp.Controllers
             selectedType.Selected = true;
             ViewBag.ListTypeAdresse = selectListType;
 
+            if (TempData["messageErreurmdpSupp"] != null)
+            {
+                ViewBag.erreur = TempData["messageErreurmdpSupp"].ToString();
+            }
+
             return View(user);
         }
 
@@ -248,6 +253,34 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void deleteCompte(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            if(userConnected.IdRoles <= 3)
+            {
+                if (BCryptNet.Verify(user.PasswordHash, getUser.PasswordHash) && user.PasswordHash != "")
+                {
+                    Response.Redirect("/");
+                    HttpContext.Session.Clear();
+                    TempData["messageConfirmSupp"] = "Votre compte a bien été supprimer !";
+                    Response.Redirect("/");
+                }
+                else
+                {
+                    TempData["messageErreurmdpSupp"] = "Le mot de passe est incorrect !";
+                    Response.Redirect("/Personne/Edit?id=" + getUser.Id);
+                }
+            }else
+            {
+                Service.PersonneManager.Delete(getUser.Id);
+                Response.Redirect("/Personne/AdminPersonne");
+            }
+            
+        }
+
         // GET: PersonneController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -280,7 +313,7 @@ namespace WebApp.Controllers
             return Json(personnes);
         }
 
-        public ActionResult GetViewCgu()
+        public ActionResult cgu()
         {
             
             return View();

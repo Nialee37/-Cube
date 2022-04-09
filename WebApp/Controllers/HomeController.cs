@@ -53,6 +53,11 @@ namespace WebApp.Controllers
 
             ViewBag.Types = selectlisttype;
 
+            if (TempData["messageConfirmSupp"] != null)
+            {
+                ViewBag.message = TempData["messageConfirmSupp"].ToString();
+            }
+
             return View();
         }
 

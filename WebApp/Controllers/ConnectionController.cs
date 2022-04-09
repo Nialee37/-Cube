@@ -70,6 +70,11 @@ namespace WebApp.Controllers
                 }
                 ViewBag.ListTypeAdresse = new SelectList(ListTypeAdresse, "Key", "Value");
 
+                if(TempData["messageErreurLogin"] != null)
+                {
+                    ViewBag.message = TempData["messageErreurLogin"].ToString();
+                }
+
                 return View();
             }
 
@@ -98,6 +103,7 @@ namespace WebApp.Controllers
                             }
                             else
                             {
+                                ViewData.Clear();
                                 ViewBag.message = "Votre mot de passe est incorrect";
                                 return View("Index");
                             }
@@ -126,8 +132,9 @@ namespace WebApp.Controllers
             if (userbdd != null) { 
                 if (user.Mail == userbdd.Mail)
                 {
-                    ViewBag.message = "Bonjour un compte existe deja avec cet identifiant.";
-                    return RedirectToAction("Index", "Home");
+                    
+                    TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
+                    return RedirectToAction("Register", "Connection");
                 }
             }
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
