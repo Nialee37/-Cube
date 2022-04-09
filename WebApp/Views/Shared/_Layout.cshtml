@@ -1,11 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Text.Json
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApp</title>
+    <!-- balises servant à décrire le contenu partagé sur les réseaux sociaux -->
+    <meta property="og:title" content="@ViewData["Title"] - Source Relationnelle" />
+    <meta property="og:image" content="~/img/logoV1.png" />
+    <meta property="og:description" content="Venez découvrir notre site de partage de ressource pour vous faire pleins d'amis" />
+    <title>@ViewData["Title"] - Source Relationnelle</title>
     @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
