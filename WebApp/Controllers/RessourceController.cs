@@ -523,10 +523,19 @@ namespace WebApp.Controllers
         {
             
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+                
+                Ressources ressourcetosend = new Ressources();
+
 
                 if (ressource != null)
                 {
-                    if(file != null)
+
+                    ressourcetosend = Service.RessourcesManager.Get(ressource.Id);
+                    ressourcetosend.Nom = ressource.Nom;
+                    ressourcetosend.IdCategorie = ressource.IdCategorie;
+
+
+                    if (file != null)
                     {
                         var fileName = Path.GetFileName(file.FileName);
 
@@ -536,43 +545,43 @@ namespace WebApp.Controllers
                         switch (extensstion)
                         {
                             case "docx": //cas word
-                                ressource.IdType = 3;
+                            ressourcetosend.IdType = 3;
                                 break;
 
                             case "doc": //cas word
-                                ressource.IdType = 3;
+                            ressourcetosend.IdType = 3;
                                 break;
 
                             case "txt": //cas word
-                                ressource.IdType = 3;
+                            ressourcetosend.IdType = 3;
                                 break;
 
                             case "mp4": //cas vidéo
-                                ressource.IdType = 5;
+                            ressourcetosend.IdType = 5;
                                 break;
 
                             case "png": //cas image
-                                ressource.IdType = 6;
+                            ressourcetosend.IdType = 6;
                                 break;
 
                             case "jpg": //cas image
-                                ressource.IdType = 6;
+                            ressourcetosend.IdType = 6;
                                 break;
 
                             case "xlsx": //cas excel
-                                ressource.IdType = 2;
+                            ressourcetosend.IdType = 2;
                                 break;
 
                             case "xls": //cas excel
-                                ressource.IdType = 2;
+                            ressourcetosend.IdType = 2;
                                 break;
 
                             case "pdf": //cas pdf
-                                ressource.IdType = 4;
+                            ressourcetosend.IdType = 4;
                                 break;
 
                             default: //cas ou c'est la merde
-                                ressource.IdType = 7;
+                            ressourcetosend.IdType = 7;
                                 break;
                         }
 
@@ -585,11 +594,11 @@ namespace WebApp.Controllers
                         {
                             await file.CopyToAsync(fileStream);
                         }
-                        ressource.CheminAcces = "/PDF_FOLDER/";
-                        ressource.Source = fileNewName;
+                    ressourcetosend.CheminAcces = "/PDF_FOLDER/";
+                    ressourcetosend.Source = fileNewName;
                     }
 
-                Service.RessourcesManager.Update(ressource);
+                Service.RessourcesManager.Update(ressourcetosend);
             }
 
             return Redirect("/Ressource");
