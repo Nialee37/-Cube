@@ -116,6 +116,27 @@ namespace WebApp.Controllers
             return Json(listressource);
         }
 
+        public JsonResult GetHistoriqueMobile(string id)
+        {
+            int idtofindpersonne = 0;
+            if(id != null)
+            {
+                idtofindpersonne = int.Parse(id);
+                Personne userConnected = Service.PersonneManager.Get(idtofindpersonne); //maybe descending sur le order by
+                List<Ressources> listressource = new List<Ressources>();
+                List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
+
+                foreach (Historique item in listfav)
+                {
+                    listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+                }
+
+                return Json(listressource);
+            }
+           
+            return Json("");
+        }
+
         public JsonResult GetFavoris()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
@@ -128,6 +149,26 @@ namespace WebApp.Controllers
             }
 
             return Json(listressource);
+        }
+
+        public JsonResult GetFavorisModile(string id)
+        {
+            int idtofindpersonne = 0;
+            if (id != null)
+            {
+                idtofindpersonne = int.Parse(id);
+                Personne userConnected = Service.PersonneManager.Get(idtofindpersonne);
+                List<Ressources> listressource = new List<Ressources>();
+                List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
+
+                foreach (Favori item in listfav)
+                {
+                    listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+                }
+
+                return Json(listressource);
+            }
+            return Json("");
         }
         public JsonResult GetAllressource()
         {
