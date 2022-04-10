@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@model ServiceDAL.BusinessObjet.Ressources
+@{
+    ViewData["Title"] = "Contactez-Nous";
+    ViewData["Page"] = "Contact";
+
+    Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+    string mail = (user != null ? user.Mail : "");
+    string nom = (user != null ? user.Prenom + " " + user.Nom : "");
+}
+@section Styles {
+    <link rel='stylesheet' href='~/css/box_form.css'>
+    <link rel='stylesheet' href='~/css/card_commentaire.css'>
+}
+
+<div class="container">
+    <div class="row row-card">
+        <div class="col-md-12 col-lg-12 ml-auto mr-auto mb-2 card-custom">
+            <h1><i class="fas fa-phone-alt"></i> Contactez-Nous</h1>
+        </div>
+        <div class="col-md-12 col-lg-12 ml-auto mr-auto mt-2 card-custom">
+            <form class="form-horizontal" asp-action="EnvoieMailContact" id="form-mailContact" method="POST">
+                <div class="div-custom">
+                    <div class="row">
+                        <!-- Nom de la personne -->
+                        <div class="col-md-12">
+                            <div class="form-group EditGeneral">
+                                <div class="input-icon"><i class="fas fa-address-card"></i></div>
+                                <input required type="text" value="@nom" class="form-control verifForm" name="nom"  placeholder="Votre nom *" />
+                                <div class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- mail -->
+                        <div class="col-md-12">
+                            <div class="form-group EditGeneral">
+                                <div class="input-icon"><i class="fas fa-envelope"></i></div>
+                                <input required class="form-control verifForm" type="email" name="email" value="@mail" placeholder="Votre adresse mail *" />
+                                <div class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Objet mail -->
+                        <div class="col-md-12">
+                            <div class="form-group EditGeneral">
+                                <div class="input-icon"><i class="fas fa-mail-bulk"></i></div>
+                                <input required type="text" class="form-control verifForm" name="objet" placeholder="Objet de votre mail *" />
+                                <div asp-validation-for="Adresse.Nom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Message Mail -->
+                        <div class="col-md-12">
+                            <div class="form-group EditGeneral">
+                                <div class="input-icon"><i class="fas fa-marker"></i></div>
+                                <textarea class="form-control verifForm textContact" placeholder="Votre message *" name="textMail" required rows="20" cols="100" style="height: 150px;">
+                                    
+                                </textarea>
+                                <div class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <!-- Bouton submit -->
+                        <div class="col-md-12 submit-btn EditGeneral">
+                            <button class="btn signin login-btn" type="submit"><i class="fas fa-paper-plane"></i> Envoyez</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

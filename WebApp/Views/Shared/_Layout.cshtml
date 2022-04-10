@@ -55,13 +55,17 @@
         <nav class="nav">
             <div> 
                 <a href="#" class="nav_logo"> <img src="~/img/logoV1.png" id="btnNav" alt="logo" class="logo nav_logo-icon"><span class="title-logo">Source Relationnelles</span> </a>
-                <div class="nav_list"> 
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class='nav_link @(ViewData["Page"] == "Home" ? "active" : "" )'> <i class="fas fa-home nav_icon"></i><span class="nav_name">Accueil</span> </a> 
-                   
-                    <a asp-area="" asp-controller="Personne" asp-action="cgu" class='nav_link @(ViewData["Page"] == "CGU" ? "active" : "" )'> <i class="fas fa-user-secret nav_icon"></i></i> <span class="nav_name">Conditions général d'utilisation</span> </a> 
-                @{if(user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur" )){
-                   <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a> 
-                }}
+                <div class="nav_list">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class='nav_link @(ViewData["Page"] == "Home" ? "active" : "" )'> <i class="fas fa-home nav_icon"></i><span class="nav_name">Accueil</span> </a>
+
+                    <a asp-area="" asp-controller="Personne" asp-action="cgu" class='nav_link @(ViewData["Page"] == "CGU" ? "active" : "" )'> <i class="fas fa-user-secret nav_icon"></i> <span class="nav_name">Conditions général d'utilisation</span> </a>
+
+                    <a asp-area="" asp-controller="Contact" asp-action="ContactezNous" class='nav_link @(ViewData["Page"] == "Contact" ? "active" : "" )'> <i class="fas fa-phone-alt"></i> <span class="nav_name">Contactez-nous</span> </a>
+
+                    @{if (user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
+                        {
+                            <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a>
+                        }}
                 </div>
             </div> 
             
