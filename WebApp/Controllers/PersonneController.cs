@@ -339,7 +339,7 @@ namespace WebApp.Controllers
                     moy.Add(item.Count());
                 }
 
-                ViewBag.moycree =  Math.Round(moy.Average()).ToString();
+                ViewBag.moycree =  Math.Round(moy.Average(),0).ToString();
             }
             else
             {
@@ -357,7 +357,7 @@ namespace WebApp.Controllers
                     moy.Add(item.Count());
                 }
 
-                ViewBag.moylu = moy.Average().ToString();
+                ViewBag.moylu = Math.Round(moy.Average(), 0).ToString();
             }
             else
             {
