@@ -32,10 +32,11 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: const MainAppBar(
           title: Text(
-        "Login Page",
+        "Page de connexion",
         style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
       )),
@@ -57,9 +58,9 @@ class _LoginState extends State<Login> {
               maxLength: 30,
               obscureText: false,
               decoration: const InputDecoration(
-                labelText: '  adresse e-mail',
+                labelText: '  Adresse e-mail',
                 labelStyle: TextStyle(color: Color.fromARGB(255, 255, 89, 100)),
-                hintText: 'adresse e-mail',
+                hintText: 'Adresse e-mail',
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Color.fromARGB(255, 255, 89, 100), width: 2.0),
@@ -73,9 +74,9 @@ class _LoginState extends State<Login> {
               maxLength: 30,
               obscureText: true,
               decoration: const InputDecoration(
-                labelText: '  mot de passe',
+                labelText: '  Mot de passe',
                 labelStyle: TextStyle(color: Color.fromARGB(255, 255, 89, 100)),
-                hintText: 'mot de passe',
+                hintText: 'Mot de passe',
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Color.fromARGB(255, 255, 89, 100), width: 2.0),
@@ -96,7 +97,7 @@ class _LoginState extends State<Login> {
                     MaterialPageRoute(builder: (_) => const CubeAPP()));
               },
               child: const Text(
-                'continuez sans',
+                'Connectez-vous sans compte',
                 style: TextStyle(
                     color: Color.fromARGB(255, 255, 89, 100), fontSize: 15),
               ),

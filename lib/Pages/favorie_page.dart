@@ -131,7 +131,7 @@ class _FavoriePageState extends State<FavoriePage> {
                   } else if (snapshot.hasError) {
                     return const Center(child: Text('Something went wrong :('));
                   }
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 },
                 future: showsFavorie,
               ),

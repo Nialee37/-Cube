@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong :('));
           }
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
         future: showsbis,
       ),

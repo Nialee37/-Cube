@@ -31,14 +31,14 @@ class _HistoriquePageState extends State<HistoriquePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Historique Page',
+      title: 'Page Historique',
       theme: ThemeData(
         primaryColor: const Color.fromARGB(255, 255, 89, 100),
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Historique APP'),
+          title: const Text('Page d\'historique'),
           backgroundColor: const Color.fromARGB(255, 255, 89, 100),
           actions: <Widget>[
             IconButton(
@@ -131,7 +131,7 @@ class _HistoriquePageState extends State<HistoriquePage> {
                   } else if (snapshot.hasError) {
                     return const Center(child: Text('Something went wrong :('));
                   }
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 },
                 future: showsHistorique,
               ),

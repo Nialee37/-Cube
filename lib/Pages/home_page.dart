@@ -96,7 +96,7 @@ class _CubeAPPState extends State<CubeAPP> {
                 maxLength: 30,
                 cursorColor: const Color.fromARGB(255, 255, 89, 100),
                 decoration: const InputDecoration(
-                  labelText: 'Search',
+                  labelText: 'Recherche',
                   labelStyle:
                       TextStyle(color: Color.fromARGB(255, 255, 89, 100)),
                   suffixIcon: Icon(
@@ -155,7 +155,7 @@ class _CubeAPPState extends State<CubeAPP> {
                   } else if (snapshot.hasError) {
                     return const Center(child: Text('Something went wrong :('));
                   }
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 },
                 future: shows,
               ),
