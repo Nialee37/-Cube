@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -325,6 +326,44 @@ namespace WebApp.Controllers
 
         public ActionResult AdminPersonne()
         {
+
+            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+            Service.RessourcesManager.Dispose();
+
+            if (ressourcelist.Count > 0)
+            {
+                List<int> moy = new List<int>();
+
+                foreach (var item in ressourcelist)
+                {
+                    moy.Add(item.Count());
+                }
+
+                ViewBag.moycree =  Math.Round(moy.Average()).ToString();
+            }
+            else
+            {
+                ViewBag.moycree = "Pas calculable";
+            }
+            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+            Service.HistoriqueManager.Dispose();
+
+            if (listfav.Count > 0)
+            {
+                List<int> moy = new List<int>();
+
+                foreach (var item in listfav)
+                {
+                    moy.Add(item.Count());
+                }
+
+                ViewBag.moylu = moy.Average().ToString();
+            }
+            else
+            {
+                ViewBag.moylu = "";
+            }
+            
             return View();
         }
         [HttpGet]

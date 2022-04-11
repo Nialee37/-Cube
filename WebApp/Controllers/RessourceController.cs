@@ -30,6 +30,45 @@ namespace WebApp.Controllers
         // GET: RessourceController
         public ActionResult Index() //fonction qui va retourner une page surlaquelle sera dispoible les ressources de la personne et un onglet de création de ressources
         {
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
+            var listfav = Service.HistoriqueManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+            Service.HistoriqueManager.Dispose();
+
+            if (listfav.Count > 0)
+            {
+                List<int> moy = new List<int>();
+
+                foreach (var item in listfav)
+                {
+                    moy.Add(item.Count());
+                }
+
+                ViewBag.moy = moy.Average().ToString();
+            }
+            else
+            {
+                ViewBag.moy =  "Pas calculable";
+            }
+
+           
+            var listcree = Service.RessourcesManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+            Service.RessourcesManager.Dispose();
+            List<int> moye = new List<int>();
+
+            foreach (var item in listcree)
+            {
+                moye.Add(item.Count());
+            }
+
+            if(moye.Count > 0)
+            {
+                ViewBag.cree = moye.Average().ToString();
+            }
+            else
+            {
+                ViewBag.cree = "Pas calculable";
+            }
+     
             return View();
         }
 
@@ -60,8 +99,8 @@ namespace WebApp.Controllers
 
         public string getmoyressourcelu()
         {
-            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
-            var listfav = Service.HistoriqueManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
+            
+            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
             Service.HistoriqueManager.Dispose();
 
             if (listfav.Count > 0)

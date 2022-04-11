@@ -124,11 +124,11 @@
     <div class="col-lg-5 col-12 dashboard-card"> @*a center et grossir*@
         <h2>Nombre moyen de ressource lu par les utilisateurs</h2>
         <div> 
-            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">12</p>
+            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moylu</p>
         </div> 
          <h2>Nombre de ressources créé par les utilisateurs</h2>
         <div> 
-            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">12</p>
+            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moycree</p>
         </div> 
     </div>
 
@@ -442,22 +442,22 @@ chart2 = new Highcharts.chart('chart2', {
 
 <script>
     
-      $.ajax({
-        url: '/Ressource/getmoyressourcelu/',
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-            document.getElementById("moyressourcelu").innerHTML = response;
-        }
-    });
+    //  $.ajax({
+    //    url: '/Ressource/getmoyressourcelu/',
+    //    type: "GET",
+    //    success: function(response) {
+    //        console.log(response);
+    //        document.getElementById("moyressourcelu").innerHTML = response;
+    //    }
+    //});
 
-     $.ajax({
-        url: '/Ressource/moyressourcecree/',
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-            document.getElementById("moyressourcecree").innerHTML = response;
-        }
-    });
+    // $.ajax({
+    //    url: '/Ressource/moyressourcecree/',
+    //    type: "GET",
+    //    success: function(response) {
+    //        console.log(response);
+    //        document.getElementById("moyressourcecree").innerHTML = response;
+    //    }
+    //});
 
 </script>
