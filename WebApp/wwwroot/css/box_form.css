@@ -176,6 +176,10 @@
     height: 100% !important;
 }
 
+.textContact {
+    height: 150px;  
+}
+
 @media only screen and (max-width:568px) {
     .card-register {
         margin-left: 10vw !important;
