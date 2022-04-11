@@ -263,7 +263,7 @@ namespace WebApp.Controllers
             {
                 if (BCryptNet.Verify(user.PasswordHash, getUser.PasswordHash) && user.PasswordHash != "")
                 {
-                    Response.Redirect("/");
+                    Service.PersonneManager.Delete(getUser.Id);
                     HttpContext.Session.Clear();
                     TempData["messageConfirmSupp"] = "Votre compte a bien été supprimer !";
                     Response.Redirect("/");

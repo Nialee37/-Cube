@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -23,28 +27,27 @@ namespace WebApp.Controllers
         {
             if(nom != "" && email != "" && objet != "" && textMail != "")
             {
-                //Instanciation du client
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 465);
-                //On indique au client d'utiliser les informations qu'on va lui fournir
-                smtpClient.UseDefaultCredentials = true;
-                //Ajout des informations de connexion
-                smtpClient.Credentials = new System.Net.NetworkCredential("projetcube.tech@gmail.com", "5$@b&&36p2p$^Z3sZ9");
-                //On indique que l'on envoie le mail par le réseau
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //On active le protocole SSL
-                smtpClient.EnableSsl = true;
+
+                SmtpClient smtpClient = getConfigSmtp();
 
                 MailMessage mail = new MailMessage();
                 //Expéditeur
                 mail.From = new MailAddress(email, nom);
                 //Destinataire
-                mail.To.Add(new MailAddress("projetcube.tech@gmail.com"));
+                mail.To.Add(new MailAddress(email));
                 //Copie
                 mail.Subject = objet;
 
                 mail.Body = textMail;
 
-                smtpClient.Send(mail);
+                try
+                {
+                    smtpClient.Send(mail);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 return RedirectToAction("ContactezNous", "Contact");
             }
@@ -58,6 +61,68 @@ namespace WebApp.Controllers
 
                 return RedirectToAction("ContactezNous", "Contact");
             }
+        }
+
+        public SmtpClient getConfigSmtp()
+        {
+            //Instanciation du client
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+            //Port SMTP
+            smtpClient.Port = 587;
+            //On indique au client d'utiliser les informations qu'on va lui fournir
+            smtpClient.UseDefaultCredentials = false;
+            //Ajout des informations de connexion
+            smtpClient.Credentials = new NetworkCredential("projetcube.tech", "5$@b&&36p2p$^Z3sZ9"); ;
+            //On indique que l'on envoie le mail par le réseau
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //On active le protocole SSL
+            smtpClient.EnableSsl = true;
+
+            return smtpClient;
+        }
+
+
+        public void EnvoieMailBienvenue(string nom, string email)
+        {
+            if (nom != "" && email != "")
+            {
+
+                SmtpClient smtpClient = getConfigSmtp();
+
+                MailMessage mail = new MailMessage();
+                //Expéditeur
+                mail.From = new MailAddress(email, nom);
+                //Destinataire
+                mail.To.Add("projetcube.tech@gmail.com");
+                //Copie
+                mail.Subject = "Bienvenu sur notre site projetcube.tech";
+
+                mail.IsBodyHtml = true;
+
+                mail.Body = BodyRegister(nom);
+
+                try
+                {
+                    smtpClient.Send(mail);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+        }
+
+
+        private string BodyRegister(string userName)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader("~/ViewsMail/register.html"))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", userName);
+            return body;
         }
     }
 }
