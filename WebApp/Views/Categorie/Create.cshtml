@@ -1,0 +1,31 @@
+﻿@model ServiceDAL.BusinessObjet.Categorie
+
+<!-- Modal Création d'une catégorie -->
+<div class="modal fade" id="modalCreateCat" tabindex="-1" aria-labelledby="modalCreateCatLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+     <form asp-controller="Categorie" asp-action="Create">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCreateCatLabel">Création d'une categorie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Libelle" class="control-label"></label>
+                    <input asp-for="Libelle" class="form-control" />
+                    <span asp-validation-for="Libelle" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Crée la catégorie !</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,7 @@
 ﻿using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceDAL.BusinessLayer
 {
@@ -30,6 +27,13 @@ namespace ServiceDAL.BusinessLayer
             return Service.DbContext.Commentaire
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
+        }
+
+        public IList<Commentaire> GetCommentaireBuyRessource(int id)
+        {
+            return Service.DbContext.Commentaire
+                .Where(p => p.IdRessource == id)
+                .ToList();
         }
 
         public IList<Commentaire> GetAll()

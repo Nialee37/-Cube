@@ -10,6 +10,6 @@ namespace ServiceDAL.Interfaces
         public T Add(T obj);
         public void Update(T obj);
         public bool Delete(int id);
-        void Dispose();
+        new void Dispose();
     }
 }

@@ -20,6 +20,7 @@ namespace WebApp.Models
 
         public int IdAdresse { get; set; }
         public int IdRoles { get; set; }
+        public bool IsActivate { get; set; }
         public virtual Adresse Adresse { get; set; }
         public virtual Roles Roles { get; set; }
     }

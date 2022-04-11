@@ -34,6 +34,16 @@ namespace ServiceDAL.BusinessLayer
             return Service.DbContext.Villes.ToList();
         }
 
+        public IList<Ville> Get30last()
+        {
+            return Service.DbContext.Villes.OrderBy(x => x.CPostal).Take(30).ToList();
+        }
+
+        public IList<Ville> GetbyCPOrVille(string cpName)
+        {
+            return Service.DbContext.Villes.Where(x =>x.CPostal.Contains(cpName) || x.Nom.Contains(cpName)).Take(30).ToList();
+        }
+
         public void Update(Ville obj)
         {
             Ville Old = Service.DbContext.Villes.Find(obj.IdVille);

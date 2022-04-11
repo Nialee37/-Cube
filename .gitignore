@@ -20,3 +20,26 @@ ServiceDAL/obj/
 .vs/
 
 .zip
+
+ServiceDALTests/obj/
+
+ServiceDALTests/bin/
+
+AndroidApp/AndroidApp.Android/obj/
+
+AndroidApp/AndroidApp.Android/bin/
+
+*.user
+
+AndroidApp/AndroidApp/obj/
+
+AndroidApp/AndroidApp/bin/
+
+*/bin/
+AndroidApp/AndroidApp.iOS/obj/
+
+AndroidApp/AndroidApp.iOS/bin/
+
+.idea/
+
+WebApp/PDF_FOLDER/

@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@{
+
+    Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/css/maRessource.css'>
+    <link rel='stylesheet' href='~/css/card_commentaire.css'>
+}
+
+<div class="box_commentaire_ressource">
+    <h2>Commentaires</h2>
+    <div id="commentaire_container">
+
+    </div>
+    <label for="fname">Commentaire</label>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="input-icon"><i class="fas fa-comment"></i></div>
+            <textarea id="fname" name="fname" class="form-control verifForm" placeholder="Votre commentaire" value="">
+
+            </textarea>
+            <div class="invalid-feedback fw-bold"></div>
+        </div>
+        <button id="btn_send" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>
+    </div>
+</div>
+
+<script>
+    var pause = false;
+    var repCom = false;
+    $( document ).ready(function() {
+        refreshcommentaire();
+        $("#btn_send").on('click', function () {
+            createcommentaire();
+        });
+    });
+
+function refreshcommentaire() {
+    var userJS = '@(user != null ? user : null)';
+    //GetCommentaireBuyRessource
+  console.log("refresh");
+  $.ajax({
+        //L'URL de la requête
+        url: "/Commentaire/GetCommentaireBuyRessource",
+
+        //La méthode d'envoi (type de requête)
+        method: "POST",
+        data : {
+            id : @Model.Id ,
+        }
+
+    })
+
+    .done(function(data){
+        repCom = false;
+        $("#commentaire_container").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                var date = new Date(data[i].date_com);
+                var heure = date.toLocaleTimeString("fr");
+                var datefr = date.toLocaleDateString("fr");
+                $("#commentaire_container").append('<div class="card_commentaire">'
+                    + '<div class="title_commentaire">'
+                    + '<span>' + data[i].personne.prenom + ' ' + data[i].personne.nom + ' Le ' + datefr + ' à ' + heure + '</span>'
+                    + (@(user != null ? user.Id : null) == data[i].personne.id || @(user != null ? user.IdRoles : null) >= 3  ? '<button class="btn_supp_com" data-id_personne="' + data[i].personne.id + '" data-id_com="' + data[i].id + '"><i class="fas fa-trash"></i> Supprimer</button>' : '')
+                    + '<button class="btn_rep_com" data-id_com="' + data[i].id + '"><i class="fas fa-reply"></i> Répondre</button>'
+                    + '</div>'
+                    + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de ' + data[i].origineCommentaire.personne.prenom + ' ' + data[i].origineCommentaire.personne.nom +
+                    ' :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> ' + data[i].origineCommentaire.commentaire + ' <i class="fas fa-quote-right"></i></div>') : '<span class="mt-4 mb-4 fw-bold">Réponse un commentaire supprimer :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> Commentaire supprimer <i class="fas fa-quote-right"></i></div>') : '')
+                    + '<div class="com_commentaire">'
+                    + '<p>' + data[i].commentaire + '</p>'
+                    + '</div>'
+                    + '</div>'
+                );
+            }
+            $(".btn_rep_com").on('click', function () {
+                if (!repCom) {
+                    pause = true;
+                    var idComm = $(this).data("id_com");
+                    var thisCom = $(this);
+
+                    $(this).parent().parent().append('<div id="rep_Com"><label for="fname_rep">Réponse au commentaire</label>'
+                        + '<div class="form-horizontal">'
+                        + '<div class="form-group">'
+                        + '<div class="input-icon"><i class="fas fa-comment"></i></div>'
+                        + '<textarea id="fname_rep" name="fname_rep" class="form-control verifForm"  placeholder="Réponse au commentaire">'
+                        + '</textarea>'
+                        + '<div class="invalid-feedback fw-bold"></div>'
+                        + '</div>'
+                        + '<button id="btn_send_rep" data-id_com="' + $(this).data("id_com") + '" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>'
+                        + '</div></div>');
+
+                    $(this).parent().append('<button class="btn_rep_com " id="btn_cancel_rep"><i class="fas fa-times-circle"></i> Annuler</button>');
+                    $("#btn_cancel_rep").on("click", function () {
+                        $("#rep_Com").remove();
+                        $(this).remove();
+                        thisCom.show();
+                        pause = false;
+                        repCom = false;
+                    })
+                    $(this).hide();
+                    $("#btn_send_rep").on("click", function () {
+                        createcommentaire(idComm);
+                    })
+                }
+                repCom = true;
+            });
+            $(".btn_supp_com").on("click", function () {
+                if (confirm("Êtes-vous sur de vouloir supprimer ce commentaire ?")) {
+                    var idCom = $(this).data("id_com");
+                    var id_personne = $(this).data("id_personne");
+                    $.ajax({
+                        //L'URL de la requête
+                        url: "/Commentaire/Delete",
+                        data: {
+                            id: idCom,
+                            idPersonneRessource: id_personne
+                        },
+                        //La méthode d'envoi (type de requête)
+                        method: "POST",
+                    }).done(function (response) {
+                        pause = false;
+                        refreshcommentaire();
+                    });
+                }
+            });
+        } else {
+            $("#commentaire_container").html("<span>Aucun commentaire pour cette ressource ! </span>")
+        }
+
+    });
+}
+
+//EN CAS DE BESOIN ADAPTER LA FONCTION SI DESSOUS
+//function refreshcommentaire(id) {
+//    //GetCommentaireBuyRessource
+//  console.log(id);
+
+//  $.ajax({
+//        //L'URL de la requête
+//        url: "/Commentaire/Delete",
+
+//        //La méthode d'envoi (type de requête)
+//        method: "POST",
+//        data : {
+//            id : idcommentaire ,
+//        }
+
+//    })
+
+//    .done(function(response){
+//        console.log(response);
+//    });
+//}
+
+
+function createcommentaire(idComReponse = null) {
+  console.log("add");
+    console.log(@Model.Id);
+    console.log(idComReponse)
+  console.log(document.querySelector('#fname').value);
+  var copr = (idComReponse != null ? document.querySelector('#fname_rep').value : document.querySelector('#fname').value)
+  var data = {
+            id_ressource : @Model.Id ,
+            corp : copr
+        }
+        if(idComReponse != null){
+                data.idComReponse = idComReponse;
+            }
+        console.log(data);
+
+    $.ajax({
+        //L'URL de la requête
+        url: "/Commentaire/Create",
+
+        //La méthode d'envoi (type de requête)
+        method: "POST",
+        data : data
+
+    })
+
+    .done(function(response){
+        pause = false;
+        refreshcommentaire();
+    });
+}
+
+setInterval(function(){if(!pause){refreshcommentaire()}},20000); /* rappel après 2 secondes = 2000 millisecondes */
+
+</script>

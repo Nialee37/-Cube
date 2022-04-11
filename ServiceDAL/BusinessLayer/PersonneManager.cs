@@ -10,7 +10,7 @@ namespace ServiceDAL.BusinessLayer
         public Personne Add(Personne obj)
         {
             var personne = Service.DbContext.Personnes.Add(obj);
-            Service.DbContext.SaveChanges();
+                Service.DbContext.SaveChanges();
             return personne;
         }
 
@@ -39,6 +39,7 @@ namespace ServiceDAL.BusinessLayer
 
         public Personne GetByMail(string mail)
         {
+            
             return Service.DbContext.Personnes
                 .Include("Adresse")
                 .Where(p => p.Mail == mail)

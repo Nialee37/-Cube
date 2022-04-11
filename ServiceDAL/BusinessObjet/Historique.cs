@@ -7,11 +7,16 @@ namespace ServiceDAL.BusinessObjet
 {
     public class Historique
     {
-        [Key][Column(Order = 0)]
+        [Key]
+        [ForeignKey("Personne")]
+        [Column(Order = 0)]
         public int IdPersonne { get; set; }
-        [Key][Column(Order = 1)]
+        [Key]
+        [ForeignKey("Ressources")]
+        [Column(Order = 1)]
         public int IdRessource { get; set; }
         public DateTime Date { get; set; }
+
         public virtual Personne Personne { get; set; }
         public virtual Ressources Ressources { get; set; }
     }

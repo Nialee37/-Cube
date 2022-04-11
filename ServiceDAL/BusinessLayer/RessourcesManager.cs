@@ -33,6 +33,18 @@ namespace ServiceDAL.BusinessLayer
         {
             return Service.DbContext.Ressources.ToList();
         }
+        public IList<Ressources> Getallfalse()
+        {
+            return Service.DbContext.Ressources.Where(x => x.IsValidate == false).ToList();
+        }
+        //public IList<Ressources> GetAllByIdPersonne(int id )
+        //{
+        //    return Service.DbContext.Ressources.ToList().Where(x => x.CreatorId == id);
+        //}
+        public IList<Ressources> Get10last()
+        {
+            return Service.DbContext.Ressources.OrderByDescending(x => x.Date).Take(10).ToList();
+        }
 
         public void Update(Ressources obj)
         {

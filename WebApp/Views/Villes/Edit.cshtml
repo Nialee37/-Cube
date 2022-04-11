@@ -1,0 +1,58 @@
+﻿@model ServiceDAL.BusinessObjet.Ville
+@{
+    ViewData["Title"] = "Modifier la ville";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/css/box_form.css'>
+}
+<div class="container center-element-page">
+    <div class="row py-5 mt-4 align-items-center">
+        <!-- Logo -->
+        <div class="col-md-12 col-lg-3 pr-lg-5 mb-5 mb-md-0 card-photo">
+            <i class="logo-submit img-logo fas fa-list"></i>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="col-md-12 col-lg-9 ml-auto card-register">
+            <form class="form-horizontal" asp-action="Edit">
+                 <h1>Édition de la ville</h1>
+                  <div>
+                    <a asp-controller="Personne" asp-action="AdminPersonne" class="btn btn-primary btn_color_blue btn_right_card"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+                 </div>
+                 <div class="div-general">
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <input type="hidden" asp-for="IdVille" />
+                     <h2>Modifier la ville</h2>
+                     <hr />
+                     <div class="row">
+                        <!-- Nom -->
+                        <div class="col-md-6">                        
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-building"></i></div>
+                                <input asp-for="Nom" class="form-control verifForm" data-nom="Nom" placeholder="Nom" required/>
+                                <div asp-validation-for="Nom" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">                        
+                            <div class="form-group">
+                                <div class="input-icon"><i class="fas fa-street-view"></i></div>
+                                <input asp-for="CPostal" class="form-control verifForm" data-nom="CPostal" placeholder="Code postal" required/>
+                                <div asp-validation-for="CPostal" class="invalid-feedback fw-bold"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Bouton submit -->
+                        <div class="col-md-6 submit-btn editCat">
+                            <button type="submit"class="btn signin btn_color_green" ><i class="fas fa-save"></i> Sauvegarder</button>
+                        </div>
+                        <div class="col-md-6 submit-btn editCat">
+                            <a class="btn btn-danger" href="/Villes/Delete?id=@Model.IdVille"><i class="fas fa-trash"></i> Supprimer la ville</a>
+                        </div>
+                   </div>
+               </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -24,9 +24,7 @@ namespace ServiceDAL.BusinessLayer
 
         public Categorie Get(int id)
         {
-            return Service.DbContext.Categorie
-                .Where(p => p.Id == id)
-                .FirstOrDefault();
+            return Service.DbContext.Categorie.Find(id);
         }
 
         public IList<Categorie> GetAll()

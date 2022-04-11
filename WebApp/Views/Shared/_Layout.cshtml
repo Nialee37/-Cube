@@ -1,54 +1,91 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApp</title>
+    <!-- balises servant à décrire le contenu partagé sur les réseaux sociaux -->
+    <meta property="og:title" content="@ViewData["Title"] - Source Relationnelle" />
+    <meta property="og:image" content="~/img/logoV1.png" />
+    <meta property="og:description" content="Venez découvrir notre site de partage de ressource pour vous faire pleins d'amis" />
+    <title>@ViewData["Title"] - Source Relationnelle</title>
+    @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/navBar.css" />
+    <link rel="stylesheet" href="~/css/select.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" />
+    <script src="~/lib/datatables/datatables.min.js"></script>
+    <script src="~/js/select.js"></script>
+    @RenderSection("JS", false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Villes" asp-action="Index">Liste des villes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Connection" asp-action="Index">Connection</a>
-                        </li>
-                    </ul>
-                </div>
+    @{
+         Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
+    }
+    <header class="header" id="header">
+        <div class="header_toggle"><i class="fas fa-bars" id="header-toggle"></i> </div>
+        @{if(user != null){
+            <div class="header_img dropleft">
+                <a class="align-items-center text-decoration-none dropdown-toggle " href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user dark"></i> @user.Prenom @user.Nom</a>
+        
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownUser1">
+                    <li><a href="/Personne/Edit?id=@(user.Id)" class='dropdown-item'> <i class="fas fa-user-edit "></i> <span class="nav_name">Edition du profil</span> </a></li>
+                    <li><a asp-area="" asp-controller="Ressource" asp-action="Index" class='dropdown-item'> <i class="fas fa-book-open"></i> Mes ressources</a></li>
+                    <li><a asp-area="" asp-controller="Ressource" asp-action="Historique" class='dropdown-item'> <i class="fas fa-history"></i> Historique</a></li>
+                    <li><a asp-area="" asp-controller="Ressource" asp-action="Favoris" class='dropdown-item'> <i class="fas fa-star"></i> Favoris</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a asp-area="" asp-controller="Connection" asp-action="Logout" class='dropdown-item link-danger'> <i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+                  </ul>
             </div>
-        </nav>
+                     
+        }else{
+            <div>
+                <a asp-area="" asp-controller="Connection" asp-action="Register" class='btn btn-danger'> <i class="fas fa-pen"></i> S'inscrire</a> 
+
+                <a asp-area="" asp-controller="Connection" asp-action="Index" class='btn btn-success'> <i class="fas fa-sign-in-alt"></i> Connexion</a> 
+            </div>
+        }}
+        
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> 
+                <a href="#" class="nav_logo"> <img src="~/img/logoV1.png" id="btnNav" alt="logo" class="logo nav_logo-icon"><span class="title-logo">Source Relationnelles</span> </a>
+                <div class="nav_list">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class='nav_link @(ViewData["Page"] == "Home" ? "active" : "" )'> <i class="fas fa-home nav_icon"></i><span class="nav_name">Accueil</span> </a>
+
+                    <a asp-area="" asp-controller="Personne" asp-action="cgu" class='nav_link @(ViewData["Page"] == "CGU" ? "active" : "" )'> <i class="fas fa-user-secret nav_icon"></i> <span class="nav_name">Conditions général d'utilisation</span> </a>
+
+                    <a asp-area="" asp-controller="Contact" asp-action="ContactezNous" class='nav_link @(ViewData["Page"] == "Contact" ? "active" : "" )'> <i class="fas fa-phone-alt"></i> <span class="nav_name">Contactez-nous</span> </a>
+
+                    @{if (user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
+                        {
+                            <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a>
+                        }}
+                </div>
+            </div> 
+            
+        </nav>
+    </div>
+   <div class="wave"></div>    
+    <div class="div-main">
+        <main id="main" role="main" class="pb-3 me-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted" >
         <div class="container">
             &copy; 2021 - WebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    </footer> *@
+    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/navBar.js" asp-append-version="true"></script>
 </body>
 </html>

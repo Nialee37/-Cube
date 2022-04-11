@@ -21,6 +21,12 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return true;
         }
+        public bool DeleteObj(Favori favori)
+        {
+            Service.DbContext.Favori.Remove(favori);
+            Service.DbContext.SaveChanges();
+            return true;
+        }
 
 
         public Favori Get(int idP)
@@ -29,7 +35,13 @@ namespace ServiceDAL.BusinessLayer
                 .Where(p => p.IdPersonne == idP)
                 .FirstOrDefault();
         }
-
+        public List<Favori> Getal(int idP)
+        {
+            List<Favori> favoris = Service.DbContext.Favori
+               .Where(p => p.IdPersonne == idP)
+               .ToList();
+            return favoris;
+        }
         public Favori Get(int idP, int idR)
         {
             return Service.DbContext.Favori

@@ -1,0 +1,69 @@
+﻿.profilPicture {
+    width: 1.5em;
+    font-size: 5em;
+    padding-left: 0.3em;
+    border-radius: 50%;
+    box-shadow: #00000063 1px 1px 10px 1px;
+    position: absolute;
+    background-color: white;
+    top: -70px;
+    right: 5%;
+}
+
+.box_general_ressource {
+    background: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-top: 100px;
+    position: relative;
+    font-size: 18px;
+}
+
+.box_data_ressource {
+    background: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 15px;
+}
+
+.box_commentaire_ressource {
+    background: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 15px;
+}
+
+.download_btn {
+    position: absolute;
+    right: 15px;
+    top: 25px;
+    width: 30% !important;
+}
+
+.box_data_ressource img{
+    width: 100%;
+}
+
+#deleteRessource, #validationValidation {
+    width: 45%;
+}
+
+.selectCatR {
+    width: 80%;
+    margin: 0 !important;
+    margin-left: 20px !important;
+}
+
+.selectCatR .dropdown-select {
+    margin-bottom: 10px !important;
+}
+
+.formTitleEditRessource {
+    width: 30% !important;
+    margin: 15px 10px 25px !important;
+}

@@ -1,6 +1,22 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@font-face {
+  font-family: 'Sofia';
+  src: url('../webfonts/Sofia/SofiaRegular.otf');
+  src: local('☺'), url('../webfonts/Sofia/SofiaRegular.woff') format('woff'), url('../webfonts/Sofia/SofiaRegular.ttf') format('truetype'), url('../webfonts/Sofia/SofiaRegular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia-light';
+  src: url('../webfonts/Sofia/Sofia/SofiaLight.otf');
+  src: local('☺'), url('../webfonts/Sofia/SofiaLight.woff') format('woff'), url('../webfonts/Sofia/SofiaLight.ttf') format('truetype'), url('../webfonts/Sofia/SofiaLight.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -55,17 +71,143 @@ button.accept-policy {
 -------------------------------------------------- */
 html {
   position: relative;
-  min-height: 100%;
+  height: 100%;
+}
+
+.card-photo i {
+    font-size: 10vw;
+    color: white;
+    text-align: center;
+    padding: 5%;
 }
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
+font-family: "Sofia-light","Open Sans", sans-serif;
+height: 100%;
 }
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Sofia","Open Sans", sans-serif;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.cardLogin {
+  border-radius: 15px;
+  box-shadow: 0px 0px 30px #CDCDCD
+}
+
+.div-main {
+    height: 100%;
+    position: relative;
+    padding-top: 20px;
+}
+
+.center-element-page {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+}
+
+.center-element {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.wave {
+    height: 500px;
+    width: 100%;
+    position: fixed;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ff5964' fill-opacity='1' d='M0,192L30,197.3C60,203,120,213,180,234.7C240,256,300,288,360,266.7C420,245,480,171,540,138.7C600,107,660,117,720,138.7C780,160,840,192,900,181.3C960,171,1020,117,1080,106.7C1140,96,1200,128,1260,160C1320,192,1380,224,1410,240L1440,256L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.txt-hello {
+    background-color: #ff5964;
+    border-radius: 0 0 20px 20px;
+    padding: 0 20px 10px;
+    color: #432c2c;
+    display: inline;
+}
+
+.dropdown-menu-dark {
+    background-color: #1b1b1b;
+}
+
+/* Style for input file */
+.inputfile {
+    width: 0.1px !important;
+    height: 0.1px !important;
+    opacity: 0;
+    overflow: hidden !important;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+   color: #b5b5b5;
+}
+
+.btn-custom {
+    color: rgba(255, 255, 255, 0.8);
+    background: #E9374C;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: 0 0 10px 0;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.card-custom {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    font-size: 18px;
+    box-shadow: #00000085 1px 1px 10px 1px;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.btn-facebook {
+    color: white;
+    background-color: #454598;
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: -1px 7px 11px #c6c6c6bd;
+}
+
+.btn-twitter {
+    color: #628af8;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid #a8a8a8;
+    box-shadow: -1px 7px 11px #c6c6c6bd;
+}
+
+.btn-Linkedin {
+    color: #ffffff;
+    background-color: #0a66c2;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid #a8a8a8;
+    box-shadow: -1px 7px 11px #c6c6c6bd;
 }
