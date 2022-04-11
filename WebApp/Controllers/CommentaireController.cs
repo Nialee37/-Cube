@@ -55,7 +55,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             Service.CommentaireManager.Dispose();
-            return View(Service.CommentaireManager.Get((int)id));
+            return View(ville);
         }
 
         // GET: CommentairesController/Create
