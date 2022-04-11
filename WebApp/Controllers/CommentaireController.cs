@@ -23,19 +23,21 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             var Commentaires = Service.CommentaireManager.GetAll();
+            Service.CommentaireManager.Dispose();
             return View(Commentaires);
         }
 
         public JsonResult JsonVille()
         {
             var Commentaires = Service.CommentaireManager.GetAll();
+            Service.CommentaireManager.Dispose();
             return Json(Commentaires);
         }
 
         public JsonResult GetCommentaireBuyRessource(int id)
         {
             List<Commentaire> listVille = Service.CommentaireManager.GetCommentaireBuyRessource(id).ToList();
-
+            Service.CommentaireManager.Dispose();
             return Json(listVille);
         }
 
@@ -52,6 +54,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            Service.CommentaireManager.Dispose();
             return View(Service.CommentaireManager.Get((int)id));
         }
 
@@ -77,7 +80,7 @@ namespace WebApp.Controllers
                     commentaire.IdCommentaireOrigine = idComReponse;
                 }
             Service.CommentaireManager.Add(commentaire);
-            
+            Service.CommentaireManager.Dispose();
             return "Commentaire ajouté";
         }
 
@@ -117,6 +120,7 @@ namespace WebApp.Controllers
                 if(userConnected.IdRoles >= 3 || idPersonneRessource == userConnected.Id)
                 {
                     Service.CommentaireManager.Delete(id);
+                    Service.CommentaireManager.Dispose();
                     return true;
                 }
                 else

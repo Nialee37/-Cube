@@ -25,6 +25,7 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             ViewBag.dada = Service.RessourcesManager.Getallfalse();
+            Service.RessourcesManager.Dispose();
             return View();
         }
 
@@ -61,6 +62,7 @@ namespace WebApp.Controllers
         {
 
             Personne user = Service.PersonneManager.Get(id);
+            Service.PersonneManager.Dispose();
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
 
@@ -70,6 +72,7 @@ namespace WebApp.Controllers
             {
                 IDictionary<int, string> ListRoles = new Dictionary<int, string>();
                 IEnumerable<Roles> roles = Service.RolesManager.GetAll();
+                Service.RolesManager.Dispose();
                 foreach (var item in roles)
                 {
                     ListRoles.Add(item.Id, $"{item.Libelle}");
@@ -84,6 +87,7 @@ namespace WebApp.Controllers
 
             IDictionary<int, string> ListVilles = new Dictionary<int, string>();
             IEnumerable<Ville> villes = Service.VilleManager.GetbyCPOrVille(user.Adresse.Ville.CPostal).OrderBy(v => v.CPostal);
+            Service.VilleManager.Dispose();
             //ListVilles.Add(-1, "Veuillez sélectionner une ville");
             foreach (var item in villes)
             {
@@ -142,14 +146,17 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             getUser.Prenom = user.Prenom;
             getUser.Nom = user.Nom;
             getUser.Genre = user.Genre;
             getUser.DateNaissance = user.DateNaissance;
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
 
             getUser = Service.PersonneManager.Get(getUser.Id);
-            if(userConnected.Id == user.Id)
+            Service.PersonneManager.Dispose();
+            if (userConnected.Id == user.Id)
             {
                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(getUser);
                 HttpContext.Session.SetString("user", jsonUser);
@@ -158,6 +165,7 @@ namespace WebApp.Controllers
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
+            
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
@@ -166,8 +174,9 @@ namespace WebApp.Controllers
         public void EditVilleUser(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             getUser.Adresse = Service.AdresseManager.Get(getUser.IdAdresse);
-
+            Service.AdresseManager.Dispose();
             getUser.Adresse.Numero = user.Adresse.Numero;
             getUser.Adresse.Type = user.Adresse.Type;
             getUser.Adresse.Nom = user.Adresse.Nom;
@@ -175,12 +184,13 @@ namespace WebApp.Controllers
             getUser.Adresse.Ville = Service.VilleManager.Get(getUser.Adresse.IdVille);
 
             Service.PersonneManager.Update(getUser);
-
+            Service.PersonneManager.Dispose();
             getUser = Service.PersonneManager.Get(getUser.Id);
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
@@ -189,10 +199,12 @@ namespace WebApp.Controllers
         public void EditSecuriter(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
-            if(user.Mail != "" && user.Mail != null){
+            Service.PersonneManager.Dispose();
+            if (user.Mail != "" && user.Mail != null){
                 if (user.Mail != getUser.Mail)
                 {
                     Personne checkMail = Service.PersonneManager.GetByMail(user.Mail);
+                    Service.PersonneManager.Dispose();
                     if (checkMail != null)
                     {
                         if (user.Mail == checkMail.Mail)
@@ -217,7 +229,9 @@ namespace WebApp.Controllers
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             user = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
@@ -230,12 +244,14 @@ namespace WebApp.Controllers
         public void EditRole(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             if (user.IdRoles != null && user.IdRoles > 1)
             {
                 getUser.IdRoles = user.IdRoles;
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
@@ -244,12 +260,14 @@ namespace WebApp.Controllers
         public void EditStatut(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             if (user.IsActivate ==  getUser.IsActivate)
             {
                 getUser.IsActivate = !user.IsActivate;
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
@@ -258,12 +276,14 @@ namespace WebApp.Controllers
         public void deleteCompte(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             if(userConnected.IdRoles <= 3)
             {
                 if (BCryptNet.Verify(user.PasswordHash, getUser.PasswordHash) && user.PasswordHash != "")
                 {
                     Service.PersonneManager.Delete(getUser.Id);
+                    Service.PersonneManager.Dispose();
                     HttpContext.Session.Clear();
                     TempData["messageConfirmSupp"] = "Votre compte a bien été supprimer !";
                     Response.Redirect("/");
@@ -276,6 +296,7 @@ namespace WebApp.Controllers
             }else
             {
                 Service.PersonneManager.Delete(getUser.Id);
+                Service.PersonneManager.Dispose();
                 Response.Redirect("/Personne/AdminPersonne");
             }
             
@@ -310,6 +331,7 @@ namespace WebApp.Controllers
         public JsonResult GetAllPersonne()
         {
             List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
+            Service.PersonneManager.Dispose();
             return Json(personnes);
         }
 

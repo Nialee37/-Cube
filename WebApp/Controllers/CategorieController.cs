@@ -38,6 +38,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            Service.CategorieManager.Dispose();
             return View(Service.CategorieManager.Get((int)id));
         }
 
@@ -55,6 +56,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.CategorieManager.Add(categorie);
+                Service.CategorieManager.Dispose();
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
@@ -71,6 +73,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            Service.CategorieManager.Dispose();
             return View(categorie);
         }
 
@@ -82,6 +85,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.CategorieManager.Update(categorie);
+                Service.CategorieManager.Dispose();
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
@@ -89,6 +93,7 @@ namespace WebApp.Controllers
         public JsonResult GetAllCategorie()
         {
             List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
+            Service.CategorieManager.Dispose();
 
             return Json(listcategorie);
         }
@@ -98,6 +103,7 @@ namespace WebApp.Controllers
         public ActionResult Delete(int id)
         {
             Service.CategorieManager.Delete(id);
+            Service.CategorieManager.Dispose();
             return RedirectToAction("AdminPersonne", "Personne");
         }
     }

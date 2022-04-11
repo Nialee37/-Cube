@@ -28,8 +28,10 @@ namespace WebApp.Controllers
                 List<Favori> mesfavoris = new List<Favori>();
 
                 mesfavoris = (List<Favori>)Service.FavoriManager.Getal(userConnected.Id);
+                Service.FavoriManager.Dispose();
 
                 List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
+                Service.RessourcesManager.Dispose();
                 for (int i = 0; i < mesressources.Count; i++)
                 {
                     if (mesfavoris.Find(x => x.IdPersonne == userConnected.Id && x.IdRessource == mesressources[i].Id) != null)
@@ -49,6 +51,7 @@ namespace WebApp.Controllers
             else
             {
                 List<Ressources> mesressources = Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
+                Service.RessourcesManager.Dispose();
                 for (int i = 0; i < mesressources.Count; i++)
                 {
                     mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
@@ -62,7 +65,7 @@ namespace WebApp.Controllers
         {
         
                 List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
-
+                Service.RessourcesManager.Dispose();
         
                 for (int i = 0; i < mesressources.Count; i++)
                 {
@@ -84,6 +87,7 @@ namespace WebApp.Controllers
         public JsonResult Typelist()
         {
             List<Type> listtype = Service.TypeManager.GetAll().ToList();
+            Service.TypeManager.Dispose();
             return Json(listtype);
         }
 
@@ -95,12 +99,15 @@ namespace WebApp.Controllers
             {
                 idtofindpersonne = int.Parse(id);
                 Personne userConnected = Service.PersonneManager.Get(idtofindpersonne); //maybe descending sur le order by
+                Service.PersonneManager.Dispose();
                 List<Ressources> listressource = new List<Ressources>();
                 List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
+                Service.HistoriqueManager.Dispose();
 
                 foreach (Historique item in listfav)
                 {
                     listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+                    Service.RessourcesManager.Dispose();
                 }
 
                 return Json(listressource);
@@ -116,12 +123,15 @@ namespace WebApp.Controllers
             {
                 idtofindpersonne = int.Parse(id);
                 Personne userConnected = Service.PersonneManager.Get(idtofindpersonne);
+                Service.PersonneManager.Dispose();
                 List<Ressources> listressource = new List<Ressources>();
                 List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
+                Service.FavoriManager.Dispose();
 
                 foreach (Favori item in listfav)
                 {
                     listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+                    Service.RessourcesManager.Dispose();
                 }
 
                 return Json(listressource);
@@ -133,6 +143,7 @@ namespace WebApp.Controllers
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
             Personne user = Service.PersonneManager.GetByMail(email);
+            Service.PersonneManager.Dispose();
             if (user != null)
             {
                 if (user.IsActivate)

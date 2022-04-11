@@ -41,6 +41,7 @@ namespace WebApp.Controllers
             var selectlistcategorie = new SelectList(ListCategories, "Key", "Value");
            
             ViewBag.Categories = selectlistcategorie;
+            Service.CategorieManager.Dispose();
 
             IDictionary<int, string> ListType = new Dictionary<int, string>();
             IEnumerable<Type> types = Service.TypeManager.GetAll();
@@ -52,6 +53,7 @@ namespace WebApp.Controllers
             var selectlisttype = new SelectList(ListType, "Key", "Value");
 
             ViewBag.Types = selectlisttype;
+            Service.TypeManager.Dispose();
 
             if (TempData["messageConfirmSupp"] != null)
             {

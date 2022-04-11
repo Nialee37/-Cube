@@ -46,7 +46,7 @@ namespace WebApp.Controllers
                     ListVilles.Add(item.IdVille, $"<i class='fas fa-building'></i> - {item.CPostal} - {item.Nom}");
                 }
                 ViewBag.ListVilles = new SelectList(ListVilles, "Key", "Value");
-
+                Service.VilleManager.Dispose();
 
 
                 IDictionary<int, string> ListGenres = new Dictionary<int, string>();
@@ -99,6 +99,7 @@ namespace WebApp.Controllers
                                 ViewBag.message = "Bonjour " + user.Prenom.ToString();
 
                                 Service.PersonneManager.Update(user);
+                                Service.PersonneManager.Dispose();
                                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
@@ -136,7 +137,7 @@ namespace WebApp.Controllers
             if (userbdd != null) { 
                 if (user.Mail == userbdd.Mail)
                 {
-                    
+                    Service.PersonneManager.Dispose();
                     TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
                     return RedirectToAction("Register", "Connection");
                 }
@@ -150,7 +151,7 @@ namespace WebApp.Controllers
                 user.Roles = Service.RolesManager.Get(user.IdRoles);
 
                 Service.PersonneManager.Add(user);
-
+                Service.PersonneManager.Dispose();
                 //EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
                 return IndexLogin(user.Mail, temppsd);
             }
@@ -165,7 +166,8 @@ namespace WebApp.Controllers
         [HttpPost]
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
-            Personne user = Service.PersonneManager.GetByMail(email);          
+            Personne user = Service.PersonneManager.GetByMail(email);
+            Service.PersonneManager.Dispose();
             if (user != null) 
             {
                 if (user.IsActivate)
