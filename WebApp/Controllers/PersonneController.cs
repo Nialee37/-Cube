@@ -363,7 +363,27 @@ namespace WebApp.Controllers
             {
                 ViewBag.moylu = "";
             }
-            
+
+            List<Ville> listVille = Service.VilleManager.GetAll().ToList();
+            Service.VilleManager.Dispose();
+            ViewBag.listVille = listVille.ToArray();
+
+            List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
+            Service.CategorieManager.Dispose();
+            ViewBag.listCategorie = listcategorie.ToArray();
+
+            List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
+            Service.PersonneManager.Dispose();
+            ViewBag.listPersonne = personnes.ToArray();
+
+            List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
+            Service.RessourcesManager.Dispose();
+            ViewBag.listRessourceFalse = listressource.ToArray();
+
+            List<Ressources> listressourceAll = Service.RessourcesManager.GetAll().ToList();
+            Service.RessourcesManager.Dispose();
+            ViewBag.listAllRessource = listressourceAll.ToArray();
+
             return View();
         }
         [HttpGet]
