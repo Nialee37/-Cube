@@ -81,66 +81,20 @@ namespace WebApp.Controllers
 
             return View();
         }
-
-        public string getressourcecree()
+        public JsonResult GetFavoris()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            var listfav = Service.RessourcesManager.GetAll().Where(x => x.IdPersonne == userConnected.Id).GroupBy(x => x.IdPersonne).ToList();
-            Service.RessourcesManager.Dispose();
-            List<int> moy = new List<int>();
+            List<Ressources> listressource = new List<Ressources>();
+            List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
+            Service.FavoriManager.Dispose();
 
-            foreach (var item in listfav)
+            foreach (Favori item in listfav)
             {
-                moy.Add(item.Count());
+                listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
+                Service.FavoriManager.Dispose();
             }
 
-            return moy.Average().ToString();
-        }
-
-        public string getmoyressourcelu()
-        {
-            
-            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-            Service.HistoriqueManager.Dispose();
-
-            if (listfav.Count > 0)
-            {
-                List<int> moy = new List<int>();
-
-                foreach (var item in listfav)
-                {
-                    moy.Add(item.Count());
-                }
-
-                return moy.Average().ToString();
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public string moyressourcecree()
-        {
-
-            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-            Service.RessourcesManager.Dispose();
-
-            if (ressourcelist.Count > 0)
-            {
-                List<int> moy = new List<int>();
-
-                foreach (var item in ressourcelist)
-                {
-                    moy.Add(item.Count());
-                }
-
-                return Math.Round(moy.Average()).ToString();
-            }
-            else
-            {
-                return "";
-            }
+            return Json(listressource);
         }
 
         public JsonResult GetHistorique()
@@ -158,69 +112,6 @@ namespace WebApp.Controllers
 
             return Json(listressource);
         }
-
-        public JsonResult GetHistoriqueMobile(string id)
-        {
-            int idtofindpersonne = 0;
-            if(id != null)
-            {
-                idtofindpersonne = int.Parse(id);
-                Personne userConnected = Service.PersonneManager.Get(idtofindpersonne); //maybe descending sur le order by
-                Service.PersonneManager.Dispose();
-                List<Ressources> listressource = new List<Ressources>();
-                List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
-                Service.HistoriqueManager.Dispose();
-
-                foreach (Historique item in listfav)
-                {
-                    listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
-                    Service.RessourcesManager.Dispose();
-                }
-
-                return Json(listressource);
-            }
-           
-            return Json("");
-        }
-
-        public JsonResult GetFavoris()
-        {
-            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
-            List<Ressources> listressource = new List<Ressources>();
-            List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
-            Service.FavoriManager.Dispose();
-
-            foreach (Favori item in listfav)
-            {
-                listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
-                Service.FavoriManager.Dispose();
-            }
-
-            return Json(listressource);
-        }
-
-        public JsonResult GetFavorisModile(string id)
-        {
-            int idtofindpersonne = 0;
-            if (id != null)
-            {
-                idtofindpersonne = int.Parse(id);
-                Personne userConnected = Service.PersonneManager.Get(idtofindpersonne);
-                Service.PersonneManager.Dispose();
-                List<Ressources> listressource = new List<Ressources>();
-                List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
-                Service.FavoriManager.Dispose();
-
-                foreach (Favori item in listfav)
-                {
-                    listressource.Add(Service.RessourcesManager.Get(item.IdRessource));
-                    Service.RessourcesManager.Dispose();
-                }
-
-                return Json(listressource);
-            }
-            return Json("");
-        }
         public JsonResult GetAllressource()
         {
             List<Ressources> listressource = Service.RessourcesManager.GetAll().ToList();
@@ -233,7 +124,7 @@ namespace WebApp.Controllers
             Service.RessourcesManager.Dispose();
             return Json(listressource);
         }
-        public ActionResult Getmenu()
+        public ActionResult Getmenu() //menu des filtre affichage de la vue partielle
         {
             return View("/Views/Shared/_FiltresRessources.cshtml");
         }
@@ -285,7 +176,6 @@ namespace WebApp.Controllers
 
             return Json(listressource);
         }
-
         public int Addfav(int id)
         {
             try
@@ -313,8 +203,7 @@ namespace WebApp.Controllers
                 return 99;
             }
         }
-
-        public int validateressource(int id)
+        public int validateressource(int id) //fonction qui permet de valider une ressource par un modérateur
         {
             Ressources mesressources = Service.RessourcesManager.Get(id);
             Service.RessourcesManager.Dispose();
@@ -323,8 +212,8 @@ namespace WebApp.Controllers
             Service.RessourcesManager.Update(mesressources);
             Service.RessourcesManager.Dispose();
             return 1;
-        }
-        public int notvalidateressource(int id)
+        } 
+        public int notvalidateressource(int id) //fonction qui permet de dévalider une ressource
         {
             Ressources mesressources = Service.RessourcesManager.Get(id);
             Service.RessourcesManager.Dispose();
@@ -334,7 +223,6 @@ namespace WebApp.Controllers
             Service.RessourcesManager.Dispose();
             return 1;
         }
-
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
@@ -360,7 +248,6 @@ namespace WebApp.Controllers
             }
             return Json(mesressources);
         }
-
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
         {
 

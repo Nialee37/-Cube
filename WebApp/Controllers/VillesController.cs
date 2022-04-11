@@ -112,7 +112,6 @@ namespace WebApp.Controllers
             return RedirectToAction("AdminPersonne", "Personne");
         }
 
-    
         public ActionResult Delete(int id)
         {
             Service.VilleManager.Delete(id);

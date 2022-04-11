@@ -17,13 +17,11 @@ namespace WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IService Service;
-
         public HomeController(ILogger<HomeController> logger, IService service)
         {
             _logger = logger;
             Service = service;
         }
-
         public ActionResult Index()
         {
             ViewBag.ListRessources = Service.RessourcesManager.Get10last(); //récupération des 10 derniere.
@@ -64,13 +62,11 @@ namespace WebApp.Controllers
 
             return View();
         }
-
         public IActionResult Privacy()
         {
             
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

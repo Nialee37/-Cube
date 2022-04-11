@@ -19,7 +19,6 @@ namespace WebApp.Controllers
         {
             return View();
         }
-
         // POST: Contact/EnvoieMailContact
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -62,7 +61,6 @@ namespace WebApp.Controllers
                 return RedirectToAction("ContactezNous", "Contact");
             }
         }
-
         public SmtpClient getConfigSmtp()
         {
             //Instanciation du client
@@ -80,8 +78,6 @@ namespace WebApp.Controllers
 
             return smtpClient;
         }
-
-
         public void EnvoieMailBienvenue(string nom, string email)
         {
             if (nom != "" && email != "")
@@ -112,8 +108,6 @@ namespace WebApp.Controllers
 
             }
         }
-
-
         private string BodyRegister(string userName)
         {
             string body = string.Empty;

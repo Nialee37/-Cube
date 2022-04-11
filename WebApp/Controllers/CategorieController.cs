@@ -24,8 +24,6 @@ namespace WebApp.Controllers
             Service.CategorieManager.Dispose();
             return View(villes);
         }
-
-
         // GET: VillesController/Details/5
         public ActionResult Details(int? id)
         {
@@ -42,13 +40,11 @@ namespace WebApp.Controllers
             Service.CategorieManager.Dispose();
             return View(Service.CategorieManager.Get((int)id));
         }
-
         // GET: VillesController/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: VillesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -61,7 +57,6 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
-
         // GET: VillesController/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -77,7 +72,6 @@ namespace WebApp.Controllers
             Service.CategorieManager.Dispose();
             return View(categorie);
         }
-
         // POST: VillesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,17 +84,13 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
-        
         public JsonResult GetAllCategorie()
         {
             List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
             Service.CategorieManager.Dispose();
 
             return Json(listcategorie);
-        }
-
-        
-        
+        } //Renvoie toute les catégories
         public ActionResult Delete(int id)
         {
             Service.CategorieManager.Delete(id);

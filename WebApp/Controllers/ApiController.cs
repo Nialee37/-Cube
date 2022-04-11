@@ -18,7 +18,6 @@ namespace WebApp.Controllers
             _logger = logger;
             Service = service;
         }
-
         public JsonResult RessourceAccueil() //fonction qui va retourner les ressources sur la page d'acceuil
         {
 
@@ -60,7 +59,6 @@ namespace WebApp.Controllers
             }
 
         }
-
         public JsonResult RessourceFiltred(string libelletype) //fonction qui va retourner les ressources sur la page d'acceuil
         {
         
@@ -83,15 +81,12 @@ namespace WebApp.Controllers
             }
                 
         }
-
         public JsonResult Typelist()
         {
             List<Type> listtype = Service.TypeManager.GetAll().ToList();
             Service.TypeManager.Dispose();
             return Json(listtype);
-        }
-
-        
+        }  //renvoie une list de type pour l'application mobile
         public JsonResult GetHistoriqueMobile(string id)
         {
             int idtofindpersonne = 0;
@@ -114,8 +109,7 @@ namespace WebApp.Controllers
             }
 
             return Json("");
-        }
-
+        } //renvoie une liste de ressources lié a l'historique d'un utilisateur
         public JsonResult GetFavorisModile(string id)
         {
             int idtofindpersonne = 0;
@@ -137,8 +131,7 @@ namespace WebApp.Controllers
                 return Json(listressource);
             }
             return Json("");
-        }
-
+        }//renvoie une liste de ressources lié aux favoris d'un utilisateur
         [HttpPost]
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
@@ -170,7 +163,6 @@ namespace WebApp.Controllers
                 return Json("");
             }
 
-        }
-
+        }//Login d'un user et renvoie de son profil
     }
 }
