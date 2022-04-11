@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Http;
             using Microsoft.Extensions.Logging;
             using ServiceDAL.BusinessObjet;
             using ServiceDAL.Interfaces;
-            using System.Collections.Generic;
-            using System.Linq;
-            using BCryptNet = BCrypt.Net.BCrypt;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 
 namespace WebApp.Controllers
@@ -98,7 +102,7 @@ namespace WebApp.Controllers
                                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
-                            return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Index", "Home");
                                 //return View("~/Views/Home/Index.cshtml");
                             }
                             else
@@ -146,7 +150,8 @@ namespace WebApp.Controllers
                 user.Roles = Service.RolesManager.Get(user.IdRoles);
 
                 Service.PersonneManager.Add(user);
-                // code a recuperer pour la création du compte
+
+                //EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
                 return IndexLogin(user.Mail, temppsd);
             }
 
@@ -186,6 +191,69 @@ namespace WebApp.Controllers
                 return Json("");
             }
 
+        }
+
+
+        public SmtpClient getConfigSmtp()
+        {
+            //Instanciation du client
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+            //Port SMTP
+            smtpClient.Port = 587;
+            //On indique au client d'utiliser les informations qu'on va lui fournir
+            smtpClient.UseDefaultCredentials = false;
+            //Ajout des informations de connexion
+            smtpClient.Credentials = new NetworkCredential("projetcube.tech", "5$@b&&36p2p$^Z3sZ9"); ;
+            //On indique que l'on envoie le mail par le réseau
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //On active le protocole SSL
+            smtpClient.EnableSsl = true;
+
+            return smtpClient;
+        }
+
+
+        public void EnvoieMailBienvenue(string nom, string email)
+        {
+            if (nom != "" && email != "")
+            {
+
+                SmtpClient smtpClient = getConfigSmtp();
+
+                MailMessage mail = new MailMessage();
+                //Expéditeur
+                mail.From = new MailAddress("projetcube.tech@gmail.com", "projetcube.tech");
+                //Destinataire
+                mail.To.Add(new MailAddress(email));
+                //Copie
+                mail.Subject = "Bienvenu sur notre site projetcube.tech";
+
+                mail.IsBodyHtml = true;
+
+                mail.Body = BodyRegister(nom);
+
+                try
+                {
+                    smtpClient.Send(mail);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+        }
+
+
+        private string BodyRegister(string userName)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader("./ViewsMail/register.html"))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", userName);
+            return body;
         }
 
     }
