@@ -87,7 +87,7 @@ namespace WebApp.Controllers
             {
                 if(username != null && password != null) {
                     Personne user = Service.PersonneManager.GetByMail(username);
-
+                    Service.PersonneManager.Dispose();
                     if (user != null)
                     {
                         if (user.IsActivate)
@@ -149,7 +149,7 @@ namespace WebApp.Controllers
                 user.IdRoles = 2; //role normal citoyen connecté
                 user.IsActivate = true;
                 user.Roles = Service.RolesManager.Get(user.IdRoles);
-
+                Service.RolesManager.Dispose();
                 Service.PersonneManager.Add(user);
                 Service.PersonneManager.Dispose();
                 //EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
