@@ -21,6 +21,7 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             var villes = Service.CategorieManager.GetAll();
+            Service.CategorieManager.Dispose();
             return View(villes);
         }
 
