@@ -57,6 +57,37 @@ namespace WebApp.Controllers
             }
 
         }
+
+        public JsonResult RessourceFiltred(string libelletype) //fonction qui va retourner les ressources sur la page d'acceuil
+        {
+        
+                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
+
+        
+                for (int i = 0; i < mesressources.Count; i++)
+                {
+                    mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
+                }
+
+                if(libelletype != null)
+            {
+                mesressources = mesressources.Where(x => x.Type.Libelle == libelletype).ToList();
+                return Json(mesressources);
+            }
+            else
+            {
+                return Json(mesressources);
+            }
+                
+        }
+
+        public JsonResult Typelist()
+        {
+            List<Type> listtype = Service.TypeManager.GetAll().ToList();
+            return Json(listtype);
+        }
+
+        
         public JsonResult GetHistoriqueMobile(string id)
         {
             int idtofindpersonne = 0;
