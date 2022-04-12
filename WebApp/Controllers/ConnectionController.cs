@@ -1,11 +1,9 @@
-﻿
-
-using Microsoft.AspNetCore.Http;
-            using Microsoft.AspNetCore.Mvc;
-            using Microsoft.AspNetCore.Mvc.Rendering;
-            using Microsoft.Extensions.Logging;
-            using ServiceDAL.BusinessObjet;
-            using ServiceDAL.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using ServiceDAL.BusinessObjet;
+using ServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,22 +17,19 @@ namespace WebApp.Controllers
     {
         public class ConnectionController : Controller
         {
-            private readonly IService Service;
-            private readonly ILogger<ConnectionController> _logger;
+        private readonly IService Service;
+        private readonly ILogger<ConnectionController> _logger;
 
-
-
-            public ConnectionController(ILogger<ConnectionController> logger, IService service)
+        public ConnectionController(ILogger<ConnectionController> logger, IService service)
             {
                 _logger = logger;
                 Service = service;
             }
-            public IActionResult Index()
+        public IActionResult Index()
             {
                 return View();
             }
-
-            public IActionResult Register()
+        public IActionResult Register()
             {
 
 
@@ -46,7 +41,7 @@ namespace WebApp.Controllers
                     ListVilles.Add(item.IdVille, $"<i class='fas fa-building'></i> - {item.CPostal} - {item.Nom}");
                 }
                 ViewBag.ListVilles = new SelectList(ListVilles, "Key", "Value");
-
+                Service.VilleManager.Dispose();
 
 
                 IDictionary<int, string> ListGenres = new Dictionary<int, string>();
@@ -81,13 +76,12 @@ namespace WebApp.Controllers
 
                 return View();
             }
-
-            [ValidateAntiForgeryToken]
-            public IActionResult IndexLogin(string username, string password)
+        [ValidateAntiForgeryToken]
+        public IActionResult IndexLogin(string username, string password)
             {
                 if(username != null && password != null) {
                     Personne user = Service.PersonneManager.GetByMail(username);
-
+                    Service.PersonneManager.Dispose();
                     if (user != null)
                     {
                         if (user.IsActivate)
@@ -99,6 +93,7 @@ namespace WebApp.Controllers
                                 ViewBag.message = "Bonjour " + user.Prenom.ToString();
 
                                 Service.PersonneManager.Update(user);
+                                Service.PersonneManager.Dispose();
                                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
@@ -128,15 +123,14 @@ namespace WebApp.Controllers
                     return View("Index");
             }
             }
-
-            public IActionResult RegisterCreate(Personne user)
+        public IActionResult RegisterCreate(Personne user)
             {
             Personne userbdd = Service.PersonneManager.GetByMail(user.Mail);
                 
             if (userbdd != null) { 
                 if (user.Mail == userbdd.Mail)
                 {
-                    
+                    Service.PersonneManager.Dispose();
                     TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
                     return RedirectToAction("Register", "Connection");
                 }
@@ -148,24 +142,23 @@ namespace WebApp.Controllers
                 user.IdRoles = 2; //role normal citoyen connecté
                 user.IsActivate = true;
                 user.Roles = Service.RolesManager.Get(user.IdRoles);
-
+                Service.RolesManager.Dispose();
                 Service.PersonneManager.Add(user);
-
+                Service.PersonneManager.Dispose();
                 //EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
                 return IndexLogin(user.Mail, temppsd);
             }
-
         public IActionResult Logout()
         {
             Response.Redirect("/");
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-
         [HttpPost]
         public JsonResult LoginfromMobile(string email, string motdepasse)
         {
-            Personne user = Service.PersonneManager.GetByMail(email);          
+            Personne user = Service.PersonneManager.GetByMail(email);
+            Service.PersonneManager.Dispose();
             if (user != null) 
             {
                 if (user.IsActivate)
@@ -192,8 +185,6 @@ namespace WebApp.Controllers
             }
 
         }
-
-
         public SmtpClient getConfigSmtp()
         {
             //Instanciation du client
@@ -211,8 +202,6 @@ namespace WebApp.Controllers
 
             return smtpClient;
         }
-
-
         public void EnvoieMailBienvenue(string nom, string email)
         {
             if (nom != "" && email != "")
@@ -243,8 +232,6 @@ namespace WebApp.Controllers
 
             }
         }
-
-
         private string BodyRegister(string userName)
         {
             string body = string.Empty;
@@ -255,6 +242,5 @@ namespace WebApp.Controllers
             body = body.Replace("{UserName}", userName);
             return body;
         }
-
     }
 }

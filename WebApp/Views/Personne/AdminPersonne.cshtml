@@ -124,11 +124,11 @@
     <div class="col-lg-5 col-12 dashboard-card"> @*a center et grossir*@
         <h2>Nombre moyen de ressource lu par les utilisateurs</h2>
         <div> 
-            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">12</p>
+            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moylu</p>
         </div> 
          <h2>Nombre de ressources créé par les utilisateurs</h2>
         <div> 
-            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">12</p>
+            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moycree</p>
         </div> 
     </div>
 
@@ -140,75 +140,72 @@
 <partial name="/Views/Villes/Create.cshtml" />
 
 <script>
-    $(document).ready(function() {
-    $('#manageVille').DataTable( {
+$(document).ready(function () {
+    datatableVille();
+    datatableCategorie();
+    datatablePersonne();
+    datatableRessource();
+    datatableRessourceAll();
+    requestData();
+});
+
+function datatableVille() {
+    $('#manageVille').DataTable({
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
-        "ajax": {
-            "url": "/Villes/GetAllVille",
-            "dataSrc": ""
-        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listVille)),
         "columns": [
             { "data": "idVille" },
             { "data": "nom" },
             { "data": "cPostal" },
-           
-            
+
+
         ],
-        "columnDefs":[
-            
+        "columnDefs": [
+
             {
                 targets: 1,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Villes/Edit/' + row.idVille + '">' + row.nom + '</a>'
                 }
-                
+
             }
-          
+
         ]
-
-    } );
-} );
-
-$(document).ready(function() {
-    $('#manageCategorie').DataTable( {
+    });
+}
+function datatableCategorie() {
+    $('#manageCategorie').DataTable({
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
-        "ajax": {
-            "url": "/Categorie/GetAllCategorie",
-            "dataSrc": ""
-        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listCategorie)),
         "columns": [
             { "data": "id" },
             { "data": "Libelle" },
-            
+
         ],
-        "columnDefs":[
-            
+        "columnDefs": [
+
             {
                 targets: 1,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Categorie/Edit/' + row.id + '">' + row.libelle + '</a>'
                 }
-                
+
             }
-          
+
         ]
 
-    } );
-} );
-
-$(document).ready(function() {
-    $('#managePersonne').DataTable( {
+    });
+}
+function datatablePersonne() {
+    $('#managePersonne').DataTable({
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
-        "ajax": {
-            "url": "/Personne/GetAllPersonne",
-            "dataSrc": ""
-        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listPersonne)),
         "columns": [
             { "data": "id" },
             { "data": "nom" },
@@ -216,77 +213,69 @@ $(document).ready(function() {
             { "data": "mail" },
             { "data": "IsActivate" }
         ],
-        "columnDefs":[
-            {visible: false, targets: [0]},
+        "columnDefs": [
+            { visible: false, targets: [0] },
             {
                 targets: 1,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Personne/Edit/' + row.id + '">' + row.nom + '</a>'
                 }
-                
+
             },
             {
                 targets: 4,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     console.log(row);
                     return (row.isActivate ? '<span class="badge bg-success">Activer</span>' : '<span class="badge bg-danger">Désactiver</span>')
                 }
             }
         ]
 
-    } );
-} );
-
-$(document).ready(function() {
-    $('#manageRessource').DataTable( {
+    });
+}
+function datatableRessource() {
+    $('#manageRessource').DataTable({
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
-        "ajax": {
-            "url": "/Ressource/GetAllressourcetovalidate",
-            "dataSrc": ""
-        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listRessourceFalse)),
         "columns": [
             { "data": "id" },
             { "data": "nom" },
             { "data": "date" },
         ],
-        "columnDefs":[
-            {visible: false, targets: [0]},
+        "columnDefs": [
+            { visible: false, targets: [0] },
             {
                 targets: 1,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
                 }
             }
         ]
 
-    } );
-} );
-
-$(document).ready(function() {
-    $('#manageRessourceAll').DataTable( {
+    });
+}
+function datatableRessourceAll() {
+    $('#manageRessourceAll').DataTable({
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
-        "ajax": {
-            "url": "/Ressource/GetAllressource",
-            "dataSrc": ""
-        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listAllRessource)),
         "columns": [
             { "data": "id" },
             { "data": "nom" },
             { "data": "date" },
             { "data": "idType" },
             { "data": "idCategorie" },
-          
-            
+
+
         ],
-        "columnDefs":[
-            {visible: false, targets: [0]},
+        "columnDefs": [
+            { visible: false, targets: [0] },
             {
                 targets: 1,
-                render: function(data,type,row,meta){
+                render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
                 },
                 //targets: 3,
@@ -300,51 +289,80 @@ $(document).ready(function() {
             }
         ]
 
-    } );
-} );
-</script>
-
-
-<script>
-
-var config1 =  {
-  chart: {
-    type: 'column'
-  
-  },
-  title: {
-    text: 'Nombre de ressources par catégorie'
-  },
-  
-  xAxis: {
-    type: 'category',
-    labels: {
-      rotation: -45,
-      style: {
-        fontSize: '13px',
-        fontFamily: 'Verdana, sans-serif'
-      }
-    }
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: 'Nombre de ressoruce'
-    }
-  },
-  legend: {
-    enabled: false
-  },
-  tooltip: {
-    pointFormat: 'nombre de ressources'
-  },
-  series: []
+    });
 }
- $(document).ready(function() {requestData()});
+function requestChard() {
+    chart2 = new Highcharts.chart('chart2', {
+        chart: {
+            type: 'line',
+            events: {
+                load: requestData2
+            }
+        },
+        title: {
+            text: 'Nombre de ressource par mois'
+        },
 
-
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Nombre de ressource'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+            //    {
+            //  name: 'nombre_de_ressources',
+            //  data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
+            //}
+        ]
+    });
+}
 function requestData() {
-     console.log("coucou");
+    var config1 = {
+        chart: {
+            type: 'column'
+
+        },
+        title: {
+            text: 'Nombre de ressources par catégorie'
+        },
+
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Nombre de ressoruce'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'nombre de ressources'
+        },
+        series: []
+    }
+
+
     $.ajax({
         url: '/Ressource/getressourcebycat/',
         type: "GET",
@@ -371,63 +389,20 @@ function requestData() {
             
             var chart1 = new Highcharts.chart('chart1', config1 );
            
-          
+          requestChard();
         },
         error :  function(response) {
             console.log(response);
         }
     });
 }
-
-</script>
-
-<script>
-    $(document).ready(function() {
-chart2 = new Highcharts.chart('chart2', {
-  chart: {
-    type: 'line',
-     events: {
-                load: requestData2
-            }
-  },
-  title: {
-    text: 'Nombre de ressource par mois'
-  },
-
-  xAxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  },
-  yAxis: {
-    title: {
-      text: 'Nombre de ressource'
-    }
-  },
-  plotOptions: {
-    line: {
-      dataLabels: {
-        enabled: true
-      },
-      enableMouseTracking: false
-    }
-  },
-  series: [
-  //    {
-  //  name: 'nombre_de_ressources',
-  //  data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
-  //}
-  ]
-});
-  });
-
-  function requestData2() {
+function requestData2() {
 
     $.ajax({
         url: '/Ressource/getressourcebymonth/',
         type: "GET",
 
         success: function(response) {
-            console.log("toto");
-            console.log(response);
             chart2.addSeries({
               name: "nombre_de_ressources",
               data: response
@@ -436,28 +411,6 @@ chart2 = new Highcharts.chart('chart2', {
     });
 }
 
-
-</script>
-
-
-<script>
     
-      $.ajax({
-        url: '/Ressource/getmoyressourcelu/',
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-            document.getElementById("moyressourcelu").innerHTML = response;
-        }
-    });
-
-     $.ajax({
-        url: '/Ressource/moyressourcecree/',
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-            document.getElementById("moyressourcecree").innerHTML = response;
-        }
-    });
-
 </script>
+

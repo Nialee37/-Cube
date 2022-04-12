@@ -163,11 +163,11 @@ a {
     }
 
     .show-nav {
-        width: calc(var(--nav-width) + 156px)
+        width: calc(var(--nav-width) + 250px)
     }
 
     .body-pd {
-        padding-left: calc(var(--nav-width) + 188px)
+        padding-left: calc(var(--nav-width) + 280px)
     }
 }
 

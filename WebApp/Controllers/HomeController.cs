@@ -17,22 +17,23 @@ namespace WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IService Service;
-
         public HomeController(ILogger<HomeController> logger, IService service)
         {
             _logger = logger;
             Service = service;
         }
-
         public ActionResult Index()
         {
             ViewBag.ListRessources = Service.RessourcesManager.Get10last(); //récupération des 10 derniere.
-
+            Service.RessourcesManager.Dispose();
             ViewBag.Categories = Service.CategorieManager.GetAll();
+            Service.CategorieManager.Dispose();
             ViewBag.Type = Service.TypeManager.GetAll();
+            Service.TypeManager.Dispose();
 
             IDictionary<int, string> ListCategories = new Dictionary<int, string>();
             IEnumerable<Categorie> villes = Service.CategorieManager.GetAll();
+            Service.CategorieManager.Dispose();
             //ListVilles.Add(-1, "Veuillez sélectionner une ville");
             foreach (var item in villes)
             {
@@ -52,6 +53,7 @@ namespace WebApp.Controllers
             var selectlisttype = new SelectList(ListType, "Key", "Value");
 
             ViewBag.Types = selectlisttype;
+            Service.TypeManager.Dispose();
 
             if (TempData["messageConfirmSupp"] != null)
             {
@@ -60,13 +62,11 @@ namespace WebApp.Controllers
 
             return View();
         }
-
         public IActionResult Privacy()
         {
             
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

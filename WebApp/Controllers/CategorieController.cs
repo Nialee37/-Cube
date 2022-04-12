@@ -21,10 +21,9 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             var villes = Service.CategorieManager.GetAll();
+            Service.CategorieManager.Dispose();
             return View(villes);
         }
-
-
         // GET: VillesController/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,15 +37,14 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            Service.CategorieManager.Dispose();
             return View(Service.CategorieManager.Get((int)id));
         }
-
         // GET: VillesController/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: VillesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -55,10 +53,10 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.CategorieManager.Add(categorie);
+                Service.CategorieManager.Dispose();
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
-
         // GET: VillesController/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -71,9 +69,9 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            Service.CategorieManager.Dispose();
             return View(categorie);
         }
-
         // POST: VillesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,22 +80,21 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.CategorieManager.Update(categorie);
+                Service.CategorieManager.Dispose();
             }
             return RedirectToAction("AdminPersonne", "Personne");
         }
-        
         public JsonResult GetAllCategorie()
         {
             List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
+            Service.CategorieManager.Dispose();
 
             return Json(listcategorie);
-        }
-
-        
-        
+        } //Renvoie toute les catégories
         public ActionResult Delete(int id)
         {
             Service.CategorieManager.Delete(id);
+            Service.CategorieManager.Dispose();
             return RedirectToAction("AdminPersonne", "Personne");
         }
     }
