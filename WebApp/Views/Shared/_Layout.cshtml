@@ -62,7 +62,7 @@
 
                     <a asp-area="" asp-controller="Contact" asp-action="ContactezNous" class='nav_link @(ViewData["Page"] == "Contact" ? "active" : "" )'> <i class="fas fa-phone-alt"></i> <span class="nav_name">Contactez-nous</span> </a>
 
-                    @{if (user != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
+                    @{if (user != null && user.Roles != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
                         {
                             <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a>
                         }}

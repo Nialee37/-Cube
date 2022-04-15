@@ -145,7 +145,7 @@ namespace WebApp.Controllers
                 Service.RolesManager.Dispose();
                 Service.PersonneManager.Add(user);
                 Service.PersonneManager.Dispose();
-                //EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
+                EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
                 return IndexLogin(user.Mail, temppsd);
             }
         public IActionResult Logout()
@@ -235,7 +235,7 @@ namespace WebApp.Controllers
         private string BodyRegister(string userName)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader("./ViewsMail/register.html"))
+            using (StreamReader reader = new StreamReader("./wwwroot/ViewsMail/register.html"))
             {
                 body = reader.ReadToEnd();
             }
