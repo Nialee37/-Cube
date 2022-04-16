@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row row-card">
         <div class="col-md-12 col-lg-9 ml-auto card-register">
-            <div class="profilPicture"><i class="fas fa-user"></i></div>
+            <div class="center-element"><div class="profilPicture"><i class="fas fa-user"></i></div></div>
             <h1>Mon profil</h1>
         </div>
         <!-- Formulaire d'edit -->
@@ -235,15 +235,18 @@
             {
                 <div class="col-md-12 col-lg-9 ml-auto ">
                     <form class="form-horizontal" id="formDeleteCompte" asp-action="deleteCompte">
+                        <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                         <div class="col-md-12 submit-btn EditGeneral" id="divIdDeleteCompte">
-                            <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden" />
                             @{if (user != null && Model.Id == user.Id) { 
                                 <div class="form-group EditGeneral">
-                                    <div class="input-icon"><i class="fas fa-map-pin"></i></div>
+                                    <div class="input-icon"><i class="fas fa-key"></i></div>
                                     <input required type="password" asp-for="PasswordHash" value="" class="form-control verifForm" id="passwordDeleteCompte" placeholder="Veuillez saisir votre mot de passe pour supprimer le compte" />
                                     <div asp-validation-for="PasswordHash" class="invalid-feedback fw-bold" style="@(ViewBag.erreur != null ? "display:block;" : "")">@(ViewBag.erreur != null ? ViewBag.erreur : "")</div>
                                 </div>
                             }}
+                        </div>
+
+                        <div class="col-md-12 submit-btn EditGeneral" id="divIdDeleteCompte">
                             <button class="btn btn-danger" type="submit" id="deleteCompte">Supprimer @(Model.Id != user.Id ? "le" : "mon") compte</button>
                         </div>
                     </form>

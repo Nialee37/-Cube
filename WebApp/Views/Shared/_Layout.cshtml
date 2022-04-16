@@ -22,7 +22,7 @@
     <script src="~/js/select.js"></script>
     @RenderSection("JS", false)
 </head>
-<body>
+<body class="preload">
     @{
          Personne user = Context.Session.GetString("user") != null ? JsonSerializer.Deserialize<Personne>(Context.Session.GetString("user")) : null;
     }
@@ -54,19 +54,29 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div> 
-                <a href="#" class="nav_logo"> <img src="~/img/logoV1.png" id="btnNav" alt="logo" class="logo nav_logo-icon"><span class="title-logo">Source Relationnelles</span> </a>
-                <div class="nav_list">
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class='nav_link @(ViewData["Page"] == "Home" ? "active" : "" )'> <i class="fas fa-home nav_icon"></i><span class="nav_name">Accueil</span> </a>
+                <a href="#" class="nav_logo nav_link"> <img src="~/img/logoV1.png" id="btnNav" alt="logo" class="logo nav_logo-icon"><span class="title-logo">Source Relationnelles</span> </a>
+                <ul class="nav_list">
+                    <li class='nav_link @(ViewData["Page"] == "Home" ? "active" : "" )'><a asp-area="" class="link" asp-controller="Home" asp-action="Index" > <i class="fas fa-home nav_icon"></i><span class="nav_name">Accueil</span> </a></li>
 
-                    <a asp-area="" asp-controller="Personne" asp-action="cgu" class='nav_link @(ViewData["Page"] == "CGU" ? "active" : "" )'> <i class="fas fa-user-secret nav_icon"></i> <span class="nav_name">Conditions général d'utilisation</span> </a>
+                    <li class='nav_link @(ViewData["Page"] == "CGU" ? "active" : "" )'><a asp-area="" class="link" asp-controller="Personne" asp-action="cgu" > <i class="fas fa-user-secret nav_icon"></i> <span class="nav_name">Conditions général d'utilisation</span> </a></li>
 
-                    <a asp-area="" asp-controller="Contact" asp-action="ContactezNous" class='nav_link @(ViewData["Page"] == "Contact" ? "active" : "" )'> <i class="fas fa-phone-alt"></i> <span class="nav_name">Contactez-nous</span> </a>
+                   <li class='nav_link @(ViewData["Page"] == "Contact" ? "active" : "" )'> <a asp-area="" class="link" asp-controller="Contact" asp-action="ContactezNous" > <i class="fas fa-phone-alt nav_icon"></i> <span class="nav_name">Contactez-nous</span> </a></li>
 
                     @{if (user != null && user.Roles != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
                         {
-                            <a asp-area="" asp-controller="Personne" asp-action="AdminPersonne" class='nav_link @(ViewData["Page"] == "Dashboard" ? "active" : "" )'> <i class="fas fa-users"></i> <span class="nav_name">Gestion des utilisateurss</span> </a>
+                            <li class="nav_link li-bubble-dopdown">
+                                <button class="link btnDopdownBubble" type="button"><i class="fas fa-tools"></i><span class="nav_name">Gestions @user.Roles.Libelle</span></button>
+                                <div class="bubble-dopdown">
+                                    <ul class="fa-ul">
+                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-users nav_icon"></i></span>Gestion des utilisateurs</a><li>
+                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-swatchbook nav_icon"></i></span>Gestion des ressources</a><li>
+                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-city nav_icon"></i></span>Gestion des catégories et villes</a><li>
+                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-chart-bar nav_icon"></i></span>Statistiques général</a><li>
+                                    </ul>
+                                </div>
+                            </li>
                         }}
-                </div>
+                </ul>
             </div> 
             
         </nav>

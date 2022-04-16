@@ -10,22 +10,7 @@
     --z-fixed: 10000
 }
 
-*,
-::before,
-::after {
-    box-sizing: border-box
-}
-
-/*body {
-    position: relative;
-    margin: var(--header-height) 0 0 0;
-    padding: 0 1rem;
-    font-family: var(--body-font);
-    font-size: var(--normal-font-size);
-    transition: .5s
-}
-*/
-a {
+nav a {
     text-decoration: none
 }
 
@@ -57,7 +42,15 @@ a {
 .header_img {
     display: flex;
     justify-content: center;
-    overflow: hidden
+    overflow: hidden;
+    background-color: #ffc4c4;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.header_img a:hover {
+    color: #b10000;
 }
 
 .l-navbar {
@@ -77,16 +70,28 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden
+}
+
+.nav .nav_link {
+    width: var(--nav-width);
+    transition: .5s;
+}
+.nav .nav_link .btnDopdownBubble {
+    width: var(--nav-width);
+    transition: .5s;
+}
+
+.nav_list {
+    padding:0;
 }
 
 .nav_logo,
-.nav_link {
+.nav_link .link {
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;
     column-gap: 1.6rem;
-    padding: .5rem 0 .5rem 1.5rem
+    padding: .5rem 0 .5rem 1.5rem;
 }
 
 .nav_logo {
@@ -97,27 +102,32 @@ a {
 
 .nav_logo-icon {
     font-size: 1.25rem;
-    color: var(--white-color)
+    color: var(--white-color) !important;
 }
 
 .nav_logo-name {
-    color: var(--white-color);
+    color: var(--white-color) !important;
     font-weight: 700
 }
 
 .nav_link {
     position: relative;
-    color: var(--first-color-light);
     margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.nav_link .link{
+    color: var(--first-color-light) !important;
     transition: .3s
 }
 
-    .nav_link:hover {
-        color: var(--white-color)
-    }
+.nav_link:hover .link {
+    color: var(--white-color) !important;
+}
 
 .nav_icon {
-    font-size: 1.25rem
+    font-size: 1.25rem;
+    width: 20px;
 }
 
 .show-nav {
@@ -132,53 +142,23 @@ a {
     color: var(--white-color)
 }
 
-    .active::before {
+.active::before {
         content: '';
         position: absolute;
         left: 0;
         width: 2px;
         height: 32px;
         background-color: var(--white-color)
-    }
+}
 
 .height-100 {
     height: 100vh
 }
 
-@media screen and (min-width: 768px) {
-    .div-main {
-        /*margin: calc(var(--header-height) + 1rem) 0 0 0;*/
-        padding-top: calc(var(--header-height) + 1rem);
-        padding-left: calc(var(--nav-width) + 2rem)
-    }
-
-    .header {
-        height: calc(var(--header-height) + 1rem);
-        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
-    }
-
-    .l-navbar {
-        left: 0;
-        padding: 0.2rem .5rem 0 0
-    }
-
-    .show-nav {
-        width: calc(var(--nav-width) + 250px)
-    }
-
-    .body-pd {
-        padding-left: calc(var(--nav-width) + 280px)
-    }
-
-    .nav_logo {
-        padding-left: 15px;
-    }
-}
-
 .logo {
     width: 40px;
     height: 40px;
-    border-radius:50%;
+    border-radius: 50%;
 }
 
 .title-logo {
@@ -196,4 +176,121 @@ a {
 .btn_register {
     background-color: #d20057 !important;
     border: #d20057 !important;
+}
+
+.li-bubble-dopdown {
+    position: relative;
+    overflow: unset;
+}
+
+.btnDopdownBubble {
+    background: none;
+    border: none;
+    overflow: hidden;
+}
+
+.li-bubble-dopdown .bubble-dopdown {
+    -webkit-animation: scale-out-hor-left 0.2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    animation: scale-out-hor-left 0.2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;   
+    opacity:0;
+}
+
+.li-bubble-dopdown:hover .bubble-dopdown {
+    -webkit-animation: scale-in-hor-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: scale-in-hor-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    opacity: 1;
+}
+
+.bubble-dopdown {
+    position: absolute;
+    left: 100%;
+    top: -47px;
+    box-shadow: 1px 1px 10px 3px #4b4b4b4f;
+    background: var(--first-color);
+    color: var(--first-color-light) !important;
+    padding: 7px 15px;
+    border-radius: 3px;
+    width: 300px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.bubble-dopdown::after{
+    content:""; 
+    border-bottom:20px solid transparent;
+    border-left:20px solid transparent;
+    border-right:20px solid var(--first-color);
+    border-top: 20px solid transparent;
+    left:-40px;
+    top:25%;
+    position: absolute;
+}
+
+.bubble-dopdown::before{
+    content:""; 
+    border-bottom:20px solid transparent;
+    border-left:20px solid transparent;
+    border-right:19px solid #414141;
+    border-top: 20px solid transparent;
+    left:-40px;
+    top:25%;
+    position: absolute;
+}
+
+.bubble-dopdown a {
+    color: var(--first-color-light) !important;
+}
+
+.bubble-dopdown a:hover {
+    color: var(--white-color) !important;
+}
+
+.bubble-dopdown .nav_name {
+        padding-right: 20px;
+}
+
+.bubble-dopdown li {
+    padding: 5px 0;
+}
+
+@media screen and (min-width: 768px) {
+    .div-main {
+        /*margin: calc(var(--header-height) + 1rem) 0 0 0;*/
+        padding-top: calc(var(--header-height) + 1rem);
+        padding-left: calc(var(--nav-width) + 2rem)
+    }
+
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+    }
+
+    .header_img {
+        margin-top: 0px;
+    }
+
+    .l-navbar {
+        left: 0;
+        padding: 0.2rem .5rem 0 0
+    }
+
+    .show-nav .nav .nav_link .btnDopdownBubble {
+        width: calc(var(--nav-width) + 250px);
+    }
+
+    .show-nav .nav .nav_link {
+        width: calc(var(--nav-width) + 250px);
+    }
+
+    .show-nav {
+        width: calc(var(--nav-width) + 250px);
+    }
+
+    .body-pd {
+        padding-left: calc(var(--nav-width) + 280px)
+    }
+
+    .nav_logo {
+        padding-left: 15px;
+    }
 }
