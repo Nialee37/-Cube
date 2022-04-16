@@ -188,12 +188,12 @@
     }
 
     .img-logo {
-        width: 90% !important;
-        margin-top: -13vh !important;
+        width: 60% !important;
+        margin-bottom: 20px !important;
     }
 }
 
-@media only screen and (max-width:992px) and (min-width:568px) {
+@media only screen and (max-width:1200px) and (min-width:568px) {
     .card-register {
         padding-left: 10px !important;
         margin-left: 0 !important;
@@ -201,9 +201,7 @@
 
     .img-logo {
         width: 50% !important;
-        margin-left: 20vw !important;
         margin-bottom: 20px !important;
-        margin-top: -4.3vh !important;
     }
 }
 

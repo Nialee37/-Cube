@@ -105,11 +105,7 @@ h1,h2,h3,h4,h5,h6 {
   box-shadow: 0px 0px 30px #CDCDCD
 }
 
-.div-main {
-    height: 100%;
-    position: relative;
-    padding-top: 20px;
-}
+
 
 .center-element-page {
     position: absolute;
@@ -124,6 +120,25 @@ h1,h2,h3,h4,h5,h6 {
     justify-content: center;
     align-items: center;
 }
+
+@media only screen and (max-width:992px) {
+    .center-md-element {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width:1200px) {
+    .center-lg-element {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
 
 .wave {
     height: 500px;
