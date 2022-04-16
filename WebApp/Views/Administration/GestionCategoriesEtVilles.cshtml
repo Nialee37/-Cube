@@ -1,0 +1,109 @@
+﻿@{
+
+  ViewData["Title"] = "Gestion des catégories et des villes";
+  ViewData["Page"] = "GestionCatogoriesVilles";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+}
+
+<div class="row justify-content-evenly ">
+    <h1 class="dashboard-title">Gestion des catégories et des villes</h1>
+     <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des catégories de ressources</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateCat">
+          Créer une catégorie
+        </button>
+        <table class="table table-striped" style="width:100%" id="manageCategorie">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Libelle</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des villes</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateVille">
+          Créer une ville
+        </button>
+        <table class="table table-striped" style="width:100%" id="manageVille">
+            <thead>
+                <tr>
+                    <th>IdVille</th>
+                    <th>Nom</th>
+                    <th>CPostal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<partial name="/Views/Categorie/Create.cshtml" />
+<partial name="/Views/Villes/Create.cshtml" />
+
+<script>
+$(document).ready(function () {
+    datatableVille();
+    datatableCategorie();
+});
+
+function datatableVille() {
+    $('#manageVille').DataTable({
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listVille)),
+        "columns": [
+            { "data": "idVille" },
+            { "data": "nom" },
+            { "data": "cPostal" },
+
+
+        ],
+        "columnDefs": [
+
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Villes/Edit/' + row.idVille + '">' + row.nom + '</a>'
+                }
+
+            }
+
+        ]
+    });
+}
+function datatableCategorie() {
+    $('#manageCategorie').DataTable({
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listCategorie)),
+        "columns": [
+            { "data": "id" },
+            { "data": "Libelle" },
+
+        ],
+        "columnDefs": [
+
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Categorie/Edit/' + row.id + '">' + row.libelle + '</a>'
+                }
+
+            }
+
+        ]
+
+    });
+}
+</script>
+

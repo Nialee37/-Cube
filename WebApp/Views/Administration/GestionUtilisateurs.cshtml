@@ -1,0 +1,69 @@
+﻿@{
+
+  ViewData["Title"] = "Gestion des utilisateurs";
+  ViewData["Page"] = "GestionUtilisateurs";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+}
+<div class="row justify-content-evenly ">
+    <h1 class="dashboard-title">Gestion des utilisateurs</h1>
+    <div class="col-lg-5 col-12 dashboard-card">
+        <table class="table table-striped" style="width:100%" id="managePersonne">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Mail</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    datatablePersonne();
+});
+
+function datatablePersonne() {
+    $('#managePersonne').DataTable({
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listPersonne)),
+        "columns": [
+            { "data": "id" },
+            { "data": "nom" },
+            { "data": "prenom" },
+            { "data": "mail" },
+            { "data": "IsActivate" }
+        ],
+        "columnDefs": [
+            { visible: false, targets: [0] },
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Personne/Edit/' + row.id + '">' + row.nom + '</a>'
+                }
+
+            },
+            {
+                targets: 4,
+                render: function (data, type, row, meta) {
+                    console.log(row);
+                    return (row.isActivate ? '<span class="badge bg-success">Activer</span>' : '<span class="badge bg-danger">Désactiver</span>')
+                }
+            }
+        ]
+
+    });
+}
+    
+</script>
+

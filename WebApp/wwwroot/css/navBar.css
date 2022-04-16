@@ -245,8 +245,13 @@ nav a {
     color: var(--white-color) !important;
 }
 
+.bubble-dopdown a.active::before {
+    left: -55px;
+    height: 20px;
+}
+
 .bubble-dopdown .nav_name {
-        padding-right: 20px;
+    padding-right: 20px;
 }
 
 .bubble-dopdown li {

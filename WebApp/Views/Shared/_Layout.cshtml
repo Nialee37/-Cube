@@ -64,14 +64,14 @@
 
                     @{if (user != null && user.Roles != null && (user.Roles.Libelle == "Administrateur" || user.Roles.Libelle == "SuperAdministrateur"))
                         {
-                            <li class="nav_link li-bubble-dopdown">
+                            <li class="nav_link @(ViewData["Page"] == "GestionCatogoriesVilles" || ViewData["Page"] == "GestionUtilisateurs" || ViewData["Page"] == "GestionRessources" || ViewData["Page"] == "StatsG" ? "active" : "" ) li-bubble-dopdown">
                                 <button class="link btnDopdownBubble" type="button"><i class="fas fa-tools"></i><span class="nav_name">Gestions @user.Roles.Libelle</span></button>
                                 <div class="bubble-dopdown">
                                     <ul class="fa-ul">
-                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-users nav_icon"></i></span>Gestion des utilisateurs</a><li>
-                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-swatchbook nav_icon"></i></span>Gestion des ressources</a><li>
-                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-city nav_icon"></i></span>Gestion des catégories et villes</a><li>
-                                      <li><a href="#"><span class="nav_name fa-li"><i class="fas fa-chart-bar nav_icon"></i></span>Statistiques général</a><li>
+                                      <li><a asp-area="" class=" @(ViewData["Page"] == "GestionUtilisateurs" ? "active" : "" )" asp-controller="Administration" asp-action="GestionUtilisateurs"><span class="nav_name fa-li"><i class="fas fa-users nav_icon"></i></span>Gestion des utilisateurs</a><li>
+                                      <li><a asp-area="" class=" @(ViewData["Page"] == "GestionRessources" ? "active" : "" )" asp-controller="Administration" asp-action="GestionRessources"><span class="nav_name fa-li"><i class="fas fa-swatchbook nav_icon"></i></span>Gestion des ressources</a><li>
+                                      <li><a asp-area="" class=" @(ViewData["Page"] == "GestionCatogoriesVilles" ? "active" : "" )" asp-controller="Administration" asp-action="GestionCategoriesEtVilles"><span class="nav_name fa-li"><i class="fas fa-city nav_icon"></i></span>Gestion des catégories et villes</a><li>
+                                      <li><a asp-area="" class=" @(ViewData["Page"] == "StatsG" ? "active" : "" )" asp-controller="Administration" asp-action="StatistiquesGeneral"><span class="nav_name fa-li"><i class="fas fa-chart-bar nav_icon"></i></span>Statistiques général</a><li>
                                     </ul>
                                 </div>
                             </li>

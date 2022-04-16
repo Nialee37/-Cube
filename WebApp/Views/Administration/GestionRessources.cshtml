@@ -1,0 +1,114 @@
+﻿@{
+
+  ViewData["Title"] = "Gestion des ressources";
+  ViewData["Page"] = "GestionRessources";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+}
+
+<div class="row justify-content-evenly ">
+    <h1 class="dashboard-title">Gestion des ressources</h1>
+
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des ressources non valide</h2>
+        <table class="table table-striped" style="width:100%" id="manageRessource">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+     <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Gestion des ressources</h2>
+        <table class="table table-striped" style="width:100%" id="manageRessourceAll">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>date</th>
+                    <th>idType</th>
+                    <th>idCategorie</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function () {
+    datatableRessource();
+    datatableRessourceAll();
+});
+
+function datatableRessource() {
+    $('#manageRessource').DataTable({
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listRessourceFalse)),
+        "columns": [
+            { "data": "id" },
+            { "data": "nom" },
+            { "data": "date" },
+        ],
+        "columnDefs": [
+            { visible: false, targets: [0] },
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
+                }
+            }
+        ]
+
+    });
+}
+function datatableRessourceAll() {
+    $('#manageRessourceAll').DataTable({
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listAllRessource)),
+        "columns": [
+            { "data": "id" },
+            { "data": "nom" },
+            { "data": "date" },
+            { "data": "idType" },
+            { "data": "idCategorie" },
+
+
+        ],
+        "columnDefs": [
+            { visible: false, targets: [0] },
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
+                },
+                //targets: 3,
+                //render: function(data,type,row,meta){
+                //    return '<p>' + row.idType + " " + row.idType '</p>'
+                //},
+                //targets: 4,
+                //render: function(data,type,row,meta){
+                //    return '<p>' + row.idCategorie + " " + row.idCategorie '</p>'
+                //}
+            }
+        ]
+
+    });
+}
+
+    
+</script>
+
