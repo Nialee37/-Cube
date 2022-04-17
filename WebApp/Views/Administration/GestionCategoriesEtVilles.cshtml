@@ -19,7 +19,6 @@
         <table class="table table-striped" style="width:100%" id="manageCategorie">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Libelle</th>
                 </tr>
             </thead>
@@ -35,7 +34,6 @@
         <table class="table table-striped" style="width:100%" id="manageVille">
             <thead>
                 <tr>
-                    <th>IdVille</th>
                     <th>Nom</th>
                     <th>CPostal</th>
                 </tr>
@@ -61,16 +59,13 @@ function datatableVille() {
         },
         "data": @Html.Raw(Json.Serialize(@ViewBag.listVille)),
         "columns": [
-            { "data": "idVille" },
             { "data": "nom" },
             { "data": "cPostal" },
-
-
         ],
         "columnDefs": [
 
             {
-                targets: 1,
+                targets: 0,
                 render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Villes/Edit/' + row.idVille + '">' + row.nom + '</a>'
                 }
@@ -87,14 +82,12 @@ function datatableCategorie() {
         },
         "data": @Html.Raw(Json.Serialize(@ViewBag.listCategorie)),
         "columns": [
-            { "data": "id" },
             { "data": "Libelle" },
-
         ],
         "columnDefs": [
 
             {
-                targets: 1,
+                targets: 0,
                 render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Categorie/Edit/' + row.id + '">' + row.libelle + '</a>'
                 }

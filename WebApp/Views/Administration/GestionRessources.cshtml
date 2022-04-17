@@ -17,7 +17,6 @@
         <table class="table table-striped" style="width:100%" id="manageRessource">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Nom</th>
                     <th>date</th>
                 </tr>
@@ -34,8 +33,8 @@
                     <th>Id</th>
                     <th>Nom</th>
                     <th>date</th>
-                    <th>idType</th>
-                    <th>idCategorie</th>
+                    <th>Type</th>
+                    <th>Categorie</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -57,7 +56,6 @@ function datatableRessource() {
         },
         "data": @Html.Raw(Json.Serialize(@ViewBag.listRessourceFalse)),
         "columns": [
-            { "data": "id" },
             { "data": "nom" },
             { "data": "date" },
         ],
@@ -83,8 +81,8 @@ function datatableRessourceAll() {
             { "data": "id" },
             { "data": "nom" },
             { "data": "date" },
-            { "data": "idType" },
-            { "data": "idCategorie" },
+            { "data": "type.libelle" },
+            { "data": "categorie.libelle" },
 
 
         ],
