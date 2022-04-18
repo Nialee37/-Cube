@@ -25,9 +25,9 @@ namespace WebApp.Controllers
 
         public ActionResult GestionRessources()
         {
-            List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
+           /* List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
             Service.RessourcesManager.Dispose();
-            ViewBag.listRessourceFalse = listressource.ToArray();
+            ViewBag.listRessourceFalse = listressource.ToArray();*/
 
             List<Ressources> listressourceAll = Service.RessourcesManager.GetAll().ToList();
             Service.RessourcesManager.Dispose();

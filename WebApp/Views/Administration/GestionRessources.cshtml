@@ -7,45 +7,48 @@
 @section Styles {
     <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='~/css/dashboard.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
 }
+<div class="container">
+    <div class="row justify-content-evenly ">
+        <h1 class="dashboard-title">Gestion des ressources</h1>
 
-<div class="row justify-content-evenly ">
-    <h1 class="dashboard-title">Gestion des ressources</h1>
+       @* <div class="col-lg-5 col-12 dashboard-card">
+            <h2>Gestion des ressources non valide</h2>
+            <table class="table table-striped" style="width:100%" id="manageRessource">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>*@
 
-    <div class="col-lg-5 col-12 dashboard-card">
-        <h2>Gestion des ressources non valide</h2>
-        <table class="table table-striped" style="width:100%" id="manageRessource">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>date</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-     <div class="col-lg-5 col-12 dashboard-card">
-        <h2>Gestion des ressources</h2>
-        <table class="table table-striped" style="width:100%" id="manageRessourceAll">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>date</th>
-                    <th>Type</th>
-                    <th>Categorie</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+         <div class="col-lg-12 col-12 dashboard-card">
+            <h2>Gestion des ressources Valide et non valide</h2>
+            <table class="table table-striped table-responsive nowrap" style="width:100%" id="manageRessourceAll">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Categorie</th>
+                        <th>Statut</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 
 <script>
 $(document).ready(function () {
-    datatableRessource();
+    //datatableRessource();
     datatableRessourceAll();
 });
 
@@ -60,11 +63,16 @@ function datatableRessource() {
             { "data": "date" },
         ],
         "columnDefs": [
-            { visible: false, targets: [0] },
+            //{ visible: false, targets: [0] },
             {
-                targets: 1,
+                targets: 0,
                 render: function (data, type, row, meta) {
                     return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
+                },
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    var date = new Date(row.date);
+                    return date.toLocaleString('FR-FR');
                 }
             }
         ]
@@ -73,37 +81,40 @@ function datatableRessource() {
 }
 function datatableRessourceAll() {
     $('#manageRessourceAll').DataTable({
+        "responsive": "true",
         "language": {
             "url": '../lib/datatables/fr-datatable.json'
         },
         "data": @Html.Raw(Json.Serialize(@ViewBag.listAllRessource)),
         "columns": [
-            { "data": "id" },
             { "data": "nom" },
             { "data": "date" },
             { "data": "type.libelle" },
             { "data": "categorie.libelle" },
-
-
+            { "data": "isValidate" },
         ],
         "columnDefs": [
-            { visible: false, targets: [0] },
+            //{ visible: false, targets: [0] },
             {
                 targets: 1,
                 render: function (data, type, row, meta) {
-                    return '<a target="_blank" href="/Ressource/Edit/' + row.id + '">' + row.nom + '</a>'
-                },
-                //targets: 3,
-                //render: function(data,type,row,meta){
-                //    return '<p>' + row.idType + " " + row.idType '</p>'
-                //},
-                //targets: 4,
-                //render: function(data,type,row,meta){
-                //    return '<p>' + row.idCategorie + " " + row.idCategorie '</p>'
-                //}
+                        var date = new Date(row.date);
+                        return date.toLocaleString('FR-FR')
+                }
+            },
+            {
+                targets: 4,
+                render: function (data, type, row, meta) {
+                        return (row.isValidate ? '<span class="badge bg-success">Valider</span>' : '<span class="badge bg-danger">Non valide</span>')
+                }
+            },
+            {
+                targets: 5,
+                render: function (data, type, row, meta) {
+                        return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" href="/Ressource/Edit/' + row.id + '"><i class="fas fa-edit"></i></a> <a target="_blank" href="/Ressource/GetRessource/' + row.id + '"><i class="fas fa-eye"></i></a></div>'
+                }
             }
         ]
-
     });
 }
 

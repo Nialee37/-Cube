@@ -113,9 +113,6 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
 
 .btn-primary {
   color: #fff;
@@ -263,6 +260,20 @@ h1,h2,h3,h4,h5,h6 {
    color: #b5b5b5;
 }
 
+.btn-custom.btn-pink {
+    color: #3f3f3f !important;
+    background-color: #ffc4c4 !important;
+    font-weight: bold;
+    border-color: #ffc4c4 !important;
+}
+
+.btn-custom.btn-pink:hover {
+    color: white !important;
+    background-color: #E9374C !important;
+    font-weight: bold;
+    border-color: #E9374C !important;
+}
+
 .btn-custom {
     color: rgba(255, 255, 255, 0.8);
     background: #E9374C;
@@ -320,4 +331,8 @@ body.preload * {
     animation-duration: 0s !important;
     -webkit-animation-duration: 0s !important;
     transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}
+
+.color-red, .color-red *{
+    color: #ff5964;
 }

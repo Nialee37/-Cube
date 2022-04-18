@@ -90,14 +90,14 @@ nav a {
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;
-    column-gap: 1.6rem;
+    column-gap: 2.2rem;
     padding: .5rem 0 .5rem 1.5rem;
 }
 
 .nav_logo {
     margin-bottom: 2rem;
     padding-left: 10px;
-    column-gap: 0.8rem;
+    column-gap: 1.5rem;
 }
 
 .nav_logo-icon {
