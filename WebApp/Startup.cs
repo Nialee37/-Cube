@@ -23,17 +23,33 @@ namespace WebApp
         {
             services.AddControllersWithViews();
 
+            services.AddMvc();
+
+            services.AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", config =>
+                {
+                    config.Cookie.Name = "auth";
+                    config.LoginPath = "/Connection";
+                    config.LogoutPath = "/Connection/Logout";
+                    config.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                    config.Cookie.HttpOnly = true;
+                    config.Cookie.IsEssential = true;
+                });
+
             services.AddSingleton<IService, Service>();
             services.AddDistributedMemoryCache();
             
             services.AddSession(options =>
             {
-                /*options.IdleTimeout = TimeSpan.FromSeconds(600);*/
+                options.Cookie.Name = "session";
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
+   
             services.AddCors();
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +69,8 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

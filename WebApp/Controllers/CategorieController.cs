@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
@@ -17,14 +18,18 @@ namespace WebApp.Controllers
             _logger = logger;
             Service = service;
         }
+
         // GET: VillesController
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult Index()
         {
             var villes = Service.CategorieManager.GetAll();
             Service.CategorieManager.Dispose();
             return View(villes);
         }
+
         // GET: VillesController/Details/5
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,12 +45,16 @@ namespace WebApp.Controllers
             Service.CategorieManager.Dispose();
             return View(Service.CategorieManager.Get((int)id));
         }
+
         // GET: VillesController/Create
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult Create()
         {
             return View();
         }
+
         // POST: VillesController/Create
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Categorie categorie)
@@ -55,9 +64,10 @@ namespace WebApp.Controllers
                 Service.CategorieManager.Add(categorie);
                 Service.CategorieManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
         // GET: VillesController/Edit/5
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,6 +83,7 @@ namespace WebApp.Controllers
             return View(categorie);
         }
         // POST: VillesController/Edit/5
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit( Categorie categorie)
@@ -82,7 +93,7 @@ namespace WebApp.Controllers
                 Service.CategorieManager.Update(categorie);
                 Service.CategorieManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
         public JsonResult GetAllCategorie()
         {
@@ -91,11 +102,13 @@ namespace WebApp.Controllers
 
             return Json(listcategorie);
         } //Renvoie toute les catégories
+
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult Delete(int id)
         {
             Service.CategorieManager.Delete(id);
             Service.CategorieManager.Dispose();
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
     }
 }

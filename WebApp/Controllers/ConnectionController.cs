@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 
@@ -77,7 +80,7 @@ namespace WebApp.Controllers
                 return View();
             }
         [ValidateAntiForgeryToken]
-        public IActionResult IndexLogin(string username, string password)
+        public async Task<IActionResult> IndexLogin(string username, string password)
             {
                 if(username != null && password != null) {
                     Personne user = Service.PersonneManager.GetByMail(username);
@@ -91,9 +94,15 @@ namespace WebApp.Controllers
 
                                 //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
                                 ViewBag.message = "Bonjour " + user.Prenom.ToString();
+                                var claims = new List<Claim>
+                                {
+                                    new Claim("user", user.Mail),
+                                    new Claim("role", user.Roles.Libelle)
+                                };
 
-                                Service.PersonneManager.Update(user);
-                                Service.PersonneManager.Dispose();
+                                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
+                                //Service.PersonneManager.Update(user);
+                                //Service.PersonneManager.Dispose();
                                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
@@ -146,11 +155,11 @@ namespace WebApp.Controllers
                 Service.PersonneManager.Add(user);
                 Service.PersonneManager.Dispose();
                 EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
-                return IndexLogin(user.Mail, temppsd);
+                return (IActionResult)IndexLogin(user.Mail, temppsd);
             }
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            Response.Redirect("/");
+            await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }

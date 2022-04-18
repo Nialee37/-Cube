@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -72,15 +73,20 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Historique()
         {
             return View();
         }
+
+        [Authorize]
         public ActionResult Favoris()
         {
 
             return View();
         }
+
+        [Authorize]
         public JsonResult GetFavoris()
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
@@ -176,6 +182,8 @@ namespace WebApp.Controllers
 
             return Json(listressource);
         }
+
+        [Authorize]
         public int Addfav(int id)
         {
             try
@@ -203,26 +211,7 @@ namespace WebApp.Controllers
                 return 99;
             }
         }
-        public int validateressource(int id) //fonction qui permet de valider une ressource par un modérateur
-        {
-            Ressources mesressources = Service.RessourcesManager.Get(id);
-            Service.RessourcesManager.Dispose();
-            mesressources.IsValidate = true;
 
-            Service.RessourcesManager.Update(mesressources);
-            Service.RessourcesManager.Dispose();
-            return 1;
-        } 
-        public int notvalidateressource(int id) //fonction qui permet de dévalider une ressource
-        {
-            Ressources mesressources = Service.RessourcesManager.Get(id);
-            Service.RessourcesManager.Dispose();
-            mesressources.IsValidate = false;
-
-            Service.RessourcesManager.Update(mesressources);
-            Service.RessourcesManager.Dispose();
-            return 1;
-        }
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
@@ -344,6 +333,7 @@ namespace WebApp.Controllers
 
 
         // GET: RessourceController/Create
+        [Authorize]
         public ActionResult Create()
         {
             IDictionary<int, string> ListCategories = new Dictionary<int, string>();
@@ -371,6 +361,7 @@ namespace WebApp.Controllers
         }
 
         // POST: RessourceController/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ressources ressource, IFormFile file)
@@ -458,6 +449,7 @@ namespace WebApp.Controllers
 
 
         // GET: RessourceController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
@@ -479,6 +471,7 @@ namespace WebApp.Controllers
         }
 
         // POST: RessourceController/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Ressources ressource, IFormFile file)
@@ -567,7 +560,8 @@ namespace WebApp.Controllers
 
             return Redirect("/Ressource");
         }
-          
+
+        [Authorize]
         [HttpPost]
         public string Delete(int id)
         {
@@ -576,6 +570,7 @@ namespace WebApp.Controllers
             return "";
 
         }
+
         public ActionResult GetRessource(int id)
         {
             Ressources ressource = Service.RessourcesManager.Get(id); //récupération de la ressource
