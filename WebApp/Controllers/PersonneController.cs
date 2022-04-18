@@ -307,7 +307,7 @@ namespace WebApp.Controllers
             {
                 Service.PersonneManager.Delete(getUser.Id);
                 Service.PersonneManager.Dispose();
-                Response.Redirect("/Personne/AdminPersonne");
+                Response.Redirect("/Administration/GestionUtilisateurs");
             }
             
         }
