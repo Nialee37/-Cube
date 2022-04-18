@@ -80,7 +80,7 @@ namespace WebApp.Controllers
                 Service.VilleManager.Add(ville);
                 Service.VilleManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
 
         // GET: VillesController/Edit/5
@@ -109,14 +109,14 @@ namespace WebApp.Controllers
                 Service.VilleManager.Update(ville);
                 Service.VilleManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
 
         public ActionResult Delete(int id)
         {
             Service.VilleManager.Delete(id);
             Service.VilleManager.Dispose();
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
     }
 }

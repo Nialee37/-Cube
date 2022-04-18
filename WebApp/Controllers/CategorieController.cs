@@ -55,7 +55,7 @@ namespace WebApp.Controllers
                 Service.CategorieManager.Add(categorie);
                 Service.CategorieManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
         // GET: VillesController/Edit/5
         public ActionResult Edit(int? id)
@@ -82,7 +82,7 @@ namespace WebApp.Controllers
                 Service.CategorieManager.Update(categorie);
                 Service.CategorieManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
         public JsonResult GetAllCategorie()
         {
@@ -95,7 +95,7 @@ namespace WebApp.Controllers
         {
             Service.CategorieManager.Delete(id);
             Service.CategorieManager.Dispose();
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
     }
 }

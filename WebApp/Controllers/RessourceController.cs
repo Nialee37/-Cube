@@ -203,26 +203,7 @@ namespace WebApp.Controllers
                 return 99;
             }
         }
-        public int validateressource(int id) //fonction qui permet de valider une ressource par un modérateur
-        {
-            Ressources mesressources = Service.RessourcesManager.Get(id);
-            Service.RessourcesManager.Dispose();
-            mesressources.IsValidate = true;
-
-            Service.RessourcesManager.Update(mesressources);
-            Service.RessourcesManager.Dispose();
-            return 1;
-        } 
-        public int notvalidateressource(int id) //fonction qui permet de dévalider une ressource
-        {
-            Ressources mesressources = Service.RessourcesManager.Get(id);
-            Service.RessourcesManager.Dispose();
-            mesressources.IsValidate = false;
-
-            Service.RessourcesManager.Update(mesressources);
-            Service.RessourcesManager.Dispose();
-            return 1;
-        }
+        
         public JsonResult Mesressources(int id) //fonction qui va retourner les ressources de la personne where id personne 
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));

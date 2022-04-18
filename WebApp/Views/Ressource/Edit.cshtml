@@ -103,7 +103,7 @@
           });
           request.done(function (output) {
             console.log("good");
-             window.location.replace("/Personne/Adminpersonne");  
+             window.location.replace("/Administration/GestionRessources");  
           });
       })
   </script>
@@ -115,11 +115,11 @@
            let request =         
           $.ajax({
             type: "POST", 	       
-            url: "/ressource/validateressource?id=" + @Model.Id
+            url: "/administration/validateressource?id=" + @Model.Id
           });
           request.done(function (output) {
             console.log("good");
-             window.location.replace("/Personne/Adminpersonne");
+             window.location.replace("/Administration/GestionRessources");
        
           });
         })
@@ -132,11 +132,11 @@
            let request =         
           $.ajax({
             type: "POST", 	       
-            url: "/ressource/notvalidateressource?id=" + @Model.Id
+            url: "/administration/notvalidateressource?id=" + @Model.Id
           });
           request.done(function (output) {
             console.log("good");
-             window.location.replace("/Personne/Adminpersonne");
+             window.location.replace("/Administration/GestionRessources");
           });
         })
     </script>
