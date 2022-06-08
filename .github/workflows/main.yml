@@ -26,9 +26,9 @@ jobs:
       # Checks out repository so our job can access it
       - uses: actions/checkout@v2
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '5.0.x'
 
       - name: Remove folder publish
         run: rm -r /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
