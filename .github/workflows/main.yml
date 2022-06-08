@@ -29,9 +29,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ matrix.dotnet }}
-
-      - name: Remove folder publish
-        run: rm -r /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
         
       - name: Install dependencies
         run: dotnet restore 
