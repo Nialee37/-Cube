@@ -31,7 +31,7 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Remove folder publish
-        run: rmdir -r /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
+        run: rm -r /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
         
       - name: Install dependencies
         run: dotnet restore 
