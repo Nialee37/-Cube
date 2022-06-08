@@ -30,6 +30,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Remove folder publish
+        run: rm dir /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
+        
       - name: Install dependencies
         run: dotnet restore 
 
