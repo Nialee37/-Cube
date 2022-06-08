@@ -38,7 +38,7 @@ jobs:
 
       # We will output publish files to the folder we previously created
       - name: Publish
-        run: dotnet publish -c Release -o /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
+        run: dotnet publish --configuration Release -o /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
         
       - name: Restart the app
         run: |
