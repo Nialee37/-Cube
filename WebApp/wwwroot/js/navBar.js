@@ -14,6 +14,11 @@ $(document).ready(function () {
         // add padding to header
         $("#header").toggleClass('body-pd');
     });
+
+    
+    setTimeout(function () {
+        document.body.className = "";
+    }, 500);
 });
 
 

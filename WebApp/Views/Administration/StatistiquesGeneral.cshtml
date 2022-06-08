@@ -1,0 +1,180 @@
+﻿@{
+
+  ViewData["Title"] = "Statistiques Générales";
+  ViewData["Page"] = "StatsG";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<div class="row justify-content-evenly ">
+     <h1 class="dashboard-title">Statistiques Générales</h1>
+
+     <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Nombre de ressource par mois</h2>
+
+        <figure class="highcharts-figure">
+          <div id="chart2"></div>
+          <p class="highcharts-description">
+           Ce graphique montre l'évolution du nombre de ressources par mois
+          </p>
+        </figure>
+
+    </div>
+
+         <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Nombre de ressources par catégorie</h2>
+
+        <figure class="highcharts-figure">
+          <div id="chart1"></div>
+          <p class="highcharts-description">
+            Ce graphique nous permet de voir le nombre de ressource par catégories.
+          </p>
+       </figure>
+
+    </div>
+
+    <div class="col-lg-5 col-12 dashboard-card">
+        <h2>Nombre moyen de ressource lu par les utilisateurs</h2>
+        <div> 
+            <p id="moyressourcelu" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moylu</p>
+        </div> 
+         <h2>Nombre de ressources créé par les utilisateurs</h2>
+        <div> 
+            <p id="moyressourcecree" class="text-center text-primary" style="font-size: 5rem;">@ViewBag.moycree</p>
+        </div> 
+    </div>
+
+</div>
+
+<script>
+$(document).ready(function () {
+    requestData();
+});
+
+function requestChard() {
+    chart2 = new Highcharts.chart('chart2', {
+        chart: {
+            type: 'line',
+            events: {
+                load: requestData2
+            }
+        },
+        title: {
+            text: 'Nombre de ressource par mois'
+        },
+
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Nombre de ressource'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+            //    {
+            //  name: 'nombre_de_ressources',
+            //  data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
+            //}
+        ]
+    });
+}
+function requestData() {
+    var config1 = {
+        chart: {
+            type: 'column'
+
+        },
+        title: {
+            text: 'Nombre de ressources par catégorie'
+        },
+
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Nombre de ressoruce'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'nombre de ressources'
+        },
+        series: []
+    }
+
+
+    $.ajax({
+        url: '/Ressource/getressourcebycat/',
+        type: "GET",
+
+        success: function(response) {
+            
+            var data = new Array;
+                var cat = new Array;
+                for (var i = 0; i < response.length; i++) {
+                    
+                    cat[i] = response[i].name;
+                    data[i] = {
+                        y: response[i].value,
+                        name: response[i].name,
+                        color: response[i].color,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                }
+                config1.series = [{ data: data }];
+                config1.xAxis.categories = cat
+
+            
+            var chart1 = new Highcharts.chart('chart1', config1 );
+           
+          requestChard();
+        },
+        error :  function(response) {
+            console.log(response);
+        }
+    });
+}
+function requestData2() {
+
+    $.ajax({
+        url: '/Ressource/getressourcebymonth/',
+        type: "GET",
+
+        success: function(response) {
+            chart2.addSeries({
+              name: "nombre_de_ressources",
+              data: response
+            });
+        }
+    });
+}
+</script>
+

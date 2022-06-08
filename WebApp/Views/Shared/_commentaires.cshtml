@@ -65,7 +65,7 @@ function refreshcommentaire() {
                 $("#commentaire_container").append('<div class="card_commentaire">'
                     + '<div class="title_commentaire">'
                     + '<span>' + data[i].personne.prenom + ' ' + data[i].personne.nom + ' Le ' + datefr + ' à ' + heure + '</span>'
-                    + (@(user != null ? user.Id : null) == data[i].personne.id ? '<button class="btn_supp_com" data-id_com="' + data[i].id + '"><i class="fas fa-trash"></i> Supprimer</button>' : '')
+                    + (@(user != null ? user.Id : null) == data[i].personne.id || @(user != null ? user.IdRoles : null) >= 3  ? '<button class="btn_supp_com" data-id_personne="' + data[i].personne.id + '" data-id_com="' + data[i].id + '"><i class="fas fa-trash"></i> Supprimer</button>' : '')
                     + '<button class="btn_rep_com" data-id_com="' + data[i].id + '"><i class="fas fa-reply"></i> Répondre</button>'
                     + '</div>'
                     + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de ' + data[i].origineCommentaire.personne.prenom + ' ' + data[i].origineCommentaire.personne.nom +
@@ -111,11 +111,13 @@ function refreshcommentaire() {
             $(".btn_supp_com").on("click", function () {
                 if (confirm("Êtes-vous sur de vouloir supprimer ce commentaire ?")) {
                     var idCom = $(this).data("id_com");
+                    var id_personne = $(this).data("id_personne");
                     $.ajax({
                         //L'URL de la requête
                         url: "/Commentaire/Delete",
                         data: {
-                            id: idCom
+                            id: idCom,
+                            idPersonneRessource: id_personne
                         },
                         //La méthode d'envoi (type de requête)
                         method: "POST",

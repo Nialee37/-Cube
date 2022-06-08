@@ -42,4 +42,28 @@
     position: absolute;
     right: 15px;
     top: 25px;
+    width: 30% !important;
+}
+
+.box_data_ressource img{
+    width: 100%;
+}
+
+#deleteRessource, #validationValidation {
+    width: 45%;
+}
+
+.selectCatR {
+    width: 80%;
+    margin: 0 !important;
+    margin-left: 20px !important;
+}
+
+.selectCatR .dropdown-select {
+    margin-bottom: 10px !important;
+}
+
+.formTitleEditRessource {
+    width: 30% !important;
+    margin: 15px 10px 25px !important;
 }

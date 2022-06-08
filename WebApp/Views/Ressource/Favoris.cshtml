@@ -12,12 +12,14 @@
 }
 <div id="container" class="container">
     <div class="row cardPage mt-5">
-        <div class="titleRessource">
+        <div class="col-12 titleRessource">
             <h1 class="text-center">Favoris</h1>
             <h2>Liste des ressources en Favoris</h2>
         </div>
-        <div class="row d-flex justify-content-evenly lesRessources">
-            
+        <div class="col-12">
+            <div class="row d-flex justify-content-evenly lesRessources w-100">
+
+            </div>
         </div>
     </div>
 </div>
@@ -45,7 +47,7 @@ $(document).ready(function(){
         for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
             var month = date.toLocaleString('FR-FR', { month: 'short' });
-          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb  mb-5"> '
+          $(".lesRessources").append('<div class="col-lg-3 col-md-5 col-sm-12 mb-5"> '
                                         +'<div class="ressourceCard card">'
                                             +'<div class="wrapper">'
                                                 +'<div class="background">'

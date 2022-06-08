@@ -25,7 +25,7 @@ namespace WebApp
 
             services.AddSingleton<IService, Service>();
             services.AddDistributedMemoryCache();
-
+            
             services.AddSession(options =>
             {
                 /*options.IdleTimeout = TimeSpan.FromSeconds(600);*/

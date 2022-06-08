@@ -25,13 +25,13 @@
 <div class="container mt-3">
     <div class="row card-custom pt-0">
         <div class="center-element text-center">
-            <h1 class="display-4 txt-hello">Bienvenue @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
+            <h1 class="display-4 txt-hello">Welcome user : @(user != null ? user.Prenom+" "+user.Nom : "")!</h1>
         </div>
     </div>
 </div>
 <div class="container mt-3">
     <div class="row card-custom form-horizontal">
-        <h3 class="text-center w-100">Filtrer les ressources</h3>
+        <h2 class="text-center w-100">Filtrer les ressources</h2>
         <div class="col-md-6 center-element">
             <div class="form-group center-element w-100 m-2">
                 <div class="input-icon"><i class="fas fa-filter"></i></div>
@@ -47,7 +47,7 @@
         <div class="col-md-6 center-element">
             <div class="form-group center-element w-100 m-2">
                 <div class="input-icon"><i class="fas fa-search"></i></div>
-                <input type="text" class="form-control verifForm w-100 m-0" id="searchfiltre" />
+                <input type="text" class="form-control verifForm w-100 m-0" id="searchfiltre" placeholder="Recherche par titre" />
             </div>
         </div>
         <div class="col-md-6 center-element">
@@ -61,11 +61,13 @@
 
 <div id="container" class="container cardPage p-0">
     <div class="row mt-3">
-        <div class="titleRessource mt-2">
+        <div class="col-12 titleRessource mt-2">
             <h2 class="text-center">Liste des dernières ressources</h2>
         </div>
-        <div class="row d-flex justify-content-evenly lesRessources">
+        <div class="col-12">
+            <div class="row d-flex justify-content-evenly lesRessources w-100">
 
+            </div>
         </div>
     </div>
 </div>
@@ -96,7 +98,7 @@ $(document).ready(function(){
         for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
             var month = date.toLocaleString('FR-FR', { month: 'short' });
-          $(".lesRessources").append('<div class="col-lg-2 col-md-2 col-sm-2 mb  mb-5"> '
+          $(".lesRessources").append('<div class="col-lg-3 col-md-5 col-sm-12 mb-5"> '
                                         +'<div class="ressourceCard card">'
                                             +'<div class="wrapper">'
                                                 +'<div class="background">'

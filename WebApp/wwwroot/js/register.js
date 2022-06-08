@@ -1,5 +1,6 @@
 ﻿var checkFinalPassword = false;
 var checkFDate = false;
+var checkCGU = false;
 /**
  * Fonction qui permet de vérifier si le mot de passe est valide ou non.
  * @param {*} password le mot de passe a vérifié.
@@ -160,10 +161,20 @@ function checkOnInput() {
 }
 
 function validForm() {
-    if (checkFinalPassword && checkAllInput() && checkFDate)
+    if (checkFinalPassword && checkAllInput() && checkFDate && checkCGU)
         $("#login-btn").removeAttr("disabled");
     else
         $("#login-btn").attr("disabled", "disabled");
+}
+
+function checkCGUVerif() {
+    $("#CGU").on("click", function () {
+        if ($(this).prop("checked")) {
+            checkCGU = true;
+        } else {
+            checkCGU = false;
+        }
+    })
 }
 
 function checkAllInput() {
@@ -300,6 +311,7 @@ $(document).ready(function () {
         }
     });
 
+    checkCGUVerif();
     checkOnInput();
     checkDate();
 });

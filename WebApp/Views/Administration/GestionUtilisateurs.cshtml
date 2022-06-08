@@ -1,0 +1,77 @@
+﻿@{
+
+  ViewData["Title"] = "Gestion des utilisateurs";
+  ViewData["Page"] = "GestionUtilisateurs";
+}
+
+@section Styles {
+    <link rel='stylesheet' href='~/lib/datatables/dataTables.bootstrap5.min.css'>
+    <link rel='stylesheet' href='~/css/dashboard.css'>
+    <link rel='stylesheet' href='~/css/box_form.css'>
+}
+<div class="container">
+    <div class="row justify-content-evenly ">
+        <h1 class="dashboard-title">Gestion des utilisateurs</h1>
+        <div class="col-lg-12 col-12 dashboard-card">
+            <table class="table table-responsive nowrap table-striped" style="width:100%" id="managePersonne">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Mail</th>
+                        <th>Statut</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    datatablePersonne();
+});
+
+function datatablePersonne() {
+    $('#managePersonne').DataTable({
+        "responsive": "true",
+        "language": {
+            "url": '../lib/datatables/fr-datatable.json'
+        },
+        "data": @Html.Raw(Json.Serialize(@ViewBag.listPersonne)),
+        "columns": [
+            { "data": "nom" },
+            { "data": "prenom" },
+            { "data": "mail" },
+            { "data": "isActivate" }
+        ],
+        "columnDefs": [
+            //{ visible: false, targets: [0] },
+            /*{
+                targets: 0,
+                render: function (data, type, row, meta) {
+                    return '<a target="_blank" href="/Personne/Edit/' + row.id + '">' + row.nom + '</a>'
+                }
+
+            },*/
+            {
+                targets: 3,
+                render: function (data, type, row, meta) {
+                    return (row.isActivate ? '<span class="badge bg-success">Activer</span>' : '<span class="badge bg-danger">Désactiver</span>')
+                }
+            },
+            {
+                targets: 4,
+                render: function (data, type, row, meta) {
+                        return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" href="/Personne/Edit/' + row.id + '"><i class="fas fa-edit"></i></a></div>'
+                }
+            }
+        ]
+
+    });
+}
+    
+</script>
+

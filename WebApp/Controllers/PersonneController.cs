@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -25,6 +26,7 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             ViewBag.dada = Service.RessourcesManager.Getallfalse();
+            Service.RessourcesManager.Dispose();
             return View();
         }
 
@@ -61,6 +63,7 @@ namespace WebApp.Controllers
         {
 
             Personne user = Service.PersonneManager.Get(id);
+            Service.PersonneManager.Dispose();
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
 
@@ -70,6 +73,7 @@ namespace WebApp.Controllers
             {
                 IDictionary<int, string> ListRoles = new Dictionary<int, string>();
                 IEnumerable<Roles> roles = Service.RolesManager.GetAll();
+                Service.RolesManager.Dispose();
                 foreach (var item in roles)
                 {
                     ListRoles.Add(item.Id, $"{item.Libelle}");
@@ -84,6 +88,7 @@ namespace WebApp.Controllers
 
             IDictionary<int, string> ListVilles = new Dictionary<int, string>();
             IEnumerable<Ville> villes = Service.VilleManager.GetbyCPOrVille(user.Adresse.Ville.CPostal).OrderBy(v => v.CPostal);
+            Service.VilleManager.Dispose();
             //ListVilles.Add(-1, "Veuillez sélectionner une ville");
             foreach (var item in villes)
             {
@@ -127,6 +132,11 @@ namespace WebApp.Controllers
             selectedType.Selected = true;
             ViewBag.ListTypeAdresse = selectListType;
 
+            if (TempData["messageErreurmdpSupp"] != null)
+            {
+                ViewBag.erreur = TempData["messageErreurmdpSupp"].ToString();
+            }
+
             return View(user);
         }
 
@@ -137,14 +147,17 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             getUser.Prenom = user.Prenom;
             getUser.Nom = user.Nom;
             getUser.Genre = user.Genre;
             getUser.DateNaissance = user.DateNaissance;
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
 
             getUser = Service.PersonneManager.Get(getUser.Id);
-            if(userConnected.Id == user.Id)
+            Service.PersonneManager.Dispose();
+            if (userConnected.Id == user.Id)
             {
                 string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(getUser);
                 HttpContext.Session.SetString("user", jsonUser);
@@ -153,6 +166,7 @@ namespace WebApp.Controllers
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
+            
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
@@ -161,8 +175,9 @@ namespace WebApp.Controllers
         public void EditVilleUser(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             getUser.Adresse = Service.AdresseManager.Get(getUser.IdAdresse);
-
+            Service.AdresseManager.Dispose();
             getUser.Adresse.Numero = user.Adresse.Numero;
             getUser.Adresse.Type = user.Adresse.Type;
             getUser.Adresse.Nom = user.Adresse.Nom;
@@ -170,12 +185,13 @@ namespace WebApp.Controllers
             getUser.Adresse.Ville = Service.VilleManager.Get(getUser.Adresse.IdVille);
 
             Service.PersonneManager.Update(getUser);
-
+            Service.PersonneManager.Dispose();
             getUser = Service.PersonneManager.Get(getUser.Id);
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
             ViewBag.Roles = lesRoles;*/
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
@@ -184,10 +200,12 @@ namespace WebApp.Controllers
         public void EditSecuriter(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
-            if(user.Mail != "" && user.Mail != null){
+            Service.PersonneManager.Dispose();
+            if (user.Mail != "" && user.Mail != null){
                 if (user.Mail != getUser.Mail)
                 {
                     Personne checkMail = Service.PersonneManager.GetByMail(user.Mail);
+                    Service.PersonneManager.Dispose();
                     if (checkMail != null)
                     {
                         if (user.Mail == checkMail.Mail)
@@ -212,7 +230,9 @@ namespace WebApp.Controllers
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             user = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             HttpContext.Session.SetString("user", jsonUser);*/
             /*List<Roles> lesRoles = (List<Roles>)Service.RolesManager.GetAll();
@@ -225,12 +245,14 @@ namespace WebApp.Controllers
         public void EditRole(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             if (user.IdRoles != null && user.IdRoles > 1)
             {
                 getUser.IdRoles = user.IdRoles;
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
@@ -239,13 +261,46 @@ namespace WebApp.Controllers
         public void EditStatut(Personne user)
         {
             Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
             if (user.IsActivate ==  getUser.IsActivate)
             {
                 getUser.IsActivate = !user.IsActivate;
             }
 
             Service.PersonneManager.Update(getUser);
+            Service.PersonneManager.Dispose();
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void deleteCompte(Personne user)
+        {
+            Personne getUser = Service.PersonneManager.Get(user.Id);
+            Service.PersonneManager.Dispose();
+            Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
+            if(userConnected.IdRoles <= 3)
+            {
+                if (BCryptNet.Verify(user.PasswordHash, getUser.PasswordHash) && user.PasswordHash != "")
+                {
+                    Service.PersonneManager.Delete(getUser.Id);
+                    Service.PersonneManager.Dispose();
+                    HttpContext.Session.Clear();
+                    TempData["messageConfirmSupp"] = "Votre compte a bien été supprimer !";
+                    Response.Redirect("/");
+                }
+                else
+                {
+                    TempData["messageErreurmdpSupp"] = "Le mot de passe est incorrect !";
+                    Response.Redirect("/Personne/Edit?id=" + getUser.Id);
+                }
+            }else
+            {
+                Service.PersonneManager.Delete(getUser.Id);
+                Service.PersonneManager.Dispose();
+                Response.Redirect("/Personne/AdminPersonne");
+            }
+            
         }
 
         // GET: PersonneController/Delete/5
@@ -271,16 +326,75 @@ namespace WebApp.Controllers
 
         public ActionResult AdminPersonne()
         {
+
+            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+            Service.RessourcesManager.Dispose();
+
+            if (ressourcelist.Count > 0)
+            {
+                List<int> moy = new List<int>();
+
+                foreach (var item in ressourcelist)
+                {
+                    moy.Add(item.Count());
+                }
+
+                ViewBag.moycree =  Math.Round(moy.Average(),0).ToString();
+            }
+            else
+            {
+                ViewBag.moycree = "Pas calculable";
+            }
+            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
+            Service.HistoriqueManager.Dispose();
+
+            if (listfav.Count > 0)
+            {
+                List<int> moy = new List<int>();
+
+                foreach (var item in listfav)
+                {
+                    moy.Add(item.Count());
+                }
+
+                ViewBag.moylu = Math.Round(moy.Average(), 0).ToString();
+            }
+            else
+            {
+                ViewBag.moylu = "";
+            }
+
+            List<Ville> listVille = Service.VilleManager.GetAll().ToList();
+            Service.VilleManager.Dispose();
+            ViewBag.listVille = listVille.ToArray();
+
+            List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
+            Service.CategorieManager.Dispose();
+            ViewBag.listCategorie = listcategorie.ToArray();
+
+            List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
+            Service.PersonneManager.Dispose();
+            ViewBag.listPersonne = personnes.ToArray();
+
+            List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
+            Service.RessourcesManager.Dispose();
+            ViewBag.listRessourceFalse = listressource.ToArray();
+
+            List<Ressources> listressourceAll = Service.RessourcesManager.GetAll().ToList();
+            Service.RessourcesManager.Dispose();
+            ViewBag.listAllRessource = listressourceAll.ToArray();
+
             return View();
         }
         [HttpGet]
         public JsonResult GetAllPersonne()
         {
             List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
+            Service.PersonneManager.Dispose();
             return Json(personnes);
         }
 
-        public ActionResult GetViewCgu()
+        public ActionResult cgu()
         {
             
             return View();

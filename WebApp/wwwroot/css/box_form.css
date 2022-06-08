@@ -82,8 +82,6 @@
 }
 
 .form-horizontal .btn {
-    color: rgba(255, 255, 255, 0.8);
-    background: #E9374C;
     font-size: 15px;
     font-weight: 500;
     text-transform: uppercase;
@@ -94,6 +92,11 @@
     border-radius: 20px;
     transition: all 0.3s ease;
 }
+
+    .form-horizontal .btn:not(.btn-success) {
+        background: #E9374C;
+        color: rgba(255, 255, 255, 0.8);
+    }
 
 .form-group.is-invalid {
     border-color: #dc3545 !important;
@@ -136,6 +139,47 @@
     position: relative;
 }
 
+.dropzone-fichier {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ff5964;
+    border-style: dashed;
+}
+
+.dropzone-fichier .iconUpload {
+    position: absolute;
+    top: 10%;
+    font-size: 5rem;
+}
+
+.dropzone-fichier .nomFile {
+    position: absolute;
+    top: 70%;
+}
+
+.dropzone-fichier .descriptionInput {
+    position: absolute;
+    top: 55%;
+}
+
+.inputfileDrop {
+    opacity: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.textContact {
+    height: 150px;  
+}
+
 @media only screen and (max-width:568px) {
     .card-register {
         margin-left: 10vw !important;
@@ -144,12 +188,12 @@
     }
 
     .img-logo {
-        width: 90% !important;
-        margin-top: -13vh !important;
+        width: 60% !important;
+        margin-bottom: 20px !important;
     }
 }
 
-@media only screen and (max-width:992px) and (min-width:568px) {
+@media only screen and (max-width:1200px) and (min-width:568px) {
     .card-register {
         padding-left: 10px !important;
         margin-left: 0 !important;
@@ -157,9 +201,7 @@
 
     .img-logo {
         width: 50% !important;
-        margin-left: 20vw !important;
         margin-bottom: 20px !important;
-        margin-top: -4.3vh !important;
     }
 }
 

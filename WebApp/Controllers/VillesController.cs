@@ -21,26 +21,28 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             var villes = Service.VilleManager.GetAll();
+            Service.VilleManager.Dispose();
             return View(villes);
         }
 
         public JsonResult JsonVille()
         {
             var villes = Service.VilleManager.GetAll();
+            Service.VilleManager.Dispose();
             return Json(villes);
         }
 
         public JsonResult GetAllVille()
         {
             List<Ville> listVille = Service.VilleManager.GetAll().ToList();
-
+            Service.VilleManager.Dispose();
             return Json(listVille);
         }
 
         public JsonResult GetByCPOrVille(string data)
         {
             List<Ville> listVille = Service.VilleManager.GetbyCPOrVille(data).ToList();
-
+            Service.VilleManager.Dispose();
             return Json(listVille);
         }
 
@@ -53,11 +55,13 @@ namespace WebApp.Controllers
             }
 
             Ville ville = Service.VilleManager.Get((int)id);
+            Service.VilleManager.Dispose();
             if (ville == null)
             {
                 return NotFound();
             }
-            return View(Service.VilleManager.Get((int)id));
+            return View(ville);
+
         }
 
         // GET: VillesController/Create
@@ -74,8 +78,9 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.VilleManager.Add(ville);
+                Service.VilleManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
 
         // GET: VillesController/Edit/5
@@ -86,6 +91,7 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
             Ville ville = Service.VilleManager.Get((int)id);
+            Service.VilleManager.Dispose();
             if (ville == null)
             {
                 return NotFound();
@@ -101,15 +107,16 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 Service.VilleManager.Update(ville);
+                Service.VilleManager.Dispose();
             }
-            return RedirectToAction("AdminPersonne", "Personne");
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
 
-    
         public ActionResult Delete(int id)
         {
             Service.VilleManager.Delete(id);
-            return RedirectToAction("AdminPersonne", "Personne");
+            Service.VilleManager.Dispose();
+            return RedirectToAction("GestionCategoriesEtVilles", "Administration");
         }
     }
 }
