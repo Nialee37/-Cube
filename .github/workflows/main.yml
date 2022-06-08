@@ -28,7 +28,7 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '5.0.405'
 
       - name: Remove folder publish
         run: rm -r /media/usb1/ProjetCube/WebApp/bin/Release/net5.0/publish
