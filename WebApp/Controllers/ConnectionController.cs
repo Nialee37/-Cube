@@ -132,17 +132,14 @@ namespace WebApp.Controllers
                     return View("Index");
             }
             }
-        public IActionResult RegisterCreate(Personne user)
-            {
+        public async Task<IActionResult> RegisterCreate(Personne user)
+        {
             Personne userbdd = Service.PersonneManager.GetByMail(user.Mail);
                 
-            if (userbdd != null) { 
-                if (user.Mail == userbdd.Mail)
-                {
-                    Service.PersonneManager.Dispose();
-                    TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
-                    return RedirectToAction("Register", "Connection");
-                }
+            if (userbdd != null && user.Mail == userbdd.Mail) { 
+               Service.PersonneManager.Dispose();
+               TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
+               return RedirectToAction("Register", "Connection");
             }
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
 
@@ -155,8 +152,8 @@ namespace WebApp.Controllers
                 Service.PersonneManager.Add(user);
                 Service.PersonneManager.Dispose();
                 EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
-                return (IActionResult)IndexLogin(user.Mail, temppsd);
-            }
+                return await IndexLogin(user.Mail, temppsd);
+        }
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();

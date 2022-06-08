@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
 using ServiceDAL.Interfaces;
@@ -371,77 +372,87 @@ namespace WebApp.Controllers
             ressource.IsValidate = false;
             ressource.IdPersonne = userConnected.Id;
 
-            if (file != null)
+            if (file != null && ressource.Nom != "")
             {
                 var fileName = Path.GetFileName(file.FileName);
-
-
                 string extensstion = fileName.Split(".").Last().ToLower(); //get l'extenstion du docuement
+                string baseDossier = "/RessourcesPublier/";
 
-                switch (extensstion)
+                const string DefaultContentType = "application/octet-stream";
+                var provider = new FileExtensionContentTypeProvider();
+                if (!provider.TryGetContentType(fileName, out string contentType))
                 {
-                    case "docx": //cas word
+                    contentType = DefaultContentType;
+                }
+
+                string[] splitContent = contentType.Split("/");
+
+                if (splitContent[0].Contains("video"))
+                {
+                    ressource.IdType = 5;
+                    ressource.CheminAcces = baseDossier + "VIDEO/";
+                }
+                else if (splitContent[0].Contains("image"))
+                {
+                    ressource.IdType = 6;
+                }
+                else if (splitContent[0].Contains("audio") || splitContent[1].Contains("audio"))
+                {
+                    ressource.IdType = 7;
+                }
+                else if (splitContent[0].Contains("text"))
+                {
+                    if (splitContent[1].Contains("plain"))
+                    {
                         ressource.IdType = 3;
-                        break;
-
-                    case "doc": //cas word
-                        ressource.IdType = 3;
-                        break;
-
-                    case "txt": //cas word
-                        ressource.IdType = 3;
-                        break;
-
-                    case "mp4": //cas vidéo
-                        ressource.IdType = 5;
-                        break;
-
-                    case "png": //cas image
-                        ressource.IdType = 6;
-                        break;
-
-                    case "jpg": //cas image
-                        ressource.IdType = 6;
-                        break;
-
-                    case "xlsx": //cas excel
-                        ressource.IdType = 2;
-                        break;
-
-                    case "xls": //cas excel
-                        ressource.IdType = 2;
-                        break;
-
-                    case "pdf": //cas pdf
-                        ressource.IdType = 4;
-                        break;
-
-                    default: //cas ou c'est la merde
-                        ressource.IdType = 7;
-                        break;
+                    }
+                }
+                else if (splitContent[1].Contains("sheet") || splitContent[1].Contains("excel"))
+                {
+                    ressource.IdType = 2;
+                }
+                else if (splitContent[1].Contains("document") || splitContent[1].Contains("text"))
+                {
+                    ressource.IdType = 3;
+                }
+                else if (splitContent[1].Contains("pdf"))
+                {
+                    ressource.IdType = 4;
+                }
+                else if (splitContent[1].Contains("powerpoint"))
+                {
+                    ressource.IdType = 8;
                 }
 
 
-                var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
-                var path = Path.Combine("./wwwroot/PDF_FOLDER/", fileNewName);
-                if (System.IO.File.Exists(path))
-                    System.IO.File.Delete(path);
-                using (Stream fileStream = new FileStream(path, FileMode.Create))
+                if(ressource.IdType != 0)
                 {
-                    await file.CopyToAsync(fileStream);
+                    var fileNewName = fileName + "_" + Guid.NewGuid().ToString() + "." + extensstion;
+                    var path = Path.Combine("./wwwroot/PDF_FOLDER/", fileNewName);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
+                    using (Stream fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    ressource.CheminAcces = "/PDF_FOLDER/";
+                    ressource.Source = fileNewName;
+
+
+                    Service.RessourcesManager.Add(ressource);
+                    Service.RessourcesManager.Dispose();
+                    return Redirect("/Ressource");
                 }
-                ressource.CheminAcces = "/PDF_FOLDER/";
-                ressource.Source = fileNewName;
-
-
-                Service.RessourcesManager.Add(ressource);
-                Service.RessourcesManager.Dispose();
-                return Redirect("/Ressource");
+                else
+                {
+                    ViewBag.message = "Votre ressource n'est compatible avec notre système";
+                    return Redirect("/Ressource/Create");
+                }
             }
             else
             {
                 //faire le message d'erreur visuellement
-                ViewBag.message = "Il n'y a pas de document lié a votre ressource.";
+                ViewBag.message = "Vous n'avez pas rempli toutes les éléments nécessaires à la création d'une ressource";
                 return Redirect("/Ressource/Create");
             }
 
