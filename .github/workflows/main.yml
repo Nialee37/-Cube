@@ -28,6 +28,9 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 5.0.408
+          
+      - name: User
+        run: whoami
       
       - name: Stop service webapp 
         run: sudo /usr/local/bin/stopwebapp.sh
