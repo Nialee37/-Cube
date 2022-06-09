@@ -30,7 +30,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Stop service webapp 
-        run: systemctl stop webapp.service
+        run: systemctl --user stop webapp.service
         
       - name: Install dependencies
         run: dotnet restore 
@@ -47,4 +47,4 @@ jobs:
           export XDG_RUNTIME_DIR=/run/user/$(id -u)
           systemctl --user restart sample-app.service
       - name: Restart the service 
-        run: systemctl start webapp.service
+        run: systemctl --user start webapp.service
