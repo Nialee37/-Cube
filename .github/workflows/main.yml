@@ -28,7 +28,10 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 5.0.408
-        
+      
+      - name: Stop service webapp 
+        run: systemctl --user stop webapp.service
+      
       - name: Install dependencies
         run: dotnet restore 
 
@@ -43,3 +46,6 @@ jobs:
         run: |
           export XDG_RUNTIME_DIR=/run/user/$(id -u)
           systemctl --user restart sample-app.service
+          
+      - name: Restart the service 
+        run: systemctl --user start webapp.service
