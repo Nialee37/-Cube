@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using Newtonsoft.Json;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 
@@ -94,7 +95,7 @@ namespace WebApp.Controllers
 
                                 Service.PersonneManager.Update(user);
                                 Service.PersonneManager.Dispose();
-                                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                                string jsonUser = JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
                                 return RedirectToAction("Index", "Home");
