@@ -159,7 +159,7 @@ namespace WebApp.Controllers
             Service.PersonneManager.Dispose();
             if (userConnected.Id == user.Id)
             {
-                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(getUser);
+                string jsonUser = JsonSerializer.Serialize(getUser);
                 HttpContext.Session.SetString("user", jsonUser);
             }
             /*string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
