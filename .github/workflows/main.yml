@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        dotnet: ["5.0.x"]
+        dotnet: ["5.0.408"]
 
     # A sequence of tasks that will execute as part of the job
     steps:
@@ -27,9 +27,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: | 
-            3.1.x
-            5.0.x
+          dotnet-version: 5.0.408
         
       - name: Install dependencies
         run: dotnet restore 
