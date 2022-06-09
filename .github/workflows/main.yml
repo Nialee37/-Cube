@@ -30,7 +30,7 @@ jobs:
           dotnet-version: 5.0.408
       
       - name: Stop service webapp 
-        run: systemctl stop webapp.service
+        run: sudo /usr/local/bin/stopwebapp.sh
       
       - name: Install dependencies
         run: dotnet restore 
@@ -48,4 +48,4 @@ jobs:
           systemctl --user restart sample-app.service
           
       - name: Restart the service 
-        run: systemctl start webapp.service
+        run: sudo /usr/local/bin/startwebapp.sh
