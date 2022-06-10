@@ -43,21 +43,31 @@ namespace ServiceDALTests.CRUDTests
         public void Ville_CreateOneVille_Find2()
         {
             // Arrange
-            const long EXCEPTED = 2;
+            const long EXCEPTED = 31;
 
             // Act
-            Manager.Add(new Ville() {
-                Nom = "ville1",
-                CPostal = "00001A",
-                code_departement = "test",
-                code_commune = "testC"
-            });
-            Manager.Add(new Ville() {
-                Nom = "ville2",
-                CPostal = "00002B",
-                code_departement = "test2",
-                code_commune = "testC2"
-            });
+            //Manager.Add(new Ville() {
+            //    Nom = "ville1",
+            //    CPostal = "00001A",
+            //    code_departement = "test",
+            //    code_commune = "testC"
+            //});
+            //Manager.Add(new Ville() {
+            //    Nom = "ville2",
+            //    CPostal = "00002B",
+            //    code_departement = "test2",
+            //    code_commune = "testC2"
+            //});
+            for (int i = 1; i < 32; i++)
+            {
+                Manager.Add(new Ville()
+                {
+                    Nom = "ville" + i,
+                    CPostal = "0000" + i,
+                    code_departement = "test" +i,
+                    code_commune = "testC" +i
+                });
+            }
             long actual = Manager.GetAll().Count;
 
             // Assert
@@ -66,6 +76,35 @@ namespace ServiceDALTests.CRUDTests
 
         [Fact]
         [Order(3)]
+        public void Ville_Get30last_Find30()
+        {
+            // Arrange
+            const long EXCEPTED = 30;
+
+            // Act
+            long actual = Manager.Get30last().Count;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+
+        [Fact]
+        [Order(4)]
+        public void Ville_GetByCp_Find1()
+        {
+            // Arrange
+            const long EXCEPTED = 1;
+
+            // Act
+            long actual = Manager.GetbyCPOrVille("000010").Count;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+
+
+        [Fact]
+        [Order(5)]
         public void Ville_GetVille_NameOk()
         {
             // Arrange
@@ -80,7 +119,7 @@ namespace ServiceDALTests.CRUDTests
             Assert.Equal(EXCEPTED, actual);
         }
         [Fact]
-        [Order(4)]
+        [Order(6)]
         public void Ville_UpdateVille_NameOk()
         {
             // Arrange
@@ -98,7 +137,7 @@ namespace ServiceDALTests.CRUDTests
             Assert.Equal(EXCEPTED, actual);
         }
         [Fact]
-        [Order(5)]
+        [Order(7)]
         public void Ville_DeleteVille_null()
         {
             // Arrange
