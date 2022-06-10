@@ -29,8 +29,8 @@ jobs:
         with:
           dotnet-version: 5.0.408
           
-      - name: User
-        run: whoami
+      - name: Activation maintenance
+        run: touch /media/usb1/ProjetCube/WebApp/maintenance.lock
       
       - name: Stop service webapp 
         run: sudo /usr/local/bin/stopwebapp.sh
@@ -52,3 +52,6 @@ jobs:
           
       - name: Restart the service 
         run: sudo /usr/local/bin/startwebapp.sh
+        
+      - name: Desactivation maintenance
+        run: rm /media/usb1/ProjetCube/WebApp/maintenance.lock
