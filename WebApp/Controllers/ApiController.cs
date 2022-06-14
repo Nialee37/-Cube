@@ -61,16 +61,16 @@ namespace WebApp.Controllers
         }
         public JsonResult RessourceFiltred(string libelletype) //fonction qui va retourner les ressources sur la page d'acceuil
         {
-        
-                List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
-                Service.RessourcesManager.Dispose();
-        
-                for (int i = 0; i < mesressources.Count; i++)
-                {
-                    mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
-                }
 
-                if(libelletype != null)
+            List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
+            Service.RessourcesManager.Dispose();
+
+            for (int i = 0; i < mesressources.Count; i++)
+            {
+                mesressources[i].fullfiledowload = "https://projetcube.tech/" + mesressources[i].CheminAcces + mesressources[i].Source;
+            }
+
+            if (libelletype != null)
             {
                 mesressources = mesressources.Where(x => x.Type.Libelle == libelletype).ToList();
                 return Json(mesressources);
@@ -79,7 +79,7 @@ namespace WebApp.Controllers
             {
                 return Json(mesressources);
             }
-                
+
         }
         public JsonResult Typelist()
         {
@@ -112,10 +112,10 @@ namespace WebApp.Controllers
         } //renvoie une liste de ressources lié a l'historique d'un utilisateur
         public JsonResult GetFavorisModile(string id)
         {
-            int idtofindpersonne = 0;
+            
             if (id != null)
             {
-                idtofindpersonne = int.Parse(id);
+                int idtofindpersonne = int.Parse(id);
                 Personne userConnected = Service.PersonneManager.Get(idtofindpersonne);
                 Service.PersonneManager.Dispose();
                 List<Ressources> listressource = new List<Ressources>();
