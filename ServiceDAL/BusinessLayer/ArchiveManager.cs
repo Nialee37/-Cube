@@ -15,7 +15,8 @@ namespace ServiceDAL.BusinessLayer
         }
         public bool Delete(int id)
         {
-            Archive archive = Service.DbContext.Archive.Find(id);
+            //Archive archive = Service.DbContext.Archive.Find(id);
+            Archive archive = Service.DbContext.Archive.Where(p => p.Personne.Id == id).FirstOrDefault();
             Service.DbContext.Archive.Remove(archive);
             Service.DbContext.SaveChanges();
             return true;

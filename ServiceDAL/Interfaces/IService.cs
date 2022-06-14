@@ -5,17 +5,17 @@ namespace ServiceDAL.Interfaces
 {
     public interface IService: IDisposable
     {
-        RolesManager RolesManager { get; }
-        VilleManager VilleManager { get; }
-        CommentaireManager CommentaireManager { get; }
-        TypeManager TypeManager { get; }
-        CategorieManager CategorieManager { get; }
         AdresseManager AdresseManager { get; }
-        PersonneManager PersonneManager { get; }
-
-        HistoriqueManager HistoriqueManager { get; }
+        ArchiveManager ArchiveManager { get; }
+        CategorieManager CategorieManager { get; }
+        CommentaireManager CommentaireManager { get; }
         FavoriManager FavoriManager { get; }
-        RessourcesManager  RessourcesManager { get; }
+        HistoriqueManager HistoriqueManager { get; }
+        PersonneManager PersonneManager { get; }
+        RessourcesManager RessourcesManager { get; }
+        RolesManager RolesManager { get; }
+        TypeManager TypeManager { get; }
+        VilleManager VilleManager { get; }
         new void Dispose();
 
     }
