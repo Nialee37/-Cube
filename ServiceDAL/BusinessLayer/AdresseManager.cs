@@ -55,7 +55,6 @@ namespace ServiceDAL.BusinessLayer
                 Service.DbContext.SaveChanges();
             }
         }
-
         public void Dispose(){}
     }
 }
