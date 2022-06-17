@@ -26,7 +26,7 @@ namespace WebApp.Controllers
                 Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user"));
                 List<Favori> mesfavoris = new List<Favori>();
 
-                mesfavoris = (List<Favori>)Service.FavoriManager.Getal(userConnected.Id);
+                mesfavoris = (List<Favori>)Service.FavoriManager.GetByPersonne(userConnected.Id);
                 Service.FavoriManager.Dispose();
 
                 List<Ressources> mesressources = (List<Ressources>)Service.RessourcesManager.GetAll().Where(x => x.IsValidate == true).OrderBy(x => x.Date).ToList();
@@ -119,7 +119,7 @@ namespace WebApp.Controllers
                 Personne userConnected = Service.PersonneManager.Get(idtofindpersonne);
                 Service.PersonneManager.Dispose();
                 List<Ressources> listressource = new List<Ressources>();
-                List<Favori> listfav = Service.FavoriManager.Getal(userConnected.Id);
+                List<Favori> listfav = Service.FavoriManager.GetByPersonne(userConnected.Id);
                 Service.FavoriManager.Dispose();
 
                 foreach (Favori item in listfav)

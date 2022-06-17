@@ -100,12 +100,12 @@ namespace ServiceDALTests.CRUDTests
         {
             // Arrange
             const int ID = 2;
-            const string EXCEPTED = "Commentaire1";
+            const int EXCEPTED = 2;
 
             // Act
             //Commentaire unCommentaire = Manager.Get(ID);
             IList<Commentaire> unCommentaire = Manager.GetCommentaireByRessource(ID);
-            string actual = unCommentaire.Count.ToString();
+            int actual = unCommentaire.Count;
 
             // Assert
             Assert.Equal(EXCEPTED, actual);
