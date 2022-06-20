@@ -96,7 +96,7 @@ namespace WebApp.Controllers
                 Personne userConnected = Service.PersonneManager.Get(idtofindpersonne); //maybe descending sur le order by
                 Service.PersonneManager.Dispose();
                 List<Ressources> listressource = new List<Ressources>();
-                List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
+                List<Historique> listfav = Service.HistoriqueManager.Getall(userConnected.Id).OrderBy(x => x.Date).ToList();
                 Service.HistoriqueManager.Dispose();
 
                 foreach (Historique item in listfav)

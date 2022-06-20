@@ -101,7 +101,7 @@ namespace WebApp.Controllers
         {
             Personne userConnected = JsonSerializer.Deserialize<Personne>(HttpContext.Session.GetString("user")); //maybe descending sur le order by
             List<Ressources> listressource = new List<Ressources>();
-            List<Historique> listfav = Service.HistoriqueManager.Getal(userConnected.Id).OrderBy(x => x.Date).ToList();
+            List<Historique> listfav = Service.HistoriqueManager.Getall(userConnected.Id).OrderBy(x => x.Date).ToList();
             Service.HistoriqueManager.Dispose();
 
             foreach (Historique item in listfav)
@@ -578,7 +578,7 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    Service.HistoriqueManager.Delete(userConnected.Id, histoold.IdRessource);
+                    Service.HistoriqueManager.DeleteByPersAndRess(userConnected.Id, histoold.IdRessource);
                     Service.HistoriqueManager.Dispose();
                     Historique histotamere = new Historique();
                     histotamere.IdPersonne = userConnected.Id;
