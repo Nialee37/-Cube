@@ -116,6 +116,36 @@ namespace ServiceDALTests.CRUDTests
         }
         [Fact]
         [Order(5)]
+        public void Personne_GetPersonneByName_NameOk()
+        {
+            // Arrange
+            const string ID = "leNom";
+            const string EXCEPTED = "leNom";
+
+            // Act
+            Personne laPersonne = Manager.GetByName(ID);
+            string actual = laPersonne.Nom;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+        [Fact]
+        [Order(6)]
+        public void Personne_GetPersonneByMail_NameOk()
+        {
+            // Arrange
+            const string ID = "email1@test.fr";
+            const string EXCEPTED = "email1@test.fr";
+
+            // Act
+            Personne laPersonne = Manager.GetByMail(ID);
+            string actual = laPersonne.Nom;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+        [Fact]
+        [Order(7)]
         public void Personne_UpdatePersonne_NameOk()
         {
             // Arrange
@@ -132,27 +162,8 @@ namespace ServiceDALTests.CRUDTests
             // Assert
             Assert.Equal(EXCEPTED, actual);
         }
-
-        //[Fact]
-        //[Order(5)]
-        //public void Personne_UpdatePersonneWithAdresse_NameOk()
-        //{
-        //    Arrange
-        //    const int ID = 1;
-        //    const string EXCEPTED = "nomAdresseModifié";
-
-        //    Act
-        //   Personne laPersonne = Manager.GetWithDependencies(ID);
-        //    laPersonne.Adresse.Nom = EXCEPTED;
-        //    Manager.UpdateWithAdresse(laPersonne);
-        //    Personne laPersonneModif = Manager.GetWithDependencies(ID);
-        //    string actual = laPersonneModif.Adresse.Nom;
-
-        //    Assert
-        //    Assert.Equal(EXCEPTED, actual);
-        //}
         [Fact]
-        [Order(6)]
+        [Order(8)]
         public void Personne_DeletePersonne_null()
         {
             // Arrange
