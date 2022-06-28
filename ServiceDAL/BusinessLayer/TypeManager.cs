@@ -15,7 +15,6 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return type;
         }
-
         public bool Delete(int id)
         {
             Type type = Service.DbContext.Type.Find(id);
@@ -23,17 +22,14 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return true;
         }
-
         public Type Get(int id)
         {
             return Service.DbContext.Type.Find(id);
         }
-
         public IList<Type> GetAll()
         {
             return Service.DbContext.Type.ToList();
         }
-
         public void Update(Type obj)
         {
             Type Old = Service.DbContext.Type.Find(obj.Id);
@@ -43,7 +39,6 @@ namespace ServiceDAL.BusinessLayer
                 Service.DbContext.SaveChanges();
             }
         }
-
         public void Dispose()
         {
         }

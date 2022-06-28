@@ -46,18 +46,6 @@ namespace ServiceDALTests.CRUDTests
             const long EXCEPTED = 31;
 
             // Act
-            //Manager.Add(new Ville() {
-            //    Nom = "ville1",
-            //    CPostal = "00001A",
-            //    code_departement = "test",
-            //    code_commune = "testC"
-            //});
-            //Manager.Add(new Ville() {
-            //    Nom = "ville2",
-            //    CPostal = "00002B",
-            //    code_departement = "test2",
-            //    code_commune = "testC2"
-            //});
             for (int i = 1; i < 32; i++)
             {
                 Manager.Add(new Ville()

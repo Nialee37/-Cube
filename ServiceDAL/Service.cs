@@ -31,8 +31,6 @@ namespace ServiceDAL
 
         }
 
-
-
         public AdresseManager AdresseManager { get; private set; }
         public ArchiveManager ArchiveManager { get; private set; }
         public CategorieManager CategorieManager { get; private set; }

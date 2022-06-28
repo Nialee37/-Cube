@@ -98,7 +98,6 @@ namespace ServiceDALTests.CRUDTests
             // Assert
             Assert.Equal(EXCEPTED, actual);
         }
-
         [Fact]
         [Order(4)]
         public void Personne_GetPersonne_NameOk()
