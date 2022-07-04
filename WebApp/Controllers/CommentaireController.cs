@@ -29,7 +29,7 @@ namespace WebApp.Controllers
         }
         public JsonResult GetCommentaireBuyRessource(int id)
         {
-            List<Commentaire> listcoms = Service.CommentaireManager.GetCommentaireBuyRessource(id).ToList();
+            List<Commentaire> listcoms = Service.CommentaireManager.GetCommentaireByRessource(id).ToList();
             Service.CommentaireManager.Dispose();
             return Json(listcoms);
         }

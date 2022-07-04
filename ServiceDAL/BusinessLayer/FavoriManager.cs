@@ -35,7 +35,7 @@ namespace ServiceDAL.BusinessLayer
                 .Where(p => p.IdPersonne == idP)
                 .FirstOrDefault();
         }
-        public List<Favori> Getal(int idP)
+        public List<Favori> GetByPersonne(int idP)
         {
             List<Favori> favoris = Service.DbContext.Favori
                .Where(p => p.IdPersonne == idP)

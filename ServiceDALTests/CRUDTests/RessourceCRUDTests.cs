@@ -39,46 +39,52 @@ namespace ServiceDALTests.CRUDTests
 
         [Fact]
         [Order(2)]
-        public void Ressources_CreateOneRessources_Find1()
+        public void Ressources_Create10Ressources_Find10()
         {
             // Arrange
-            const long EXCEPTED = 2;
+            const long EXCEPTED = 10;
 
             // Act
 
             ServiceDAL.BusinessObjet.Type UnType = ServiceStructuralTests.ServiceDAL.TypeManager.Get(2);
             Categorie UneCategorie = ServiceStructuralTests.ServiceDAL.CategorieManager.Get(2);
             Personne UnePersonne = ServiceStructuralTests.ServiceDAL.PersonneManager.Get(2);
-            Manager.Add(new Ressources()
+            for (int i = 0; i < 5; i++)
             {
-                Nom = "UneRessource1",
-                Date = new DateTime(2010, 8, 18),
-                CheminAcces = "unCheminDacces1",
-                Source = "uneSource1",
-                IsValidate = true,
-                IdType = 2,
-                Type = UnType,
-                IdCategorie = 2,
-                Categorie = UneCategorie,
-                IdPersonne = 2,
-                Personne = UnePersonne
+                Manager.Add(new Ressources()
+                {
+                    Nom = "UneRessource"+i,
+                    Date = new DateTime(2010, 8, 18),
+                    CheminAcces = "unCheminDacces"+i,
+                    Source = "uneSource"+i,
+                    IsValidate = true,
+                    IdType = 2,
+                    Type = UnType,
+                    IdCategorie = 2,
+                    Categorie = UneCategorie,
+                    IdPersonne = 2,
+                    Personne = UnePersonne
 
-            }); 
-            Manager.Add(new Ressources()
-            {
-                Nom = "UneRessource2",
-                Date = new DateTime(2010, 8, 18),
-                CheminAcces = "unCheminDacces2",
-                Source = "uneSource2",
-                IsValidate = true,
-                IdType = 2,
-                Type = UnType,
-                IdCategorie = 2,
-                Categorie = UneCategorie,
-                IdPersonne = 2,
-                Personne = UnePersonne
+                });
+                Manager.Add(new Ressources()
+                {
+                    Nom = "UneRessource" + i,
+                    Date = new DateTime(2010, 8, 18),
+                    CheminAcces = "unCheminDacces" + i,
+                    Source = "uneSource" + i,
+                    IsValidate = false,
+                    IdType = 2,
+                    Type = UnType,
+                    IdCategorie = 2,
+                    Categorie = UneCategorie,
+                    IdPersonne = 2,
+                    Personne = UnePersonne
 
-            });
+                });
+
+            }
+          
+          
             long actual = Manager.GetAll().Count;
 
             // Assert
@@ -86,12 +92,12 @@ namespace ServiceDALTests.CRUDTests
         }
 
         [Fact]
-        [Order(4)]
+        [Order(3)]
         public void Ressource_GetPRessource_NameOk()
         {
             // Arrange
             const int ID = 1;
-            const string EXCEPTED = "UneRessource1";
+            const string EXCEPTED = "UneRessource0";
 
             // Act
             Ressources laRessource = Manager.Get(ID);
@@ -100,8 +106,35 @@ namespace ServiceDALTests.CRUDTests
             // Assert
             Assert.Equal(EXCEPTED, actual);
         }
+
+        [Fact]
+        [Order(4)]
+        public void Ressource_GetAllFalse_NameOk()
+        {
+            // Arrange
+            const int EXCEPTED = 5;
+
+            // Act
+            long actual = Manager.Getallfalse().Count;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
         [Fact]
         [Order(5)]
+        public void Ressource_Get10last_NameOk()
+        {
+            // Arrange
+            const int EXCEPTED = 5;
+
+            // Act
+            long actual = Manager.Getallfalse().Count;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+        [Fact]
+        [Order(6)]
         public void Ressource_UpdateRessource_NameOk()
         {
             // Arrange
@@ -119,7 +152,7 @@ namespace ServiceDALTests.CRUDTests
             Assert.Equal(EXCEPTED, actual);
         }
         [Fact]
-        [Order(6)]
+        [Order(7)]
         public void Ressource_DeleteRessource_null()
         {
             // Arrange

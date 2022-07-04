@@ -19,7 +19,9 @@ namespace ServiceDAL.AccessLayer
         }
 
         public ServiceContext()
-             : base("Server=172.16.3.1; Database=project; User Id=project ; Password=Fvo$i%3y$3Y4b6VZ; Trusted_Connection=false; MultipleActiveResultSets=true;")
+             //: base("Server=172.16.3.1; Database=project; User Id=project ; Password=Fvo$i%3y$3Y4b6VZ; Trusted_Connection=false; MultipleActiveResultSets=true;")
+             : base("server=(localdb)\\mssqllocaldb;database=ServiceDal_Local;Trusted_Connection=True;MultipleActiveResultSets=true;")
+
         {
             SetConfiguration();
         }
@@ -37,8 +39,6 @@ namespace ServiceDAL.AccessLayer
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ServiceContext, Configuration>());
             Configuration.LazyLoadingEnabled = true;
         }
-
-
         // Ajoutez un DbSet pour chaque type d'entité à inclure dans votre modèle. Pour plus d'informations 
         // sur la configuration et l'utilisation du modèle Code First, consultez http://go.microsoft.com/fwlink/?LinkId=390109.
 

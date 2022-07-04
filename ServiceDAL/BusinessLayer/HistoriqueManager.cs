@@ -13,7 +13,7 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return historique;
         }
-        public bool Delete(int idpersonne , int idressource)
+        public bool DeleteByPersAndRess(int idpersonne , int idressource)
         {
             Historique historique = Service.DbContext.Historique.Where(p => p.IdPersonne == idpersonne && p.IdRessource == idressource).FirstOrDefault();
             Service.DbContext.Historique.Remove(historique);
@@ -28,7 +28,7 @@ namespace ServiceDAL.BusinessLayer
             return true;
         }
 
-        public List<Historique> Getal(int idP)
+        public List<Historique> Getall(int idP)
         {
              List<Historique> historiques = Service.DbContext.Historique
                 .Where(p => p.IdPersonne == idP)
@@ -37,10 +37,7 @@ namespace ServiceDAL.BusinessLayer
         }
         public Historique Get(int idP)
         {
-            return Service.DbContext.Historique
-               .Where(p => p.IdPersonne == idP)
-               .First();
-            
+            return Service.DbContext.Historique.Where(p => p.IdPersonne == idP).First();     
         }
         public Historique Get(int idP, int idR)
         {

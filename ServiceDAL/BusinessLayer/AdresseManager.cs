@@ -14,20 +14,16 @@ namespace ServiceDAL.BusinessLayer
         {
             try
             {
-
                 var adresse = Service.DbContext.Adresses.Add(obj);
                 Service.DbContext.SaveChanges();
                 return adresse;
-
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"erreur add : {ex.Message}");
                 throw;
             }
         }
-
         public bool Delete(int id)
         {
             Adresse adresse = Service.DbContext.Adresses.Find(id);
@@ -35,17 +31,14 @@ namespace ServiceDAL.BusinessLayer
             Service.DbContext.SaveChanges();
             return true;
         }
-
         public Adresse Get(int id)
         {
             return Service.DbContext.Adresses.Find(id);
         }
-
         public IList<Adresse> GetAll()
         {
             return Service.DbContext.Adresses.ToList();
         }
-
         public void Update(Adresse obj)
         {
             Adresse Old = Service.DbContext.Adresses.Find(obj.IdAdresse);
@@ -55,7 +48,6 @@ namespace ServiceDAL.BusinessLayer
                 Service.DbContext.SaveChanges();
             }
         }
-
         public void Dispose(){}
     }
 }

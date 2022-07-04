@@ -37,7 +37,7 @@ namespace ServiceDALTests.CRUDTests
         }
         [Fact]
         [Order(2)]
-        public void Adresse_CreateOneAdresse_Find2()
+        public void Adresse_CreateTwoAdresse_Find2()
         {
             // Arrange
             const long EXCEPTED = 2;

@@ -1,5 +1,6 @@
 ﻿using ServiceDAL.BusinessObjet;
 using ServiceDALTests.StructuralTests;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -92,8 +93,25 @@ namespace ServiceDALTests.CRUDTests
             // Assert
             Assert.Equal(EXCEPTED, actual);
         }
+
         [Fact]
         [Order(4)]
+        public void commentaire_GetcommentaireByRessource_NameOk()
+        {
+            // Arrange
+            const int ID = 2;
+            const int EXCEPTED = 2;
+
+            // Act
+            //Commentaire unCommentaire = Manager.Get(ID);
+            IList<Commentaire> unCommentaire = Manager.GetCommentaireByRessource(ID);
+            int actual = unCommentaire.Count;
+
+            // Assert
+            Assert.Equal(EXCEPTED, actual);
+        }
+        [Fact]
+        [Order(5)]
         public void commentaire_Updatecommentaire_NameOk()
         {
             // Arrange
@@ -111,7 +129,7 @@ namespace ServiceDALTests.CRUDTests
             Assert.Equal(EXCEPTED, actual);
         }
         [Fact]
-        [Order(5)]
+        [Order(6)]
         public void commentaire_Deletecommentaire_null()
         {
             // Arrange
