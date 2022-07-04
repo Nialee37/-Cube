@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BCryptNet = BCrypt.Net.BCrypt;
 
@@ -103,7 +104,7 @@ namespace WebApp.Controllers
                                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
                                 //Service.PersonneManager.Update(user);
                                 //Service.PersonneManager.Dispose();
-                                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                                string jsonUser = JsonSerializer.Serialize(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
                                 return RedirectToAction("Index", "Home");
