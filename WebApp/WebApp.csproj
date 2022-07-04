@@ -23,4 +23,14 @@
     <ProjectReference Include="..\ServiceDAL\ServiceDAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\RessourcesPublier\IMAGE\" />
+    <Folder Include="wwwroot\RessourcesPublier\AUDIO\" />
+    <Folder Include="wwwroot\RessourcesPublier\EXCEL\" />
+    <Folder Include="wwwroot\RessourcesPublier\VIDEO\" />
+    <Folder Include="wwwroot\RessourcesPublier\WORD\" />
+    <Folder Include="wwwroot\RessourcesPublier\POWERPOINT\" />
+    <Folder Include="wwwroot\RessourcesPublier\PDF\" />
+  </ItemGroup>
+
 </Project>

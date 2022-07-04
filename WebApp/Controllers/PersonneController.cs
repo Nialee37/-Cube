@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -58,7 +59,9 @@ namespace WebApp.Controllers
             }
         }
 
+
         // GET: PersonneController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
 
@@ -141,6 +144,7 @@ namespace WebApp.Controllers
         }
 
         // POST: PersonneController/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void EditGeneral(Personne user)
@@ -170,6 +174,7 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void EditVilleUser(Personne user)
@@ -195,6 +200,7 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void EditSecuriter(Personne user)
@@ -240,6 +246,7 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id="+ getUser.Id);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void EditRole(Personne user)
@@ -256,6 +263,7 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void EditStatut(Personne user)
@@ -272,6 +280,7 @@ namespace WebApp.Controllers
             Response.Redirect("/Personne/Edit?id=" + getUser.Id);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void deleteCompte(Personne user)
@@ -298,11 +307,12 @@ namespace WebApp.Controllers
             {
                 Service.PersonneManager.Delete(getUser.Id);
                 Service.PersonneManager.Dispose();
-                Response.Redirect("/Personne/AdminPersonne");
+                Response.Redirect("/Administration/GestionUtilisateurs");
             }
             
         }
 
+        [Authorize]
         // GET: PersonneController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -310,6 +320,7 @@ namespace WebApp.Controllers
         }
 
         // POST: PersonneController/Delete/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -324,68 +335,6 @@ namespace WebApp.Controllers
             }
         }
 
-        public ActionResult AdminPersonne()
-        {
-
-            var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-            Service.RessourcesManager.Dispose();
-
-            if (ressourcelist.Count > 0)
-            {
-                List<int> moy = new List<int>();
-
-                foreach (var item in ressourcelist)
-                {
-                    moy.Add(item.Count());
-                }
-
-                ViewBag.moycree =  Math.Round(moy.Average(),0).ToString();
-            }
-            else
-            {
-                ViewBag.moycree = "Pas calculable";
-            }
-            var listfav = Service.HistoriqueManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
-            Service.HistoriqueManager.Dispose();
-
-            if (listfav.Count > 0)
-            {
-                List<int> moy = new List<int>();
-
-                foreach (var item in listfav)
-                {
-                    moy.Add(item.Count());
-                }
-
-                ViewBag.moylu = Math.Round(moy.Average(), 0).ToString();
-            }
-            else
-            {
-                ViewBag.moylu = "";
-            }
-
-            List<Ville> listVille = Service.VilleManager.GetAll().ToList();
-            Service.VilleManager.Dispose();
-            ViewBag.listVille = listVille.ToArray();
-
-            List<Categorie> listcategorie = Service.CategorieManager.GetAll().ToList();
-            Service.CategorieManager.Dispose();
-            ViewBag.listCategorie = listcategorie.ToArray();
-
-            List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
-            Service.PersonneManager.Dispose();
-            ViewBag.listPersonne = personnes.ToArray();
-
-            List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
-            Service.RessourcesManager.Dispose();
-            ViewBag.listRessourceFalse = listressource.ToArray();
-
-            List<Ressources> listressourceAll = Service.RessourcesManager.GetAll().ToList();
-            Service.RessourcesManager.Dispose();
-            ViewBag.listAllRessource = listressourceAll.ToArray();
-
-            return View();
-        }
         [HttpGet]
         public JsonResult GetAllPersonne()
         {

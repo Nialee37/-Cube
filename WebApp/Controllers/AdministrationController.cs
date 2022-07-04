@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,8 @@ namespace WebApp.Controllers
             Service = service;
         }
 
+        
+        [Authorize]
         public ActionResult GestionRessources()
         {
            /* List<Ressources> listressource = Service.RessourcesManager.Getallfalse().ToList();
@@ -36,6 +39,7 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult GestionCategoriesEtVilles()
         {
             List<Ville> listVille = Service.VilleManager.GetAll().ToList();
@@ -48,6 +52,8 @@ namespace WebApp.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult StatistiquesGeneral()
         {
             var ressourcelist = Service.RessourcesManager.GetAll().GroupBy(x => x.IdPersonne).ToList();
@@ -90,6 +96,7 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public ActionResult GestionUtilisateurs()
         {
             List<Personne> personnes = (List<Personne>)Service.PersonneManager.GetAll();
@@ -99,6 +106,8 @@ namespace WebApp.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public int validateressource(int id) //fonction qui permet de valider une ressource par un modérateur
         {
             Ressources mesressources = Service.RessourcesManager.Get(id);
@@ -109,6 +118,8 @@ namespace WebApp.Controllers
             Service.RessourcesManager.Dispose();
             return 1;
         }
+
+        [Authorize(Roles = "Modérateur, Administrateur, SuperAdministrateur")]
         public int notvalidateressource(int id) //fonction qui permet de dévalider une ressource
         {
             Ressources mesressources = Service.RessourcesManager.Get(id);

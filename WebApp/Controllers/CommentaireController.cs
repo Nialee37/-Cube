@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceDAL.BusinessObjet;
@@ -33,6 +34,7 @@ namespace WebApp.Controllers
             return Json(listcoms);
         }
         // GET: CommentairesController/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -49,11 +51,13 @@ namespace WebApp.Controllers
             return View(ville);
         }
         // GET: CommentairesController/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
         // POST: CommentairesController/Create
+        [Authorize]
         [HttpPost]
         public string Create(int id_ressource, string corp,int? idComReponse)
         {
@@ -73,6 +77,7 @@ namespace WebApp.Controllers
             return "Commentaire ajouté";
         }
 
+        [Authorize]
         [HttpPost]
         public bool Delete(int id,int idPersonneRessource)
         {

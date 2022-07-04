@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text.Json;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 
@@ -78,7 +80,7 @@ namespace WebApp.Controllers
                 return View();
             }
         [ValidateAntiForgeryToken]
-        public IActionResult IndexLogin(string username, string password)
+        public async Task<IActionResult> IndexLogin(string username, string password)
             {
                 if(username != null && password != null) {
                     Personne user = Service.PersonneManager.GetByMail(username);
@@ -92,10 +94,16 @@ namespace WebApp.Controllers
 
                                 //User.AddIdentity(user); //mise en place de la variable accessible partout dans le code
                                 ViewBag.message = "Bonjour " + user.Prenom.ToString();
+                                var claims = new List<Claim>
+                                {
+                                    new Claim("user", user.Mail),
+                                    new Claim("role", user.Roles.Libelle)
+                                };
 
-                                Service.PersonneManager.Update(user);
-                                Service.PersonneManager.Dispose();
-                                string jsonUser = JsonSerializer.Serialize(user);
+                                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
+                                //Service.PersonneManager.Update(user);
+                                //Service.PersonneManager.Dispose();
+                                string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                                 HttpContext.Session.SetString("user", jsonUser);
                                 Response.Redirect("/");
                                 return RedirectToAction("Index", "Home");
@@ -124,17 +132,14 @@ namespace WebApp.Controllers
                     return View("Index");
             }
             }
-        public IActionResult RegisterCreate(Personne user)
-            {
+        public async Task<IActionResult> RegisterCreate(Personne user)
+        {
             Personne userbdd = Service.PersonneManager.GetByMail(user.Mail);
                 
-            if (userbdd != null) { 
-                if (user.Mail == userbdd.Mail)
-                {
-                    Service.PersonneManager.Dispose();
-                    TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
-                    return RedirectToAction("Register", "Connection");
-                }
+            if (userbdd != null && user.Mail == userbdd.Mail) { 
+               Service.PersonneManager.Dispose();
+               TempData["messageErreurLogin"] = "Bonjour un compte existe deja avec cette adresse mail.";
+               return RedirectToAction("Register", "Connection");
             }
                 string temppsd = user.PasswordHash; //garde du mot de passe en clair pour avoir une connection automatique
 
@@ -147,11 +152,11 @@ namespace WebApp.Controllers
                 Service.PersonneManager.Add(user);
                 Service.PersonneManager.Dispose();
                 EnvoieMailBienvenue((user.Nom + " " + user.Prenom),user.Mail);
-                return IndexLogin(user.Mail, temppsd);
-            }
-        public IActionResult Logout()
+                return await IndexLogin(user.Mail, temppsd);
+        }
+        public async Task<IActionResult> Logout()
         {
-            Response.Redirect("/");
+            await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
