@@ -79,7 +79,7 @@ function datatableVille() {
                 targets: 2,
                 render: function (data, type, row, meta) {
                         console.log(row);
-                        return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" href="/Villes/Edit/' + row.idVille + '"><i class="fas fa-edit"></i></a></div>'
+                    return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" id="edit_' + row.id + '" href="/Villes/Edit/' + row.idVille + '"><i class="fas fa-edit"></i></a></div>'
                 }
             }
 
@@ -107,7 +107,7 @@ function datatableCategorie() {
             {
                 targets: 1,
                 render: function (data, type, row, meta) {
-                        return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" href="/Categorie/Edit/' + row.id + '"><i class="fas fa-edit"></i></a></div>'
+                    return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" id="edit_' + row.id + '" href="/Categorie/Edit/' + row.id + '"><i class="fas fa-edit"></i></a></div>'
                 }
             }
 
