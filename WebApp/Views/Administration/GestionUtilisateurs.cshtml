@@ -65,7 +65,7 @@ function datatablePersonne() {
             {
                 targets: 4,
                 render: function (data, type, row, meta) {
-                    return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" id="edit_' + row.id + '" href="/Personne/Edit/' + row.id + '"><i class="fas fa-edit"></i></a></div>'
+                    return '<div class="d-flex justify-content-evenly color-red"><a target="_blank" class="editS" id="edit_' + row.id + '" href="/Personne/Edit/' + row.id + '"><i class="fas fa-edit"></i></a></div>'
                 }
             }
         ]
