@@ -54,7 +54,8 @@ $(document).ready(function () {
 
     function escapeHtml(textR) {
         var textString = "";
-        if (textR != undefined && textR != null && typeof textR == String) {
+        console.log(typeof textR)
+        if (textR != undefined && textR != null) {
              textR.toString();
             textString = textString
                 .replace(/&/g, '&amp;')
@@ -68,7 +69,7 @@ $(document).ready(function () {
         return textString;
     }
 
-    function datatableRessource() {
+@*function datatableRessource() {
 
     $('#manageRessource').DataTable({
         "language": {
@@ -95,7 +96,7 @@ $(document).ready(function () {
         ]
 
     });
-}
+}*@
 function datatableRessourceAll() {
     $('#manageRessourceAll').DataTable({
         "responsive": "true",
@@ -115,6 +116,7 @@ function datatableRessourceAll() {
             {
                 targets: 0,
                 render: function (data, type, row, meta) {
+                    console.log(row);
                     return escapeHtml(row.nom)
                 }
             },
