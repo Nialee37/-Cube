@@ -29,6 +29,15 @@
 </div>
 
 <script>
+
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
     var pause = false;
     var repCom = false;
     $( document ).ready(function() {
@@ -62,16 +71,17 @@ function refreshcommentaire() {
                 var date = new Date(data[i].date_com);
                 var heure = date.toLocaleTimeString("fr");
                 var datefr = date.toLocaleDateString("fr");
+                var 
                 $("#commentaire_container").append('<div class="card_commentaire">'
                     + '<div class="title_commentaire">'
-                    + '<span>' + data[i].personne.prenom + ' ' + data[i].personne.nom + ' Le ' + datefr + ' à ' + heure + '</span>'
-                    + (@(user != null ? user.Id : null) == data[i].personne.id || @(user != null ? user.IdRoles : null) >= 3  ? '<button class="btn_supp_com" data-id_personne="' + data[i].personne.id + '" data-id_com="' + data[i].id + '"><i class="fas fa-trash"></i> Supprimer</button>' : '')
+                    + '<span>' + escapeHtml(data[i].personne.prenom) + ' ' + escapeHtml(data[i].personne.nom) + ' Le ' + escapeHtml(datefr) + ' à ' + heure + '</span>'
+                    + (@(user != null ? user.Id : null) == data[i].personne.id || @(user != null ? user.IdRoles : null) >= 3 ? '<button class="btn_supp_com" data-id_personne="' + escapeHtml(data[i].personne.id) + '" data-id_com="' + data[i].id + '"><i class="fas fa-trash"></i> Supprimer</button>' : '')
                     + '<button class="btn_rep_com" data-id_com="' + data[i].id + '"><i class="fas fa-reply"></i> Répondre</button>'
                     + '</div>'
-                    + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de ' + data[i].origineCommentaire.personne.prenom + ' ' + data[i].origineCommentaire.personne.nom +
-                    ' :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> ' + data[i].origineCommentaire.commentaire + ' <i class="fas fa-quote-right"></i></div>') : '<span class="mt-4 mb-4 fw-bold">Réponse un commentaire supprimer :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> Commentaire supprimer <i class="fas fa-quote-right"></i></div>') : '')
+                    + (data[i].isReponse == true ? (data[i].idCommentaireOrigine != null ? ('<span class="mt-4 mb-4 fw-bold">Réponse au commentaire de ' + escapeHtml(data[i].origineCommentaire.personne.prenom) + ' ' + escapeHtml(data[i].origineCommentaire.personne.nom) +
+                    ' :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> ' + escapeHtml(data[i].origineCommentaire.commentaire) + ' <i class="fas fa-quote-right"></i></div>') : '<span class="mt-4 mb-4 fw-bold">Réponse un commentaire supprimer :</span><div class="repComQuote"><i class="fas fa-quote-left"></i> Commentaire supprimer <i class="fas fa-quote-right"></i></div>') : '')
                     + '<div class="com_commentaire">'
-                    + '<p>' + data[i].commentaire + '</p>'
+                    + '<p>' + escapeHtml(data[i].commentaire) + '</p>'
                     + '</div>'
                     + '</div>'
                 );
@@ -90,7 +100,7 @@ function refreshcommentaire() {
                         + '</textarea>'
                         + '<div class="invalid-feedback fw-bold"></div>'
                         + '</div>'
-                        + '<button id="btn_send_rep" data-id_com="' + $(this).data("id_com") + '" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>'
+                        + '<button id="btn_send_rep" data-id_com="' + escapeHtml($(this).data("id_com")) + '" class="btn btn_com_write"><i class="fas fa-paper-plane"></i> Envoyer le commentaire</button>'
                         + '</div></div>');
 
                     $(this).parent().append('<button class="btn_rep_com " id="btn_cancel_rep"><i class="fas fa-times-circle"></i> Annuler</button>');
@@ -155,6 +165,8 @@ function refreshcommentaire() {
 //        console.log(response);
 //    });
 //}
+
+
 
 
 function createcommentaire(idComReponse = null) {
