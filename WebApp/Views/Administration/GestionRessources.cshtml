@@ -52,8 +52,9 @@ $(document).ready(function () {
     datatableRessourceAll();
 });
 
-    function escapeHtml(text) {
-        return text
+    function escapeHtml(textR) {
+        var textReplace = textR;
+        return textReplace
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")

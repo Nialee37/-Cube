@@ -74,8 +74,9 @@
 
 <script>
  //js pour appeler la fonction en ajax "Mesressources"
-    function escapeHtml(text) {
-        return text
+    function escapeHtml(textR) {
+        var textReplace = textR;
+        return textReplace
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
