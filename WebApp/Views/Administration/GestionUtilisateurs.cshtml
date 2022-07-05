@@ -34,6 +34,20 @@ $(document).ready(function () {
     datatablePersonne();
 });
 
+    function escapeHtml(textR) {
+        var textString = "";
+        console.log(typeof textR)
+        if (typeof textR === 'string' || textR instanceof String) {
+            textString = textR
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+        return textString;
+    }
+
 function datatablePersonne() {
     $('#managePersonne').DataTable({
         "responsive": "true",
@@ -56,6 +70,18 @@ function datatablePersonne() {
                 }
 
             },*/
+            {
+                targets: 0,
+                render: function (data, type, row, meta) {
+                    return escapeHtml(row.nom)
+                }
+            },
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    return escapeHtml(row.prenom)
+                }
+            },
             {
                 targets: 3,
                 render: function (data, type, row, meta) {
