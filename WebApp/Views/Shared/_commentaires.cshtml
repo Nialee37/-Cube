@@ -71,7 +71,6 @@ function refreshcommentaire() {
                 var date = new Date(data[i].date_com);
                 var heure = date.toLocaleTimeString("fr");
                 var datefr = date.toLocaleDateString("fr");
-                var 
                 $("#commentaire_container").append('<div class="card_commentaire">'
                     + '<div class="title_commentaire">'
                     + '<span>' + escapeHtml(data[i].personne.prenom) + ' ' + escapeHtml(data[i].personne.nom) + ' Le ' + datefr + ' à ' + heure + '</span>'
