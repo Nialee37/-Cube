@@ -53,7 +53,9 @@ $(document).ready(function () {
 });
 
     function escapeHtml(textR) {
+        console.log(typeof textR)
         var textString = textR.toString();
+
         textString = textString
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
