@@ -56,7 +56,7 @@ $(document).ready(function () {
         var textString = "";
         console.log(typeof textR)
         if (typeof textR === 'string' || textR instanceof String) {
-            textString = textString
+            textString = textR
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
