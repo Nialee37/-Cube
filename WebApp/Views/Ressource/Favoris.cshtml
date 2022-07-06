@@ -24,7 +24,15 @@
     </div>
 </div>
 <script> //js pour appeler la fonction en ajax "Mesressources"
-
+    function escapeHtml(textR) {
+        var textReplace = textR;
+        return textReplace
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 $(document).ready(function(){
     var user = '@(user != null ? user : null)';
     var userId = '@(user != null ? user.Id : null)';
@@ -58,9 +66,9 @@ $(document).ready(function(){
                                                 +'</div>'
                                                 +'<div class="data"><div class="isFavS '+(data[i].isfav ? "" : "d-none")+'"><i class="fas fa-star"></i></div>'
                                                     +' <div class="content">'
-                                                        +'<span class="author">'+data[i].personne.prenom+' '+data[i].personne.nom+'</span>'
-                                                        +'<h3 class="title"><a href="/Ressource/GetRessource?id='+ data[i].id +'">'+data[i].nom+'</a></h3>'
-                                                        +'<p class="text">Catégorie : <span class="badge bg-danger">'+data[i].categorie.libelle+'</span></p>'
+                                                        + '<span class="author">' + escapeHtml(data[i].personne.prenom) + ' ' +escapeHtml(data[i].personne.nom)+'</span>'
+                                                        + '<h3 class="title"><a href="/Ressource/GetRessource?id=' + data[i].id + '">' +escapeHtml(data[i].nom)+'</a></h3>'
+                                                        + '<p class="text">Catégorie : <span class="badge bg-danger">' +escapeHtml(data[i].categorie.libelle)+'</span></p>'
                                                         +'<label for="show-menu'+i+'" class="menu-button"><span></span></label>'
                                                     +'</div>'
                                                     +'<input type="checkbox" id="show-menu'+i+'"/>'
